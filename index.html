@@ -1,1122 +1,449 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Iron Vision — Kripto Net Hesaplayıcı</title>
-  <style>
-    :root{
-      --bg:#070a10;
-      --card: rgba(21, 26, 31, 0.72);
-      --accent:#00ff66;
-      --danger:#e74c3c;
-      --text:#e9eef5;
-      --muted:#a5adb7;
-      --border: rgba(255,255,255,0.08);
-      --shadow: 0 16px 60px rgba(0,0,0,0.55);
-      --radius: 16px;
-      --radius-sm: 12px;
-      --focus: 0 0 0 4px rgba(0,255,102,0.18);
-      --blue:#6ea8ff;
-    }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 420px at 15% 10%, rgba(0,255,102,0.16), transparent 55%),
-        radial-gradient(800px 380px at 75% 15%, rgba(0,255,102,0.10), transparent 60%),
-        radial-gradient(1000px 500px at 50% 90%, rgba(110,168,255,0.12), transparent 60%),
-        var(--bg);
-      display:flex;
-      min-height:100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronVision Tools — Kripto Kâr/Zarar Hesaplayıcı</title>
+    <meta name="description" content="Kripto alım/satım kâr-zarar hesaplayıcı: komisyon ve vergi dahil net sonuç. Ücretsiz, tarayıcıda çalışır, yalnızca bilgilendirme amaçlıdır.">
+    <meta name="theme-color" content="#0b0f14">
+    <link rel="canonical" href="https://ironvisiontools.com/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,3 27,9 27,23 16,29 5,23 5,9' fill='none' stroke='%2312d18e' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%2312d18e'/%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="IronVision Tools — Kripto Kâr/Zarar Hesaplayıcı">
+    <meta property="og:description" content="Komisyon ve vergi dahil kripto net kâr/zarar hesaplayıcı. Ücretsiz, bilgilendirme amaçlıdır.">
+    <meta property="og:url" content="https://ironvisiontools.com/">
+    <meta property="og:image" content="https://ironvisiontools.com/assets/og-tools.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+      :root{
+        --bg:#0b0f14;
+        --panel:rgba(20,27,34,0.85);
+        --panel-2:rgba(27,35,44,0.9);
+        --border:rgba(255,255,255,0.09);
+        --border-strong:rgba(255,255,255,0.16);
+        --text:#e6edf3;
+        --muted:#9aa7b4;
+        --accent:#00ff66;
+        --accent-ink:#04130c;
+        --accent-soft:#57ff9e;
+        --danger:#f87171;
+        --blue:#7cb0ff;
+        --radius:18px;
+        --radius-sm:12px;
+        --focus:0 0 0 3px rgba(0,255,102,0.45);
+        --shadow:0 18px 50px rgba(0,0,0,0.45);
+      }
+      *{ box-sizing:border-box; }
+      html{ -webkit-text-size-adjust:100%; }
+      body{
+        margin:0; min-height:100vh;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(820px 380px at 12% -5%, rgba(0,255,102,0.12), transparent 60%),
+          radial-gradient(760px 360px at 100% 0%, rgba(124,176,255,0.08), transparent 60%),
+          var(--bg);
+        line-height:1.5;
+      }
+      a{ color:inherit; }
+      h1,h2,h3{ line-height:1.2; }
 
-    /* Sidebar */
-    .sidebar{
-      width:300px;
-      padding:26px 18px;
-      border-right: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(21,26,31,0.8), rgba(15,20,26,0.55));
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      gap:18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .sidebar::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(300px 220px at 50% 0%, rgba(0,255,102,0.16), transparent 60%),
-        radial-gradient(260px 180px at 10% 60%, rgba(0,255,102,0.10), transparent 60%);
-      pointer-events:none;
-      filter:saturate(1.1);
-    }
-    .brand{
-      position:relative;
-      z-index:1;
-      text-align:center;
-      width:100%;
-      padding:10px 12px;
-    }
-    .brand h1{
-      margin:0;
-      letter-spacing:0.12em;
-      font-size:16px;
-      font-weight:900;
-      color:var(--accent);
-      text-transform:uppercase;
-    }
-    .brand p{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
-      position:relative;
-      z-index:1;
-    }
+      /* shared top bar */
+      .topbar{
+        position:sticky; top:0; z-index:50;
+        display:flex; align-items:center; justify-content:space-between;
+        gap:14px; flex-wrap:wrap;
+        padding:12px clamp(14px,3vw,28px);
+        background:rgba(11,15,20,0.86);
+        backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+        border-bottom:1px solid var(--border);
+      }
+      .brand{
+        display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+        color:var(--text); font-weight:800; letter-spacing:0.14em; font-size:14px;
+        min-height:44px; padding:2px 4px;
+      }
+      .brand b{ color:var(--accent); font-weight:800; }
+      .brand svg{ width:auto; height:56px; flex:none; }
+      .tools-nav{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+      .tool-link{
+        display:inline-flex; align-items:center; justify-content:center;
+        min-height:44px; padding:0 14px; border-radius:999px; text-decoration:none;
+        font-weight:700; font-size:14px; color:var(--muted); border:1px solid transparent;
+      }
+      .tool-link:hover{ color:var(--text); background:rgba(255,255,255,0.05); }
+      .tool-link[aria-current="page"]{ color:var(--accent); border-color:rgba(0,255,102,0.4); background:rgba(0,255,102,0.08); }
+      .lang-select{
+        min-height:44px; padding:0 12px; background:var(--panel-2); color:var(--text);
+        border:1px solid var(--border-strong); border-radius:999px; font-weight:700; font-size:14px; cursor:pointer;
+      }
+      .brand:focus-visible,.tool-link:focus-visible,.lang-select:focus-visible,
+      button:focus-visible,input:focus-visible,select:focus-visible{ outline:none; box-shadow:var(--focus); }
 
-    .canvas-wrap{
-      position:relative;
-      z-index:1;
-      width:220px;
-      height:220px;
-      border-radius:999px;
-      background:
-        radial-gradient(circle at 40% 30%, rgba(0,255,102,0.22), transparent 45%),
-        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.06), transparent 45%),
-        rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    }
-    canvas{ width:200px; height:200px; }
+      main{ max-width:1080px; margin:0 auto; padding:clamp(20px,4vw,40px) clamp(14px,3vw,28px) 64px; }
+      .hero{ margin-bottom:24px; }
+      .hero h1{ margin:0 0 8px; font-size:clamp(24px,4.4vw,38px); font-weight:800; letter-spacing:-0.02em; }
+      .hero p{ margin:0; max-width:640px; color:var(--muted); font-size:clamp(14px,2.2vw,17px); }
 
-    /* Main */
-    .main{
-      flex:1;
-      padding:28px clamp(16px, 3vw, 34px);
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-    }
-    .container{
-      width:min(1080px, 100%);
-      display:grid;
-      gap:18px;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-    .titleblock{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .kicker{
-      color:var(--muted);
-      font-size:13px;
-      letter-spacing:0.02em;
-    }
-    h2{
-      margin:0;
-      font-size:22px;
-      font-weight:900;
-      line-height:1.2;
-    }
+      .card{
+        background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+        box-shadow:var(--shadow); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+        padding:clamp(18px,3vw,26px); margin-bottom:24px;
+      }
+      .grid-inputs{ display:grid; grid-template-columns:1fr; gap:16px; }
+      @media (min-width:560px){ .grid-inputs{ grid-template-columns:1fr 1fr; } }
+      @media (min-width:900px){ .grid-inputs{ grid-template-columns:1fr 1fr 1fr; } }
+      .field{ display:flex; flex-direction:column; gap:8px; }
+      .field.span-all{ grid-column:1 / -1; }
+      label.lbl{ font-weight:700; font-size:14px; color:var(--text); }
+      .input-wrap{ display:flex; align-items:center; gap:8px; min-height:54px;
+        background:rgba(0,0,0,0.28); border:1.5px solid var(--border-strong); border-radius:var(--radius-sm); padding:0 14px; }
+      .input-wrap .unit{ color:var(--muted); font-weight:800; font-size:13px; white-space:nowrap; }
+      .input-wrap input{ width:100%; border:0; background:transparent; color:var(--text); font-size:16px; font-weight:600; padding:12px 0; }
+      .input-wrap input:focus{ outline:none; }
+      .input-wrap:focus-within{ box-shadow:var(--focus); border-color:var(--accent); }
+      input::placeholder{ color:rgba(154,167,180,0.55); }
 
-    .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      overflow:hidden;
-    }
-    .card-inner{ padding:18px; }
+      .actions{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:4px; }
+      @media (min-width:560px){ .actions{ grid-template-columns:2fr 1fr 1fr; } }
+      .btn{ min-height:54px; border-radius:var(--radius-sm); font-weight:800; font-size:16px; cursor:pointer; border:1px solid transparent; }
+      .btn.primary{ background:var(--accent); color:var(--accent-ink); border:0; }
+      .btn.primary:hover{ filter:brightness(1.06); }
+      .btn.secondary{ background:rgba(255,255,255,0.05); color:var(--text); border-color:var(--border-strong); }
+      .btn.ghost{ background:transparent; color:var(--text); border-color:var(--border-strong); }
+      .btn.secondary:hover,.btn.ghost:hover{ background:rgba(255,255,255,0.08); }
 
-    .row{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .field{
-      grid-column: span 12;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    @media (min-width:860px){
-      .field.col-3{ grid-column: span 3; }
-      .field.col-4{ grid-column: span 4; }
-      .field.col-6{ grid-column: span 6; }
-      .field.col-12{ grid-column: span 12; }
-    }
+      .error{ margin-top:14px; display:none; color:#fecaca; background:rgba(248,113,113,0.12);
+        border:1px solid rgba(248,113,113,0.35); padding:12px 14px; border-radius:var(--radius-sm); font-weight:600; }
+      .error.show{ display:block; }
+      .hint{ margin-top:12px; color:var(--muted); font-size:13px; line-height:1.6; }
+      .hint .kbd{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; padding:2px 8px; border-radius:6px;
+        border:1px solid var(--border-strong); background:rgba(255,255,255,0.06); }
 
-    label{
-      font-size:13px;
-      color:var(--muted);
-      user-select:none;
-      font-weight:800;
-    }
-    .input{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 12px;
-      border-radius: var(--radius-sm);
-      background: rgba(0,0,0,0.20);
-      border:1px solid rgba(255,255,255,0.10);
-    }
-    .input span{
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-      font-weight:900;
-    }
-    input[type="number"], input[type="text"]{
-      width:100%;
-      border:0;
-      outline:none;
-      background:transparent;
-      color:var(--text);
-      font-size:15px;
-      padding:0;
-    }
-    input::placeholder{ color: rgba(165,173,183,0.65); }
-    input:focus-visible{
-      outline:none;
-      box-shadow: var(--focus);
-      border-radius: var(--radius-sm);
-    }
+      /* results */
+      .result-grid{ display:grid; grid-template-columns:1fr; gap:18px; align-items:start; }
+      @media (min-width:760px){ .result-grid{ grid-template-columns:1.1fr 0.9fr; } }
+      .netbox .label{ text-transform:uppercase; letter-spacing:0.06em; font-size:12px; font-weight:800; color:var(--muted); }
+      .netbox .value{ font-size:clamp(30px,5vw,44px); font-weight:800; letter-spacing:-0.02em; color:var(--accent-soft); margin:6px 0; }
+      .netbox .value.neg{ color:var(--danger); }
+      .netbox .explain{ color:var(--muted); font-size:13px; }
+      .metrics{ display:grid; gap:10px; }
+      .metric{ background:rgba(0,0,0,0.22); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; }
+      .metric .k{ font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:800; }
+      .metric .v{ margin-top:4px; font-size:18px; font-weight:800; }
+      .metric .v.pos{ color:var(--accent-soft); } .metric .v.neg{ color:var(--danger); } .metric .v.neu{ color:var(--blue); }
 
-    .btn{
-      border:0;
-      cursor:pointer;
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-weight: 950;
-      transition: transform .12s ease, filter .12s ease, background .12s ease, color .12s ease;
-      user-select:none;
-    }
-    .btn.primary{
-      width:100%;
-      background: linear-gradient(180deg, rgba(0,255,102,0.95), rgba(0,255,102,0.75));
-      color:#041107;
-      box-shadow: 0 12px 30px rgba(0,255,102,0.18);
-    }
-    .btn.primary:hover{ transform: translateY(-1px); filter:saturate(1.05); }
-    .btn.primary:active{ transform: translateY(0); }
+      .history-head{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+      .history-head h2{ margin:0; font-size:17px; font-weight:800; }
+      .history-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+      .btn.mini{ min-height:44px; padding:0 14px; font-size:14px; }
+      .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius-sm); }
+      table{ width:100%; border-collapse:collapse; min-width:460px; }
+      th,td{ padding:12px 12px; text-align:left; border-bottom:1px solid var(--border); font-size:13px; }
+      thead th{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:800; background:rgba(0,0,0,0.25); }
+      tr:last-child td{ border-bottom:0; }
+      td.money{ font-weight:800; } td.good{ color:var(--accent-soft); } td.bad{ color:var(--danger); }
+      .empty-row td{ color:var(--muted); }
 
-    .btn.secondary{
-      width:100%;
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow:none;
-      font-weight:900;
-    }
-    .btn.ghost{
-      width:100%;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow:none;
-    }
+      footer{ border-top:1px solid var(--border); margin-top:48px; padding:26px clamp(14px,3vw,28px);
+        text-align:center; color:var(--muted); font-size:13px; }
+      footer a{ color:var(--accent-soft); font-weight:700; display:inline-block; min-height:44px; line-height:44px; padding:0 4px; }
+      .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
-    .btn:focus-visible{ outline:none; box-shadow: var(--focus); }
-
-    .calc-actions{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-      margin-top:2px;
-    }
-    @media (min-width:640px){
-      .calc-actions{ grid-template-columns: 1fr 1fr 1fr; }
-    }
-
-    /* Language dropdown */
-    .lang{ position:relative; }
-    .lang button{
-      width:auto;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      color:var(--text);
-      font-weight:900;
-      border-radius:999px;
-      cursor:pointer;
-    }
-    .lang button:focus-visible{ outline:none; box-shadow: var(--focus); }
-    .menu{
-      position:absolute;
-      right:0;
-      top: calc(100% + 8px);
-      min-width: 220px;
-      background: rgba(15,20,26,0.98);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 14px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-      padding:8px;
-      display:none;
-      z-index:20;
-    }
-    .menu.show{ display:block; }
-    .menu li{
-      list-style:none;
-      padding:10px 10px;
-      border-radius:12px;
-      color:var(--text);
-      cursor:pointer;
-      font-weight:850;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .menu li:hover{ background: rgba(0,255,102,0.10); }
-
-    /* Result */
-    .result{
-      padding:18px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-    @media (min-width:860px){
-      .result{ grid-template-columns: 1.2fr 0.8fr; align-items:start; }
-    }
-    .result .big{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .label{
-      color:var(--muted);
-      font-size:13px;
-      letter-spacing:0.03em;
-      text-transform:uppercase;
-      font-weight:900;
-    }
-    .value{
-      font-size: clamp(26px, 3.4vw, 40px);
-      font-weight: 1100;
-      letter-spacing: -0.02em;
-      color: var(--accent);
-    }
-    .value.negative{ color: var(--danger); }
-    .value.neutral{ color: var(--blue); }
-    .muted{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .mini-metrics{
-      display:grid;
-      gap:10px;
-    }
-    .metric{
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: var(--radius-sm);
-      padding: 12px 12px;
-    }
-    .metric .k{
-      color:var(--muted);
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:0.03em;
-      text-transform:uppercase;
-    }
-    .metric .v{
-      margin-top:6px;
-      font-weight:1100;
-      font-size:18px;
-    }
-    .metric .v.positive{ color: var(--accent); }
-    .metric .v.negative{ color: var(--danger); }
-    .metric .v.neutral{ color: var(--blue); }
-
-    .error{
-      margin-top:10px;
-      color:#ffd0d0;
-      background: rgba(231,76,60,0.12);
-      border: 1px solid rgba(231,76,60,0.25);
-      padding:10px 12px;
-      border-radius:12px;
-      display:none;
-    }
-    .error.show{ display:block; }
-
-    .hint{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      padding:2px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color:var(--text);
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    /* History */
-    .history{ padding:18px; }
-    .history-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-    .history-header h3{
-      margin:0;
-      font-size:15px;
-      font-weight:950;
-      color:var(--text);
-      letter-spacing:0.02em;
-    }
-
-    table{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: var(--radius-sm);
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.12);
-    }
-    th,td{
-      padding:10px 10px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      text-align:left;
-      font-size:13px;
-    }
-    th{
-      color:var(--muted);
-      font-weight:950;
-      text-transform:uppercase;
-      letter-spacing:0.03em;
-      background: rgba(255,255,255,0.03);
-    }
-    tr:last-child td{ border-bottom:0; }
-    td.money{ font-weight:1100; }
-    td.bad{ color: var(--danger); }
-    td.good{ color: var(--accent); }
-
-    footer{
-      padding: 0 2px 8px;
-      color: rgba(165,173,183,0.85);
-      font-size: 12px;
-      text-align:center;
-    }
-  </style>
+      @media (prefers-reduced-motion: reduce){
+        *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+      }
+    </style>
 </head>
-
 <body>
-  <aside class="sidebar" aria-label="Sidebar">
-    <div class="brand">
-      <h1>IRON VISION</h1>
-      <p id="brandDesc">Alım/satım + komisyonları girin. Ham kar/zarar + vergi (pozitif kârda) + net sonucu hesaplayın.</p>
-    </div>
-    <div class="canvas-wrap" aria-hidden="true">
-      <canvas id="sphereCanvas"></canvas>
-    </div>
-  </aside>
+    <header class="topbar">
+        <a class="brand" href="index.html" aria-label="IronVision Tools">
+            <svg viewBox="0 0 255 68" width="154" height="41" aria-hidden="true"><polygon points="62,34 48.2,10.8 19.8,10.8 6,34 19.8,57.2 48.2,57.2" fill="#0d1a14" stroke="#00ff66" stroke-width="2.2"/><polygon points="56.5,34 45,14.9 23,14.9 11.5,34 23,53.1 45,53.1" fill="none" stroke="#00ff66" stroke-width="0.55" opacity="0.38"/><path d="M19,34 C24,24 44,24 49,34 C44,44 24,44 19,34 Z" fill="none" stroke="#00ff66" stroke-width="1.5"/><circle cx="34" cy="34" r="6.8" fill="none" stroke="#00ff66" stroke-width="1.5"/><circle cx="34" cy="34" r="2.9" fill="#00ff66"/><line x1="17.5" y1="34" x2="13" y2="34" stroke="#00ff66" stroke-width="1.2" opacity="0.55"/><line x1="50.5" y1="34" x2="55" y2="34" stroke="#00ff66" stroke-width="1.2" opacity="0.55"/><line x1="29.5" y1="27.4" x2="38.5" y2="27.4" stroke="#00ff66" stroke-width="0.5" opacity="0.28"/><line x1="29.5" y1="40.6" x2="38.5" y2="40.6" stroke="#00ff66" stroke-width="0.5" opacity="0.28"/><text x="74" y="31" font-family="'Arial Black','Arial Narrow',Impact,sans-serif" font-size="19" font-weight="900" letter-spacing="2.5" fill="#00ff66">IRON</text><text x="74" y="48" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" letter-spacing="5.8" fill="#00ff66">VISION</text><text x="76.5" y="59" font-family="Arial,Helvetica,sans-serif" font-size="6.8" font-weight="300" letter-spacing="5.2" fill="#00ff66" opacity="0.33">TOOLS</text></svg>
+        </a>
+        <nav class="tools-nav" aria-label="Araçlar">
+            <a class="tool-link" href="index.html" aria-current="page" data-i18n="navCrypto">Kripto K/Z</a>
+            <a class="tool-link" href="vergi.html" data-i18n="navTax">Vergi / Net Maaş</a>
+            <label class="visually-hidden" for="langSelector" data-i18n="langLabel">Dil</label>
+            <select id="langSelector" class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="tr">🇹🇷 TR</option>
+                <option value="en">🇬🇧 EN</option>
+            </select>
+        </nav>
+    </header>
 
-  <main class="main">
-    <div class="container">
-      <div class="topbar">
-        <div class="titleblock">
-          <div class="kicker" id="kickerText">Kar & Vergi + Komisyon</div>
-          <h2 id="pageTitle">Kripto Net Hesaplayıcı</h2>
-        </div>
+    <main>
+        <section class="hero">
+            <h1 id="pageTitle">Kripto Kâr/Zarar Hesaplayıcı</h1>
+            <p id="heroDesc">Alış/satış ve komisyonları girin; komisyon ve vergi sonrası net sonucu görün. Yalnızca bilgilendirme amaçlıdır.</p>
+        </section>
 
-        <div class="lang">
-          <button id="langBtn" type="button" aria-haspopup="true" aria-expanded="false">🌐 Dil</button>
-          <ul class="menu" id="langMenu" role="menu" aria-label="Language menu">
-            <li data-lang="tr" role="menuitem">🇹🇷 Türkçe</li>
-            <li data-lang="en" role="menuitem">🇺🇸 English</li>
-          </ul>
-        </div>
-      </div>
-
-      <section class="card" aria-label="Hesaplama kartı">
-        <div class="card-inner">
-          <form id="calcForm" novalidate>
-            <div class="row">
-
-              <div class="field col-3">
-                <label for="investAmount" id="lblInvest">Yatırım Miktarı</label>
-                <div class="input">
-                  <span>USD</span>
-                  <input id="investAmount" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 1000" />
+        <section class="card" aria-labelledby="formHeading">
+            <h2 id="formHeading" class="visually-hidden">Hesaplama alanları</h2>
+            <form id="calcForm" novalidate>
+                <div class="grid-inputs">
+                    <div class="field">
+                        <label class="lbl" for="investAmount" id="lblInvest">Yatırım Miktarı</label>
+                        <div class="input-wrap"><span class="unit">USD</span><input id="investAmount" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 1000"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="buyPrice" id="lblBuy">Alış Fiyatı</label>
+                        <div class="input-wrap"><span class="unit">USD</span><input id="buyPrice" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 25000"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="sellPrice" id="lblSell">Satış Fiyatı</label>
+                        <div class="input-wrap"><span class="unit">USD</span><input id="sellPrice" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 27000"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="qtyOverride" id="lblCoins">Opsiyonel Coin Miktarı</label>
+                        <div class="input-wrap"><span class="unit">COIN</span><input id="qtyOverride" type="number" inputmode="decimal" min="0" step="any" placeholder="Boş = yatırım / alış"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="buyCommission" id="lblBuyFee">Alış Komisyon (%)</label>
+                        <div class="input-wrap"><span class="unit">%</span><input id="buyCommission" type="number" inputmode="decimal" min="0" step="any" placeholder="0.10" value="0"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="sellCommission" id="lblSellFee">Satış Komisyon (%)</label>
+                        <div class="input-wrap"><span class="unit">%</span><input id="sellCommission" type="number" inputmode="decimal" min="0" step="any" placeholder="0.10" value="0"></div>
+                    </div>
+                    <div class="field">
+                        <label class="lbl" for="taxRate" id="lblTax">Vergi Oranı (Kâr Üzerinden %)</label>
+                        <div class="input-wrap"><span class="unit">%</span><input id="taxRate" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 10" value="0"></div>
+                    </div>
                 </div>
-              </div>
 
-              <div class="field col-3">
-                <label for="buyPrice" id="lblBuy">Alış Fiyatı</label>
-                <div class="input">
-                  <span>USD</span>
-                  <input id="buyPrice" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 25000" />
-                </div>
-              </div>
-
-              <div class="field col-3">
-                <label for="sellPrice" id="lblSell">Satış Fiyatı</label>
-                <div class="input">
-                  <span>USD</span>
-                  <input id="sellPrice" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 27000" />
-                </div>
-              </div>
-
-              <div class="field col-3">
-                <label for="qtyOverride" id="lblCoins">Opsiyonel Coin Miktarı</label>
-                <div class="input">
-                  <span>COIN</span>
-                  <input id="qtyOverride" type="number" inputmode="decimal" min="0" step="any" placeholder="Boş bırak = yatırım/buy" />
-                </div>
-              </div>
-
-              <div class="field col-4">
-                <label for="buyCommission" id="lblBuyFee">Alış Komisyon (%)</label>
-                <div class="input">
-                  <span>%</span>
-                  <input id="buyCommission" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 0.10" value="0" />
-                </div>
-              </div>
-
-              <div class="field col-4">
-                <label for="sellCommission" id="lblSellFee">Satış Komisyon (%)</label>
-                <div class="input">
-                  <span>%</span>
-                  <input id="sellCommission" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 0.10" value="0" />
-                </div>
-              </div>
-
-              <div class="field col-4">
-                <label for="taxRate" id="lblTax">Vergi Oranı (Net Profit Üzerinden %)</label>
-                <div class="input">
-                  <span>%</span>
-                  <input id="taxRate" type="number" inputmode="decimal" min="0" step="any" placeholder="Örn: 10" value="0" />
-                </div>
-              </div>
-
-              <div class="field col-12">
-                <div class="calc-actions">
-                  <button class="btn primary" type="button" id="calcBtn">Hesapla</button>
-                  <button class="btn secondary" type="button" id="resetBtn">Sıfırla</button>
-                  <button class="btn ghost" type="button" id="saveBtn">Sonucu Kaydet</button>
+                <div class="actions">
+                    <button class="btn primary" type="submit" id="calcBtn">Hesapla</button>
+                    <button class="btn secondary" type="button" id="resetBtn">Sıfırla</button>
+                    <button class="btn ghost" type="button" id="saveBtn">Sonucu Kaydet</button>
                 </div>
 
                 <div id="errorBox" class="error" role="alert"></div>
+                <p class="hint"><span id="hintText"><span class="kbd">Enter</span> ile hesaplayabilirsiniz.</span></p>
+                <p class="hint" id="formulaHint"></p>
+            </form>
+        </section>
 
-                <div class="hint" id="hintText">
-                  <span class="kbd">Enter</span> ile hesaplayabilirsiniz.
+        <section class="card" aria-live="polite" aria-label="Sonuç">
+            <div class="result-grid">
+                <div class="netbox">
+                    <div class="label" id="resultLabel">Net Sonuç</div>
+                    <div class="value neu" id="netReturn">+0.00 $</div>
+                    <div class="explain" id="resultExplain">Vergi oranı 0 ise net = komisyonlar sonrası satış − maliyet.</div>
                 </div>
-                <div class="hint" id="formulaHint" style="margin-top:6px;"></div>
-              </div>
-
+                <div class="metrics">
+                    <div class="metric"><div class="k" id="m1">Ham Kâr/Zarar</div><div class="v neu" id="metricGross">+0.00 $</div></div>
+                    <div class="metric"><div class="k" id="m2">Komisyon Toplamı</div><div class="v neu" id="metricFees">0.00 $</div></div>
+                    <div class="metric"><div class="k" id="m3">Vergi (Kâr Pozitifse)</div><div class="v neu" id="metricTax">0.00 $</div></div>
+                    <div class="metric"><div class="k" id="m4">Satış Tutarı (Komisyon Sonrası)</div><div class="v neu" id="metricSellNet">0.00 $</div></div>
+                </div>
             </div>
-          </form>
-        </div>
+        </section>
 
-        <div class="result" aria-live="polite">
-          <div class="big">
-            <div class="label" id="resultLabel">Net Sonuç</div>
-            <div class="value neutral" id="netReturn">+0.00 $</div>
-            <div class="muted" id="resultExplain">
-              Vergi oranı 0 ise “Net” = komisyonlar sonrası satış − maliyet.
+        <section class="card" aria-label="Hesap Geçmişi">
+            <div class="history-head">
+                <h2 id="historyTitle">Hesap Geçmişi (Son 10)</h2>
+                <div class="history-actions">
+                    <button class="btn secondary mini" type="button" id="copyHistoryBtn">Geçmişi Kopyala</button>
+                    <button class="btn ghost mini" type="button" id="clearHistoryBtn">Temizle</button>
+                </div>
             </div>
-          </div>
-
-          <div class="mini-metrics">
-            <div class="metric">
-              <div class="k" id="m1">Ham Kar/Zarar</div>
-              <div class="v neutral" id="metricGross">+0.00 $</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr>
+                        <th id="hDate">Tarih</th><th id="hGross">Ham</th><th id="hFees">Komisyon</th><th id="hTax">Vergi</th><th id="hNet">Net</th>
+                    </tr></thead>
+                    <tbody id="historyTbody"></tbody>
+                </table>
             </div>
-            <div class="metric">
-              <div class="k" id="m2">Komisyon Toplamı</div>
-              <div class="v neutral" id="metricFees">0.00 $</div>
-            </div>
-            <div class="metric">
-              <div class="k" id="m3">Vergi (Kâr Pozitifse)</div>
-              <div class="v neutral" id="metricTax">0.00 $</div>
-            </div>
-            <div class="metric">
-              <div class="k" id="m4">Satış Tutarı (Komisyon Sonrası)</div>
-              <div class="v neutral" id="metricSellNet">0.00 $</div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+    </main>
 
-      <section class="card" aria-label="Hesap Geçmişi">
-        <div class="history">
-          <div class="history-header">
-            <h3 id="historyTitle">Hesap Geçmişi (Son 10)</h3>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="btn secondary" type="button" id="copyHistoryBtn" style="width:auto; padding:10px 14px;">Geçmişi Kopyala</button>
-              <button class="btn ghost" type="button" id="clearHistoryBtn" style="width:auto; padding:10px 14px;">Temizle</button>
-            </div>
-          </div>
+    <footer>
+        <p id="footNote">© <span id="year"></span> IronVision Tools · Yalnızca bilgilendirme amaçlıdır, yatırım tavsiyesi değildir.</p>
+        <p style="margin-top:8px;"><a href="vergi.html" data-i18n="footTax">Vergi / net maaş hesaplayıcı</a> · ironvisiontools.com</p>
+    </footer>
 
-          <div style="overflow:auto;">
-            <table>
-              <thead>
-                <tr>
-                  <th id="hDate">Tarih</th>
-                  <th id="hGross">Ham</th>
-                  <th id="hFees">Komisyon</th>
-                  <th id="hTax">Vergi</th>
-                  <th id="hNet">Net</th>
-                </tr>
-              </thead>
-              <tbody id="historyTbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+    <script>
+    (function(){
+      "use strict";
+      const $ = (id)=>document.getElementById(id);
+      let activeLang = "tr";
+      let lastResult = null;
 
-      <footer>
-        © <span id="year"></span> Iron Vision — Eğitim/örnek amaçlıdır. Vergi mevzuatı ve oranlar değişebilir.
-      </footer>
-    </div>
-  </main>
-
-  <script>
-    const $ = (id) => document.getElementById(id);
-
-    /* i18n */
-    const copy = {
-      tr: {
-        brandDesc: "Alım/satım + komisyonları girin. Ham kar/zarar + vergi (pozitif kârda) + net sonucu hesaplayın.",
-        kickerText: "Kar & Vergi + Komisyon",
-        pageTitle: "Kripto Net Hesaplayıcı",
-        lblInvest: "Yatırım Miktarı",
-        lblBuy: "Alış Fiyatı",
-        lblSell: "Satış Fiyatı",
-        lblCoins: "Opsiyonel Coin Miktarı",
-        lblBuyFee: "Alış Komisyon (%)",
-        lblSellFee: "Satış Komisyon (%)",
-        lblTax: "Vergi Oranı (Net Profit Üzerinden %)",
-        calcBtn: "Hesapla",
-        resetBtn: "Sıfırla",
-        saveBtn: "Sonucu Kaydet",
-        resultLabel: "Net Sonuç",
-        resultExplain: "Vergi oranı 0 ise “Net” = komisyonlar sonrası satış − maliyet.",
-        m1: "Ham Kar/Zarar",
-        m2: "Komisyon Toplamı",
-        m3: "Vergi (Kâr Pozitifse)",
-        m4: "Satış Tutarı (Komisyon Sonrası)",
-        historyTitle: "Hesap Geçmişi (Son 10)",
-        hDate: "Tarih",
-        hGross: "Ham",
-        hFees: "Komisyon",
-        hTax: "Vergi",
-        hNet: "Net",
-        hintText: "Enter ile hesaplayabilirsiniz.",
-        formulaHint: "Model: coin = (opsiyonel coin) ya da yatırım/buy. Alış komisyonu maliyete eklenir, satış komisyonu satıştan düşülür. Vergi yalnızca ham kâr pozitifse uygulanır."
-      },
-      en: {
-        brandDesc: "Enter buy/sell and fees. Compute gross profit/loss + tax (only if gross profit is positive) + net result.",
-        kickerText: "Profit & Tax + Fees",
-        pageTitle: "Crypto Net Calculator",
-        lblInvest: "Investment Amount",
-        lblBuy: "Buy Price",
-        lblSell: "Sell Price",
-        lblCoins: "Optional Coin Quantity",
-        lblBuyFee: "Buy Commission (%)",
-        lblSellFee: "Sell Commission (%)",
-        lblTax: "Tax Rate (on Net Profit) %",
-        calcBtn: "Calculate",
-        resetBtn: "Reset",
-        saveBtn: "Save Result",
-        resultLabel: "Net Result",
-        resultExplain: "If tax rate is 0, “Net” = proceeds after fees − cost.",
-        m1: "Gross Profit/Loss",
-        m2: "Total Fees",
-        m3: "Tax (Only if Gross > 0)",
-        m4: "Sell Proceeds (After Sell Fee)",
-        historyTitle: "History (Last 10)",
-        hDate: "Date",
-        hGross: "Gross",
-        hFees: "Fees",
-        hTax: "Tax",
-        hNet: "Net",
-        hintText: "Press Enter to calculate.",
-        formulaHint: "Model: coin = (optional coins) or investment/buy. Buy fee increases cost, sell fee reduces proceeds. Tax applies only when gross profit is positive."
-      }
-    };
-
-    function setLang(lang){
-      const t = copy[lang] || copy.tr;
-
-      $("brandDesc").textContent = t.brandDesc;
-      $("kickerText").textContent = t.kickerText;
-      $("pageTitle").textContent = t.pageTitle;
-
-      $("lblInvest").textContent = t.lblInvest;
-      $("lblBuy").textContent = t.lblBuy;
-      $("lblSell").textContent = t.lblSell;
-      $("lblCoins").textContent = t.lblCoins;
-
-      $("lblBuyFee").textContent = t.lblBuyFee;
-      $("lblSellFee").textContent = t.lblSellFee;
-      $("lblTax").textContent = t.lblTax;
-
-      $("calcBtn").textContent = t.calcBtn;
-      $("resetBtn").textContent = t.resetBtn;
-      $("saveBtn").textContent = t.saveBtn;
-
-      $("resultLabel").textContent = t.resultLabel;
-      $("resultExplain").textContent = t.resultExplain;
-
-      $("m1").textContent = t.m1;
-      $("m2").textContent = t.m2;
-      $("m3").textContent = t.m3;
-      $("m4").textContent = t.m4;
-
-      $("historyTitle").textContent = t.historyTitle;
-      $("hDate").textContent = t.hDate;
-      $("hGross").textContent = t.hGross;
-      $("hFees").textContent = t.hFees;
-      $("hTax").textContent = t.hTax;
-      $("hNet").textContent = t.hNet;
-
-      $("hintText").textContent = t.hintText;
-
-      $("formulaHint").textContent = t.formulaHint;
-
-      $("langBtn").setAttribute("aria-expanded","false");
-      $("langMenu").classList.remove("show");
-    }
-
-    /* Dropdown */
-    $("langBtn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      const open = $("langMenu").classList.toggle("show");
-      $("langBtn").setAttribute("aria-expanded", open ? "true" : "false");
-    });
-
-    document.addEventListener("click", () => {
-      $("langMenu").classList.remove("show");
-      $("langBtn").setAttribute("aria-expanded","false");
-    });
-
-    [...document.querySelectorAll("#langMenu li")].forEach(li=>{
-      li.addEventListener("click", ()=>{
-        setLang(li.dataset.lang);
-      });
-    });
-
-    /* Utilities */
-    const errorBox = $("errorBox");
-    function showError(msg){
-      errorBox.textContent = msg;
-      errorBox.classList.add("show");
-    }
-    function clearError(){
-      errorBox.textContent = "";
-      errorBox.classList.remove("show");
-    }
-    function formatMoney(n){
-      if (!Number.isFinite(n)) return "0.00 $";
-      const sign = n > 0 ? "+" : "";
-      return sign + n.toFixed(2) + " $";
-    }
-    function applySignClass(el, n){
-      el.classList.remove("positive","negative","neutral");
-      if (n > 0) el.classList.add("positive");
-      else if (n < 0) el.classList.add("negative");
-      else el.classList.add("neutral");
-    }
-    function applyValueClass(el, n){
-      el.classList.remove("negative","neutral");
-      if (n < 0) el.classList.add("negative");
-      else el.classList.add("neutral");
-      // Pozitif için accent rengi (baz sınıf) kalsın
-      if (n > 0) el.style.color = "var(--accent)";
-      else el.style.color = "";
-    }
-    function getNumber(id){
-      return Number($(id).value);
-    }
-
-    /* Core calc */
-    let lastResult = null;
-
-    function calculate(){
-      clearError();
-
-      const invest = getNumber("investAmount");
-      const buy = getNumber("buyPrice");
-      const sell = getNumber("sellPrice");
-      const qtyOverride = getNumber("qtyOverride");
-
-      const buyFeePct = getNumber("buyCommission");
-      const sellFeePct = getNumber("sellCommission");
-      const taxRatePct = getNumber("taxRate");
-
-      const values = [invest, buy, sell, buyFeePct, sellFeePct, taxRatePct, qtyOverride];
-      if (values.some(v => !Number.isFinite(v))){
-        showError("Lütfen tüm alanları doğru sayılarla doldurun.");
-        return null;
-      }
-
-      if (buy <= 0){
-        showError("Alış Fiyatı 0’dan büyük olmalı.");
-        return null;
-      }
-      if (invest < 0 || sell < 0) {
-        showError("Yatırım ve Satış değerleri 0 veya daha büyük olmalı.");
-        return null;
-      }
-      if (buyFeePct < 0 || sellFeePct < 0 || taxRatePct < 0 || qtyOverride < 0){
-        showError("Oranlar ve opsiyonel coin miktarı negatif olamaz.");
-        return null;
-      }
-
-      // coin miktarı:
-      const coins = (qtyOverride > 0) ? qtyOverride : (invest / buy);
-
-      // Maliyet (alış komisyonu dahil): cost = invest * (1 + buyFee%)
-      const cost = invest * (1 + buyFeePct/100);
-
-      // Satış brüt: coins * sell
-      const grossProceedsBeforeSellFee = coins * sell;
-
-      // Satış komisyon sonrası: proceeds = grossProceeds * (1 - sellFee%)
-      const sellProceeds = grossProceedsBeforeSellFee * (1 - sellFeePct/100);
-
-      // Ham kar/zarar: gross = proceeds - cost
-      const gross = sellProceeds - cost;
-
-      // Komisyon toplamı (muhasebe gibi):
-      // - alış komisyonu: cost - invest
-      // - satış komisyonu: grossProceedsBeforeSellFee - sellProceeds
-      const buyFeeAbs = cost - invest;
-      const sellFeeAbs = grossProceedsBeforeSellFee - sellProceeds;
-      const feesTotal = buyFeeAbs + sellFeeAbs;
-
-      // Vergi: sadece gross > 0 iken
-      const tax = (gross > 0) ? gross * (taxRatePct/100) : 0;
-
-      // Net: gross - tax
-      const net = gross - tax;
-
-      // Render
-      const netEl = $("netReturn");
-      netEl.textContent = formatMoney(net);
-      netEl.style.color = (net > 0) ? "var(--accent)" : "";
-      netEl.classList.remove("negative","neutral");
-      if (net < 0) netEl.classList.add("negative");
-      else netEl.classList.add("neutral");
-
-      $("metricGross").textContent = formatMoney(gross);
-      applySignClass($("metricGross"), gross);
-
-      $("metricFees").textContent = formatMoney(feesTotal);
-      applySignClass($("metricFees"), feesTotal);
-
-      $("metricTax").textContent = formatMoney(tax);
-      applySignClass($("metricTax"), tax);
-
-      $("metricSellNet").textContent = formatMoney(sellProceeds);
-      applySignClass($("metricSellNet"), sellProceeds);
-
-      lastResult = {
-        date: new Date().toISOString(),
-        gross,
-        feesTotal,
-        tax,
-        net
+      const copy = {
+        tr:{
+          navCrypto:"Kripto K/Z", navTax:"Vergi / Net Maaş", langLabel:"Dil", footTax:"Vergi / net maaş hesaplayıcı",
+          pageTitle:"Kripto Kâr/Zarar Hesaplayıcı",
+          heroDesc:"Alış/satış ve komisyonları girin; komisyon ve vergi sonrası net sonucu görün. Yalnızca bilgilendirme amaçlıdır.",
+          lblInvest:"Yatırım Miktarı", lblBuy:"Alış Fiyatı", lblSell:"Satış Fiyatı", lblCoins:"Opsiyonel Coin Miktarı",
+          lblBuyFee:"Alış Komisyon (%)", lblSellFee:"Satış Komisyon (%)", lblTax:"Vergi Oranı (Kâr Üzerinden %)",
+          calcBtn:"Hesapla", resetBtn:"Sıfırla", saveBtn:"Sonucu Kaydet",
+          resultLabel:"Net Sonuç", resultExplain:"Vergi oranı 0 ise net = komisyonlar sonrası satış − maliyet.",
+          m1:"Ham Kâr/Zarar", m2:"Komisyon Toplamı", m3:"Vergi (Kâr Pozitifse)", m4:"Satış Tutarı (Komisyon Sonrası)",
+          historyTitle:"Hesap Geçmişi (Son 10)", copyBtn:"Geçmişi Kopyala", clearBtn:"Temizle",
+          hDate:"Tarih", hGross:"Ham", hFees:"Komisyon", hTax:"Vergi", hNet:"Net",
+          hintText:'<span class="kbd">Enter</span> ile hesaplayabilirsiniz.',
+          formulaHint:"Model: coin = (opsiyonel coin) ya da yatırım/alış. Maliyet = coin × alış × (1 + alış komisyonu). Satış komisyonu satıştan düşülür. Vergi yalnızca ham kâr pozitifse uygulanır.",
+          footNote:"Yalnızca bilgilendirme amaçlıdır, yatırım tavsiyesi değildir.",
+          empty:"Henüz kayıt yok.",
+          errFill:"Lütfen tüm alanları geçerli sayılarla doldurun.",
+          errBuy:"Alış fiyatı 0'dan büyük olmalı.",
+          errNeg:"Yatırım ve satış değerleri 0 veya daha büyük olmalı.",
+          errRates:"Oranlar ve opsiyonel coin miktarı negatif olamaz.",
+          copied:"Kopyalandı ✓", copyFail:"Kopyalama başarısız. Tarayıcı izinlerini kontrol edin."
+        },
+        en:{
+          navCrypto:"Crypto P/L", navTax:"Tax / Net Pay", langLabel:"Language", footTax:"Tax / net salary calculator",
+          pageTitle:"Crypto Profit/Loss Calculator",
+          heroDesc:"Enter buy/sell prices and fees to see your net result after fees and tax. For information only.",
+          lblInvest:"Investment Amount", lblBuy:"Buy Price", lblSell:"Sell Price", lblCoins:"Optional Coin Quantity",
+          lblBuyFee:"Buy Commission (%)", lblSellFee:"Sell Commission (%)", lblTax:"Tax Rate (on Profit) %",
+          calcBtn:"Calculate", resetBtn:"Reset", saveBtn:"Save Result",
+          resultLabel:"Net Result", resultExplain:"If tax rate is 0, net = proceeds after fees − cost.",
+          m1:"Gross Profit/Loss", m2:"Total Fees", m3:"Tax (Only if Profit > 0)", m4:"Sell Proceeds (After Fee)",
+          historyTitle:"History (Last 10)", copyBtn:"Copy History", clearBtn:"Clear",
+          hDate:"Date", hGross:"Gross", hFees:"Fees", hTax:"Tax", hNet:"Net",
+          hintText:'Press <span class="kbd">Enter</span> to calculate.',
+          formulaHint:"Model: coin = (optional coins) or investment/buy. Cost = coin × buy × (1 + buy fee). Sell fee reduces proceeds. Tax applies only when gross profit is positive.",
+          footNote:"For information only, not investment advice.",
+          empty:"No records yet.",
+          errFill:"Please fill all fields with valid numbers.",
+          errBuy:"Buy price must be greater than 0.",
+          errNeg:"Investment and sell values must be 0 or greater.",
+          errRates:"Rates and optional coin quantity cannot be negative.",
+          copied:"Copied ✓", copyFail:"Copy failed. Check browser permissions."
+        }
       };
 
-      return lastResult;
-    }
+      function t(){ return copy[activeLang] || copy.tr; }
 
-    function reset(){
-      clearError();
-      $("calcForm").reset();
-
-      // Varsayılan değerleri geri ver:
-      $("buyCommission").value = "0";
-      $("sellCommission").value = "0";
-      $("taxRate").value = "0";
-      $("qtyOverride").value = "";
-
-      // UI baz
-      $("netReturn").textContent = "+0.00 $";
-      $("netReturn").classList.remove("negative","neutral");
-      $("netReturn").classList.add("neutral");
-      $("netReturn").style.color = "";
-
-      $("metricGross").textContent = "+0.00 $";
-      applySignClass($("metricGross"), 0);
-
-      $("metricFees").textContent = "0.00 $";
-      applySignClass($("metricFees"), 0);
-
-      $("metricTax").textContent = "0.00 $";
-      applySignClass($("metricTax"), 0);
-
-      $("metricSellNet").textContent = "0.00 $";
-      applySignClass($("metricSellNet"), 0);
-
-      lastResult = null;
-      renderHistory();
-    }
-
-    $("calcBtn").addEventListener("click", ()=> calculate());
-    $("resetBtn").addEventListener("click", ()=> reset());
-    $("saveBtn").addEventListener("click", ()=>{
-      const res = lastResult || calculate();
-      if (!res) return;
-      saveLast(res);
-    });
-
-    $("calcForm").addEventListener("keydown", (e)=>{
-      if (e.key === "Enter"){
-        e.preventDefault();
-        calculate();
+      function setLang(lang){
+        activeLang = copy[lang] ? lang : "tr";
+        const c = t();
+        $("pageTitle").textContent = c.pageTitle;
+        $("heroDesc").textContent = c.heroDesc;
+        ["lblInvest","lblBuy","lblSell","lblCoins","lblBuyFee","lblSellFee","lblTax",
+         "calcBtn","resetBtn","saveBtn","resultLabel","resultExplain",
+         "m1","m2","m3","m4","historyTitle","hDate","hGross","hFees","hTax","hNet","formulaHint"
+        ].forEach(k=>{ if($(k)) $(k).textContent = c[k]; });
+        $("copyHistoryBtn").textContent = c.copyBtn;
+        $("clearHistoryBtn").textContent = c.clearBtn;
+        $("hintText").innerHTML = c.hintText;
+        $("navCrypto") && ($("navCrypto").textContent = c.navCrypto);
+        document.querySelector('[data-i18n="navCrypto"]').textContent = c.navCrypto;
+        document.querySelector('[data-i18n="navTax"]').textContent = c.navTax;
+        document.querySelector('[data-i18n="footTax"]').textContent = c.footTax;
+        $("footNote").innerHTML = "© " + new Date().getFullYear() + " IronVision Tools · " + c.footNote;
+        document.documentElement.lang = activeLang;
+        renderHistory();
       }
-    });
+      window.changeLanguage = setLang;
 
-    /* History */
-    const LS_KEY = "ironVision_history_v3";
-    function loadHistory(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        const arr = raw ? JSON.parse(raw) : [];
-        return Array.isArray(arr) ? arr : [];
-      }catch{
-        return [];
+      /* utils */
+      function showError(msg){ const e=$("errorBox"); e.textContent=msg; e.classList.add("show"); }
+      function clearError(){ const e=$("errorBox"); e.textContent=""; e.classList.remove("show"); }
+      function money(n){ if(!Number.isFinite(n)) return "0.00 $"; return (n>0?"+":"") + n.toFixed(2) + " $"; }
+      function num(id){ return Number($(id).value); }
+      function signClass(el, n, base){
+        el.classList.remove("pos","neg","neu");
+        el.classList.add(n>0 ? "pos" : n<0 ? "neg" : "neu");
       }
-    }
-    function saveHistory(arr){
-      localStorage.setItem(LS_KEY, JSON.stringify(arr));
-    }
-    function formatDate(iso){
-      const d = new Date(iso);
-      if (Number.isNaN(d.getTime())) return "-";
-      return d.toLocaleString(undefined, {
-        year:"numeric", month:"2-digit", day:"2-digit",
-        hour:"2-digit", minute:"2-digit"
+
+      /* core calc — logic preserved; cost basis now consistent with coin quantity */
+      function calculate(){
+        clearError();
+        const invest=num("investAmount"), buy=num("buyPrice"), sell=num("sellPrice"), qty=num("qtyOverride");
+        const buyFee=num("buyCommission"), sellFee=num("sellCommission"), taxRate=num("taxRate");
+        const c = t();
+
+        if([invest,buy,sell,buyFee,sellFee,taxRate,qty].some(v=>!Number.isFinite(v))){ showError(c.errFill); return null; }
+        if(buy<=0){ showError(c.errBuy); return null; }
+        if(invest<0 || sell<0){ showError(c.errNeg); return null; }
+        if(buyFee<0 || sellFee<0 || taxRate<0 || qty<0){ showError(c.errRates); return null; }
+
+        const coins = qty>0 ? qty : invest/buy;
+        const cost = coins*buy*(1 + buyFee/100);
+        const grossProceeds = coins*sell;
+        const sellProceeds = grossProceeds*(1 - sellFee/100);
+        const gross = sellProceeds - cost;
+        const buyFeeAbs = coins*buy*(buyFee/100);
+        const sellFeeAbs = grossProceeds - sellProceeds;
+        const feesTotal = buyFeeAbs + sellFeeAbs;
+        const tax = gross>0 ? gross*(taxRate/100) : 0;
+        const net = gross - tax;
+
+        $("netReturn").textContent = money(net); signClass($("netReturn"), net);
+        $("metricGross").textContent = money(gross); signClass($("metricGross"), gross);
+        $("metricFees").textContent = money(feesTotal); signClass($("metricFees"), 0);
+        $("metricTax").textContent = money(tax); signClass($("metricTax"), 0);
+        $("metricSellNet").textContent = money(sellProceeds); signClass($("metricSellNet"), 0);
+
+        lastResult = { date:new Date().toISOString(), gross, feesTotal, tax, net };
+        return lastResult;
+      }
+
+      function reset(){
+        clearError();
+        $("calcForm").reset();
+        $("buyCommission").value="0"; $("sellCommission").value="0"; $("taxRate").value="0"; $("qtyOverride").value="";
+        ["netReturn","metricGross"].forEach(id=>{ $(id).textContent="+0.00 $"; signClass($(id),0); });
+        ["metricFees","metricTax","metricSellNet"].forEach(id=>{ $(id).textContent="0.00 $"; signClass($(id),0); });
+        lastResult=null; renderHistory();
+      }
+
+      /* history */
+      const LS_KEY = "ironVision_history_v3";
+      function loadHistory(){ try{ const a=JSON.parse(localStorage.getItem(LS_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch{ return []; } }
+      function saveHistory(a){ localStorage.setItem(LS_KEY, JSON.stringify(a)); }
+      function fmtDate(iso){ const d=new Date(iso); return Number.isNaN(d.getTime())?"-":d.toLocaleString(undefined,{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}); }
+
+      function renderHistory(){
+        const arr=loadHistory(); const tb=$("historyTbody"); tb.innerHTML="";
+        if(arr.length===0){
+          const tr=document.createElement("tr"); tr.className="empty-row";
+          const td=document.createElement("td"); td.colSpan=5; td.style.padding="14px 12px"; td.textContent=t().empty;
+          tr.appendChild(td); tb.appendChild(tr); return;
+        }
+        for(const it of arr){
+          const tr=document.createElement("tr");
+          const cells=[
+            [fmtDate(it.date), ""],
+            [money(it.gross), "money "+(it.gross<0?"bad":"good")],
+            [money(it.feesTotal), ""],
+            [money(it.tax), ""],
+            [money(it.net), "money "+(it.net<0?"bad":"good")]
+          ];
+          for(const [txt,cls] of cells){ const td=document.createElement("td"); td.textContent=txt; if(cls) td.className=cls; tr.appendChild(td); }
+          tb.appendChild(tr);
+        }
+      }
+      function saveLast(res){ const a=loadHistory(); a.unshift({date:res.date,gross:res.gross,feesTotal:res.feesTotal,tax:res.tax,net:res.net}); saveHistory(a.slice(0,10)); renderHistory(); }
+
+      async function copyHistory(){
+        const arr=loadHistory(); if(arr.length===0) return;
+        const lines=["IronVision Tools — History","--------------------------------"];
+        for(const it of arr){ lines.push(`${fmtDate(it.date)} | Gross: ${money(it.gross)} | Fees: ${money(it.feesTotal)} | Tax: ${money(it.tax)} | Net: ${money(it.net)}`); }
+        await navigator.clipboard.writeText(lines.join("\n"));
+      }
+
+      /* events */
+      $("calcForm").addEventListener("submit",(e)=>{ e.preventDefault(); calculate(); });
+      $("resetBtn").addEventListener("click", reset);
+      $("saveBtn").addEventListener("click", ()=>{ const r=lastResult||calculate(); if(r) saveLast(r); });
+      $("clearHistoryBtn").addEventListener("click", ()=>{ localStorage.removeItem(LS_KEY); renderHistory(); });
+      $("copyHistoryBtn").addEventListener("click", async ()=>{
+        try{ await copyHistory(); const b=$("copyHistoryBtn"); b.textContent=t().copied; setTimeout(()=>b.textContent=t().copyBtn,1200); }
+        catch{ alert(t().copyFail); }
       });
-    }
 
-    function renderHistory(){
-      const arr = loadHistory();
-      const tbody = $("historyTbody");
-      tbody.innerHTML = "";
-
-      if (arr.length === 0){
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 5;
-        td.style.color = "var(--muted)";
-        td.style.padding = "14px 10px";
-        td.textContent = (copy.tr && $("langMenu").classList ? "Henüz kayıt yok." : "Henüz kayıt yok.");
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-        return;
-      }
-
-      for (const it of arr){
-        const tr = document.createElement("tr");
-
-        const tdDate = document.createElement("td");
-        tdDate.textContent = formatDate(it.date);
-
-        const tdGross = document.createElement("td");
-        tdGross.textContent = formatMoney(it.gross);
-        tdGross.className = "money " + (it.gross < 0 ? "bad" : "good");
-
-        const tdFees = document.createElement("td");
-        tdFees.textContent = formatMoney(it.feesTotal);
-
-        const tdTax = document.createElement("td");
-        tdTax.textContent = formatMoney(it.tax);
-
-        const tdNet = document.createElement("td");
-        tdNet.textContent = formatMoney(it.net);
-        tdNet.className = "money " + (it.net < 0 ? "bad" : "good");
-
-        tr.appendChild(tdDate);
-        tr.appendChild(tdGross);
-        tr.appendChild(tdFees);
-        tr.appendChild(tdTax);
-        tr.appendChild(tdNet);
-        tbody.appendChild(tr);
-      }
-    }
-
-    function saveLast(res){
-      const arr = loadHistory();
-      arr.unshift({
-        date: res.date,
-        gross: res.gross,
-        feesTotal: res.feesTotal,
-        tax: res.tax,
-        net: res.net
-      });
-      saveHistory(arr.slice(0,10));
-      renderHistory();
-    }
-
-    $("clearHistoryBtn").addEventListener("click", ()=>{
-      localStorage.removeItem(LS_KEY);
-      renderHistory();
-    });
-
-    async function copyHistory(){
-      const arr = loadHistory();
-      if (arr.length === 0) return;
-
-      const lines = [];
-      lines.push("IRON VISION — History");
-      lines.push("--------------------------------");
-
-      for (const it of arr){
-        lines.push(
-          `${formatDate(it.date)} | Gross: ${formatMoney(it.gross)} | Fees: ${formatMoney(it.feesTotal)} | Tax: ${formatMoney(it.tax)} | Net: ${formatMoney(it.net)}`
-        );
-      }
-
-      const text = lines.join("\n");
-      await navigator.clipboard.writeText(text);
-    }
-
-    $("copyHistoryBtn").addEventListener("click", async ()=>{
-      try{
-        await copyHistory();
-        $("copyHistoryBtn").textContent = "Kopyalandı ✓";
-        setTimeout(()=> $("copyHistoryBtn").textContent = "Geçmişi Kopyala", 1000);
-      }catch{
-        alert("Kopyalama başarısız. Tarayıcı izinlerini kontrol edin.");
-      }
-    });
-
-    /* Sphere Animation (responsive + clean) */
-    const canvas = $("sphereCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas(){
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    function drawSphere(t){
-      const w = canvas.getBoundingClientRect().width;
-      const h = canvas.getBoundingClientRect().height;
-      const cx = w/2, cy = h/2;
-      const r = Math.min(w,h) * 0.36;
-
-      ctx.clearRect(0,0,w,h);
-
-      // Glow
-      const glow = ctx.createRadialGradient(cx, cy, r*0.1, cx, cy, r*1.35);
-      glow.addColorStop(0, "rgba(0,255,102,0.35)");
-      glow.addColorStop(0.5, "rgba(0,255,102,0.10)");
-      glow.addColorStop(1, "rgba(0,255,102,0.0)");
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r*1.25, 0, Math.PI*2);
-      ctx.fill();
-
-      // Sphere gradient body
-      const grad = ctx.createRadialGradient(cx - r*0.25, cy - r*0.25, r*0.1, cx, cy, r);
-      grad.addColorStop(0, "rgba(200,255,230,0.95)");
-      grad.addColorStop(0.25, "rgba(0,255,102,0.62)");
-      grad.addColorStop(0.7, "rgba(0,190,80,0.22)");
-      grad.addColorStop(1, "rgba(0,0,0,0.0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.fill();
-
-      // Outer ring
-      ctx.strokeStyle = "rgba(0,255,102,0.55)";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.stroke();
-
-      // Animated latitude lines
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.clip();
-
-      const time = t*0.001;
-      for(let i=0;i<11;i++){
-        const p = i/10;
-        const y = cy - r + p*(2*r);
-        const xSpan = Math.sqrt(Math.max(0, r*r - (y-cy)*(y-cy)));
-
-        const alpha = 0.06 + 0.22*Math.cos((time*1.5) + p*3.4);
-        ctx.strokeStyle = `rgba(0,255,102,${alpha})`;
-        ctx.lineWidth = 1;
-
-        ctx.beginPath();
-        ctx.moveTo(cx - xSpan, y);
-        ctx.lineTo(cx + xSpan, y);
-        ctx.stroke();
-      }
-
-      // Moving highlight
-      const hx = cx - r*0.25 + Math.sin(time*0.9)*r*0.10;
-      const hy = cy - r*0.22 + Math.cos(time*0.7)*r*0.10;
-      const hgrad = ctx.createRadialGradient(hx, hy, r*0.05, hx, hy, r*0.48);
-      hgrad.addColorStop(0, "rgba(255,255,255,0.70)");
-      hgrad.addColorStop(0.25, "rgba(0,255,102,0.25)");
-      hgrad.addColorStop(1, "rgba(0,255,102,0.0)");
-      ctx.fillStyle = hgrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI*2);
-      ctx.fill();
-
-      ctx.restore();
-
-      requestAnimationFrame(drawSphere);
-    }
-    requestAnimationFrame(drawSphere);
-
-    /* Init */
-    $("year").textContent = new Date().getFullYear();
-    setLang("tr");
-    $("buyCommission").value = "0";
-    $("sellCommission").value = "0";
-    $("taxRate").value = "0";
-    renderHistory();
-    reset();
-  </script>
+      /* init */
+      const bl=(navigator.language||"tr").toLowerCase();
+      $("year").textContent = new Date().getFullYear();
+      const startLang = bl.startsWith("en") ? "en" : "tr";
+      $("langSelector").value = startLang;
+      setLang(startLang);
+      reset();
+    })();
+    </script>
 </body>
 </html>

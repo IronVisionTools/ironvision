@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sayfa bulunamadı — IronVision Tools</title>
+<meta name="description" content="Sayfa bulunamadı.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/assets/goz-logo.png">
+<link rel="apple-touch-icon" href="/assets/goz-logo.png">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/yenileme.css">
+</head>
+<body class="font-body-md text-text-primary antialiased relative min-h-screen flex flex-col bg-background">
+<!-- ÜST ÇUBUK -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border-subtle flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto left-0 right-0">
+<a class="marka" href="/" aria-label="IronVision Tools — ana sayfa">
+<img alt="IronVision Tools — çelik göz logosu" class="marka-logo" src="/assets/goz-logo.png" width="52" height="52"/>
+<span class="marka-yazi">
+<span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span>
+<span class="marka-tools">tools</span>
+</span>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/#urunler">Ürünler</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/#moymote">MoyMote</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/#yakinda">Yakında</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/blog/index.html">Blog</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/#hakkinda">Hakkında</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-text-primary transition-colors uppercase" href="/en/" hreflang="en" lang="en">EN</a>
+</div>
+<div class="flex items-center gap-3">
+<a class="hidden md:inline-flex px-6 py-2 bg-text-primary text-background rounded-full font-label-caps hover:bg-primary-container hover:text-text-primary transition-colors uppercase" href="/#contact">Demo İste</a>
+<button class="nav-toggle" type="button" id="nav-ac" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav-mobil"><span></span></button>
+</div>
+</nav>
+<div class="nav-mobil" id="nav-mobil">
+<a href="/#urunler">Ürünler</a>
+<a href="/#moymote">MoyMote</a>
+<a href="/#yakinda">Yakında</a>
+<a href="/blog/index.html">Blog</a>
+<a href="/#hakkinda">Hakkında</a>
+<a href="/#contact">Demo İste</a>
+<a href="/en/" hreflang="en" lang="en">English</a>
+</div>
+
+
+<main>
+<section class="hero" style="padding-bottom:40px">
+<div class="wrap hero-in">
+<h1 class="gir" style="opacity:1;transform:none">Sayfa bulunamadı</h1>
+<p class="alt">Adres yanlış yazılmış ya da sayfa taşınmış olabilir. This page doesn't exist.</p>
+<div class="cta-satir"><a class="btn btn-1" href="/">Ana sayfa</a><a class="btn btn-2" href="/en/" hreflang="en" lang="en">English</a></div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="w-full py-section-gap-min border-t border-border-subtle bg-surface-dim mt-auto z-10 relative">
+<div class="flex flex-col md:flex-row justify-between items-center px-gutter gap-8 max-w-container-max mx-auto">
+<div class="marka">
+<img alt="" aria-hidden="true" class="marka-logo" src="/assets/goz-logo.png" width="52" height="52"/>
+<span class="marka-yazi">
+<span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span>
+<span class="marka-tools">tools</span>
+</span>
+</div>
+<div class="font-label-caps text-label-caps text-text-muted uppercase">© 2026 IronVision Tools · Edirne</div>
+<div class="flex gap-6 font-label-caps text-label-caps uppercase">
+<a class="text-text-muted hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="/hakkinda.html">Hakkında</a>
+<a class="text-text-muted hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="/gizlilik.html">Gizlilik Politikası</a>
+<a class="text-text-muted hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="/iletisim.html">İletişim</a>
+<a class="text-text-muted hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="https://moymote.com/tr/">MoyMote</a>
+</div>
+</div>
+<p class="px-gutter" style="margin:14px 0 0;text-align:center;font-size:11.5px;color:var(--dim2)">Bu site de, tüm işlerimiz gibi, yapay zekâyla (Claude) inşa edildi; son kontrol insan gözüyle yapıldı.</p>
+</footer>
+<script>
+(function () {
+  var b = document.getElementById('nav-ac'), m = document.getElementById('nav-mobil');
+  if (!b || !m) return;
+  b.addEventListener('click', function () {
+    var acik = m.classList.toggle('acik');
+    b.setAttribute('aria-expanded', acik ? 'true' : 'false');
+    b.setAttribute('aria-label', acik ? 'Menüyü kapat' : 'Menüyü aç');
+  });
+})();
+</script>
+</body></html>

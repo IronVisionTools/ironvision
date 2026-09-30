@@ -1,0 +1,76 @@
+/* MoyMote ürün bölümü — moymote.com açılışından (etkileşimli telefon -> monitör parlaklığı).
+   Bütün seçiciler .mm altında ve mm- önekli; sitenin Tailwind/yenileme katmanıyla çakışmaz. */
+article.serit.mm{--lux:.5;--warm:.5;--ice:#bfe3ff;background:linear-gradient(180deg,#070d19,#000 85%);border-top:none;overflow:hidden}
+article.serit.mm .serit-metin h3{color:#ffffff}
+article.serit.mm .rozet{color:#ffd9a6;background:rgba(247,148,30,.16);border-color:rgba(247,148,30,.55)}
+article.serit.mm .rozet .nokta{background:#f7941e}
+article.serit.mm .liste li::before{background:#f7941e}
+@media (min-width:960px){article.serit.mm .serit-in{grid-template-columns:minmax(0,1.22fr) minmax(0,.88fr);gap:56px}}
+.mm .serit-gorsel{padding-bottom:44px}
+.mm-stage{position:relative}
+.mm-scene{position:relative;width:min(1320px,100%);margin-inline:auto;aspect-ratio:1672/941;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);
+  mask-composite:intersect}
+.mm-scene img{display:block;max-width:none}
+/* monitör ekranı: oda fotoğrafının saydam deliğinin ALTINDA durur */
+.mm-screen{position:absolute;left:21.1%;top:20.4%;width:57.8%;height:37.5%;overflow:hidden;background:#000}
+.mm-screen img{width:100%;height:100%;object-fit:cover;will-change:filter;
+  filter:brightness(calc(.24 + var(--lux) * .86)) saturate(calc(.75 + var(--lux) * .35))}
+.mm-screen::after{content:"";position:absolute;inset:0;mix-blend-mode:soft-light;
+  background:color-mix(in oklab,#7fb8ff calc((1 - var(--warm)) * 100%),#ff9a3c);
+  opacity:calc(.18 + (var(--warm) - .5) * (var(--warm) - .5) * 1.6)}
+.mm-photo{position:absolute;inset:0;width:100%;height:100%}
+.mm-glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;will-change:opacity;
+  background:radial-gradient(46% 42% at 50% 42%,color-mix(in oklab,var(--ice) calc((1 - var(--warm)) * 100%),#ffb26b) 0,transparent 70%),
+    radial-gradient(60% 30% at 50% 78%,color-mix(in oklab,#9fc8ff calc((1 - var(--warm)) * 100%),#ff9d4d) 0,transparent 72%);
+  opacity:calc(var(--lux) * .34)}
+.mm-dim{position:absolute;inset:0;pointer-events:none;background:#000;opacity:calc((1 - var(--lux)) * .28);will-change:opacity}
+
+/* telefon: gerçek MoyMote panel ekran görüntüsü, gerçekçi cihaz gövdesi içinde */
+.mm-phone{position:absolute;right:-3%;bottom:-5%;z-index:4;width:26%;
+  transform:perspective(1600px) rotateY(-9deg) rotateX(3deg) rotateZ(1deg);transform-origin:60% 50%}
+.mm-device{--sb:11.5cqw;container-type:inline-size;position:relative;width:100%;aspect-ratio:300/624;border-radius:17%/8.2%;padding:3.6%;
+  background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,0) 2.2%,rgba(255,255,255,0) 97.8%,rgba(255,255,255,.14)),
+    linear-gradient(160deg,#6e7680 0%,#2c3139 9%,#181b20 24%,#0e1014 50%,#1d2127 76%,#4b525c 92%,#7c848e 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 0 0 2.5px #07080a,inset 0 0 0 3.5px rgba(255,255,255,.07),
+    0 1px 1px rgba(255,255,255,.08),0 2px 3px rgba(0,0,0,.6),0 38px 70px -18px rgba(0,0,0,.9),0 70px 120px -40px rgba(0,0,0,.7)}
+.mm-device::before{content:"";position:absolute;inset:1.4%;border-radius:15.6%/7.4%;background:#020203;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 0 12px rgba(255,255,255,.03)}
+.mm-device-screen{position:relative;z-index:1;height:100%;overflow:hidden;background:#000;border-radius:12.6%/5.9%;
+  box-shadow:0 0 0 1px rgba(0,0,0,.9);cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.mm-device-screen>img{display:block;width:100%;max-width:none;height:calc(100% - var(--sb));margin-top:var(--sb);
+  object-fit:cover;object-position:top center;pointer-events:none}
+.mm-glass{position:absolute;z-index:3;inset:3.6%;border-radius:12.6%/5.9%;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.05) 22%,rgba(255,255,255,0) 38%),
+    linear-gradient(300deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,0) 30%)}
+.mm-cam{position:absolute;z-index:4;top:4.9%;left:50%;width:4.2%;aspect-ratio:1;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(circle at 36% 34%,#5a6d92 0 9%,#1a2336 22%,#070a10 48%,#000 70%);
+  box-shadow:0 0 0 1.5px #0a0a0c,0 0 0 2.5px rgba(255,255,255,.04)}
+.mm-btn{position:absolute;z-index:0;width:1.3%;border-radius:2px;background:linear-gradient(90deg,#15181c,#5d646e 45%,#2a2e35 70%,#111317)}
+.mm-btn.pwr{right:-1%;top:24%;height:12.5%}
+.mm-btn.vol1{left:-1%;top:20%;height:7.5%}
+.mm-btn.vol2{left:-1%;top:29.5%;height:7.5%}
+.mm-status{position:absolute;z-index:4;top:3.6%;left:3.6%;right:3.6%;height:var(--sb);display:flex;align-items:center;
+  justify-content:space-between;padding:0 9.5cqw 0 10.5cqw;font:600 3.9cqw/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:#f2f4f7;pointer-events:none}
+.mm-status b{font-weight:600;letter-spacing:.01em}
+.mm-icons{display:flex;align-items:center;gap:1.4cqw}
+.mm-sig{width:4.6cqw;height:3cqw;background:linear-gradient(90deg,#f2f4f7 0 18%,transparent 18% 27%,#f2f4f7 27% 45%,transparent 45% 54%,#f2f4f7 54% 72%,transparent 72% 81%,rgba(242,244,247,.45) 81%);
+  -webkit-mask:linear-gradient(to top right,#000 50%,transparent 50%);mask:linear-gradient(to top right,#000 50%,transparent 50%)}
+.mm-wifi{width:4.2cqw;height:3.1cqw;border-radius:50% 50% 0 0/100% 100% 0 0;
+  background:radial-gradient(circle at 50% 100%,#f2f4f7 0 22%,transparent 23% 38%,#f2f4f7 39% 55%,transparent 56% 70%,#f2f4f7 71% 86%,transparent 87%)}
+.mm-bat{position:relative;width:6.6cqw;height:3.1cqw;border-radius:.9cqw;border:.45cqw solid rgba(242,244,247,.55);
+  background:linear-gradient(90deg,#f2f4f7 0 72%,transparent 72%) content-box;padding:.35cqw}
+.mm-bat::after{content:"";position:absolute;right:-1.2cqw;top:50%;translate:0 -50%;width:.7cqw;height:1.3cqw;border-radius:0 .5cqw .5cqw 0;background:rgba(242,244,247,.55)}
+.mm-cap{position:absolute;right:2%;bottom:-34px;white-space:nowrap;margin:0;
+  font-family:'Space Grotesk',Arial,sans-serif;font-size:15px;color:var(--dim)}
+.mm-cap b{font-weight:600}
+.mm-range:focus-visible~.mm-cap{color:var(--txt)}
+
+@media (max-width:640px){
+  .mm-scene{width:150%;margin-left:-25%}
+  .mm-phone{position:relative;right:auto;bottom:auto;margin:-80px auto 0;width:230px;transform:none}
+  .mm-cap{right:auto;left:50%;translate:-50% 0;bottom:-30px}
+}

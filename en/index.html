@@ -26,6 +26,7 @@
 <link rel="apple-touch-icon" href="../assets/goz-logo.png">
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/yenileme.css">
+<link rel="stylesheet" href="/assets/css/moymote-urun.css">
 </head>
 <body class="font-body-md text-text-primary antialiased relative min-h-screen flex flex-col bg-background">
 
@@ -86,6 +87,38 @@
 <p>The screens below come straight from our own systems. You can request a demo for any of them and try it in your own business.</p>
 </div>
 </div>
+
+<!-- 0) MoyMote -->
+<article class="serit mm" id="moymote">
+<div class="wrap serit-in">
+<div class="serit-gorsel gir">
+<div class="mm-stage" id="mm-stage">
+<div class="mm-scene" aria-hidden="true">
+<div class="mm-screen"><img src="/assets/moymote/hero-lake.webp" width="1600" height="583" alt="" loading="lazy" decoding="async"></div>
+<img class="mm-photo" src="/assets/moymote/hero-room.webp" width="1672" height="941" alt="" loading="lazy" decoding="async">
+<div class="mm-glow"></div>
+<div class="mm-dim"></div>
+</div>
+<div class="mm-phone" id="mm-demo">
+<div class="mm-device"><span class="mm-btn vol1"></span><span class="mm-btn vol2"></span><span class="mm-btn pwr"></span><div class="mm-device-screen"><img id="mm-frame" src="/assets/moymote/frames/b050-en.webp" width="600" height="1298" alt="MoyMote phone panel in dark appearance, brightness at 50%" loading="lazy" decoding="async" draggable="false"></div><span class="mm-glass"></span><span class="mm-cam"></span><span class="mm-status" aria-hidden="true"><b>10:22</b><span class="mm-icons"><i class="mm-sig"></i><i class="mm-wifi"></i><i class="mm-bat"></i></span></span></div>
+<label class="sr" for="mm-lux">Brightness (preview)</label>
+<input class="sr mm-range" id="mm-lux" type="range" min="5" max="100" step="5" value="50">
+<p class="mm-cap"><b>Interactive preview.</b> Drag across the phone.</p>
+</div>
+</div>
+</div>
+<div class="serit-metin gir">
+<span class="rozet bekleme"><span class="nokta"></span>Coming soon to Microsoft Store</span>
+<h3>MoyMote</h3>
+<p>Change your external monitor's brightness, blue light and HDR from your phone or from Windows, without reaching for the buttons behind the monitor. No phone app to install: scan the QR code on your PC and the panel opens in your browser.</p>
+<ul class="liste">
+<li>Works on your local network; no account, no telemetry, no crash reports.</li>
+<li>For Windows 10 and 11, with a 7-day free trial.</li>
+</ul>
+<a class="btn btn-1" href="https://moymote.com/">Explore moymote.com</a>
+</div>
+</div>
+</article>
 
 <!-- 1) WhatsApp Appointment Bot -->
 <article class="serit gorsel-genis">
@@ -524,4 +557,5 @@ window.addEventListener('load', function () {
   setTimeout(function () { document.body.classList.remove('hareketli'); }, 8000);
 });
 </script>
+<script src="/js/moymote-urun.js" defer></script>
 </body></html>

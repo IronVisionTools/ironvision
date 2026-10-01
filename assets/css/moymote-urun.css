@@ -74,3 +74,4 @@ article.serit.mm .liste li::before{background:#f7941e}
   .mm-phone{position:relative;right:auto;bottom:auto;margin:-80px auto 0;width:230px;transform:none}
   .mm-cap{right:auto;left:50%;translate:-50% 0;bottom:-30px}
 }
+article.serit.mm .serit-metin .btn+.btn{margin-top:12px}

@@ -1,0 +1,70 @@
+/* cila.css — 07.10.2026 uzay hero cila turu: derin uzay zemini, sis/nebula bolumleri, metal IRON, gok tasi ikonlari */
+:root{--card:rgba(8,12,24,.52);--card2:rgba(13,19,36,.58);--duman:none}
+html{background:#010208}
+body{background:transparent!important}
+#uzay-arka{position:fixed;left:0;top:0;width:100%;height:132vh;z-index:-1;pointer-events:none;will-change:transform;display:block}
+#uzay-kat{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%,rgba(6,16,44,.30),rgba(2,4,12,.18) 60%,rgba(1,2,8,.34) 100%)}
+/* hero: yildiz akisi tum alani kaplar (sol maske kalkti), yalniz alt kenar solar */
+.hero-galaksi,.hero-sahne.hazir .hero-galaksi{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 86%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 0,#000 86%,transparent 100%)!important;-webkit-mask-composite:source-over!important;mask-composite:add!important}
+.hero::before,.hero::after{display:none}
+/* duz renk bloklari gider: bolumler seffaf, renk sis/nebula olarak hissedilir */
+.yakinda,.hakkinda,#contact,footer,#isler,#nasil,#urunler{background:transparent!important}
+.serit{border-top-color:rgba(120,160,255,.08)}
+#urunler,.yakinda,#isler,#nasil,.hakkinda,#contact,footer{position:relative;isolation:auto}
+#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before,
+#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{
+ content:"";position:absolute;inset:-20% -12%;width:auto;height:auto;border-radius:0;right:auto;left:auto;top:auto;bottom:auto;z-index:-1;pointer-events:none;
+ -webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:820px 820px;mask-size:820px 820px;will-change:transform}
+#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before{
+ inset:-20% -12%;background:
+ radial-gradient(38% 52% at 18% 38%,rgba(var(--n1),.40),transparent 72%),
+ radial-gradient(34% 46% at 82% 64%,rgba(var(--n2),.32),transparent 72%);
+ animation:duman-a 70s ease-in-out infinite alternate}
+#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{
+ background:radial-gradient(30% 40% at 58% 18%,rgba(var(--n3),.30),transparent 72%),radial-gradient(26% 36% at 36% 82%,rgba(var(--n1),.2),transparent 72%);
+ -webkit-mask-position:310px 190px;mask-position:310px 190px;animation:duman-b 95s ease-in-out infinite alternate}
+@keyframes duman-a{from{transform:translate3d(-3%,0,0) scale(1)}to{transform:translate3d(4%,-3%,0) scale(1.08)}}
+@keyframes duman-b{from{transform:translate3d(3%,2%,0) scale(1.06)}to{transform:translate3d(-4%,-2%,0) scale(1)}}
+#urunler{--n1:10,83,211;--n2:2,150,199;--n3:40,70,190}
+.yakinda{--n1:16,150,140;--n2:10,83,211;--n3:90,130,210}
+#isler{--n1:30,64,200;--n2:70,120,215;--n3:10,147,253}
+#nasil{--n1:0,140,172;--n2:24,64,176;--n3:60,110,200}
+.hakkinda{--n1:84,104,176;--n2:10,83,211;--n3:30,120,190}
+#contact{--n1:10,83,211;--n2:2,150,199;--n3:50,80,190}
+footer{--n1:20,60,150;--n2:10,83,211;--n3:40,100,170}
+.yakinda .rozet,.yakinda .gorsel-kutu{border-color:rgba(130,220,210,.34)}
+.yakinda .rozet{color:#c8f3ee;background:rgba(16,150,140,.14)}
+.yakinda h3{color:#e6faf7}.yakinda .btn-2{border-color:rgba(130,220,210,.5);color:#e6faf7}.yakinda .btn-2:hover{border-color:#c8f3ee}
+.yakinda .liste li::before{background:#5ad1c4}
+@media (prefers-reduced-motion:reduce){#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before,#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{animation:none}}
+/* metal IRON: fircalanmis celik (ince yatay tel + gezen isik yansimasi), VISION mavisi aynen */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+.marka-ad .iron{background-image:linear-gradient(104deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 60%),repeating-linear-gradient(0deg,rgba(255,255,255,.16) 0,rgba(255,255,255,.16) 1px,rgba(0,0,0,.20) 1px,rgba(0,0,0,.20) 2px),linear-gradient(180deg,#E4E6EA 0%,#A9ADB6 38%,#6E747F 62%,#B9BDC6 100%);
+ background-size:260% 100%,100% 100%,100% 100%;background-repeat:no-repeat,repeat,no-repeat;background-position:160% 0,0 0,0 0;animation:iron-yansima 6.5s ease-in-out 1.2s infinite}}
+@keyframes iron-yansima{0%,18%{background-position:160% 0,0 0,0 0}62%,100%{background-position:-60% 0,0 0,0 0}}
+@media (prefers-reduced-motion:reduce){.marka-ad .iron{animation:none}}
+/* gok tasi ikonlari */
+.urun-ikon{width:72px!important;height:72px!important;border:0!important;border-radius:0!important;background:transparent!important;flex:none}
+@media (max-width:767px){.urun-ikon{width:60px!important;height:60px!important}}
+/* urun bloklari: duz renk gider, her urun kendi nebula tonuyla hissedilir */
+#urunler article.serit,#urunler article.serit.mm,#urunler article.serit.gorsel-genis,#sesli-sef{background:transparent!important;position:relative;border-top:0!important}
+#urunler article.serit::before,#urunler article.serit::after{content:"";position:absolute;inset:-14% -10%;z-index:-1;pointer-events:none;-webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:700px 700px;mask-size:700px 700px;will-change:transform}
+#urunler article.serit::before{background:radial-gradient(42% 56% at 24% 46%,rgba(var(--n1),.36),transparent 72%),radial-gradient(34% 46% at 80% 58%,rgba(var(--n2),.26),transparent 72%);animation:duman-a 80s ease-in-out infinite alternate}
+#urunler article.serit::after{background:radial-gradient(30% 40% at 60% 20%,rgba(var(--n2),.22),transparent 72%);-webkit-mask-position:260px 140px;mask-position:260px 140px;animation:duman-b 110s ease-in-out infinite alternate}
+#moymote{--n1:10,83,211;--n2:2,150,199}
+article.serit.gorsel-genis{--n1:18,150,110;--n2:10,100,190}
+article.serit.ters{--n1:40,70,200;--n2:10,147,253}
+#sesli-sef{--n1:200,140,40;--n2:10,83,211}
+#icerik-otomasyonu{--n1:70,60,190;--n2:2,150,199}
+#sesli-sef .serit-metin h3{color:#fff}#sesli-sef .serit-metin p,#sesli-sef .serit-metin p[style]{color:#d4dcee!important}
+#sesli-sef .rozet{color:#ffe2a8;background:rgba(200,140,40,.16);border-color:rgba(255,226,168,.45)}
+#sesli-sef .rozet .nokta{background:#4ade80}#sesli-sef .liste li{color:#d4dcee}#sesli-sef .liste li::before{background:#ffc766}
+#sesli-sef .gorsel-kutu{border-color:rgba(255,226,168,.3)}
+/* hero alti serit: kucuk gok tasi cipleri */
+.hero-serit b{background:rgba(8,14,30,.5);border-color:rgba(150,190,255,.22)}
+.hero-serit b::before{content:"";display:inline-block;width:7px;height:6px;margin-right:9px;vertical-align:1px;background:#9fb4d6;clip-path:polygon(15% 8%,60% 0,100% 30%,88% 78%,48% 100%,6% 70%);box-shadow:0 0 6px rgba(130,170,255,.5)}
+/* dikis yok: hero sahnesi alta dogru sayfaya erir, MoyMote bloku sisi kirpmaz */
+.hero-sahne{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 74%,transparent 100%)}
+#urunler article.serit.mm{overflow:visible!important}
+.hero-serit b{white-space:nowrap}
+@media (max-width:767px){.hero-sahne.hazir .hero-galaksi{opacity:.8}}

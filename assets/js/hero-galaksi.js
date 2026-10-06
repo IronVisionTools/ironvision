@@ -1,4 +1,5 @@
-/* hero-galaksi.js — "sonsuz goz" hero sahnesi (IRON VISION, 03.10.2026)
+/* [CILA 07.10: SAHNE bolumu elle yeniden yazildi; hero-galaksi-sync.py ile ezilmemeli]
+   hero-galaksi.js — "sonsuz goz" hero sahnesi (IRON VISION, 03.10.2026)
    YAPI: [SAHNE] prototipten BIREBIR kopyalanan blok + [MOTOR] siteye ozel kapsayici/performans kodu.
    Prototip yenilenince SADECE sahne blogu degisir:
      python3 ~/vyron/wt/hero-galaksi-sync.py   (sablon + prototip -> assets/js/hero-galaksi.js)
@@ -6,140 +7,106 @@
    Sahne sozlesmesi: window.HERO_SCENE={init(E),step(dt,t),draw(ctx,E,t)}; E={W,H,dpr,mobile,cx,cy,R,N,put,gauss,PAL,...} */
 (function(){
 'use strict';
-/* ====== SAHNE BASLA (prototipten birebir; elle DUZENLEME) ====== */
-window.HERO_STILL={t:.001,steps:0};window.HERO_ADAPT=true;
+/* ====== SAHNE BASLA (cila turu 07.10.2026: yildiz akisi -> parcaciklardan goz) ====== */
+window.HERO_STILL={t:11,steps:0};window.HERO_ADAPT=true;
 window.HERO_SCENE=(function(){
-const TAU=Math.PI*2,T=15,Q=new URLSearchParams(location.search),SCROLL=Q.get('scroll')==='1',FV=Q.get('v'),QF=5,RP=.28,SPK=84,LA=1.5;
+const TAU=Math.PI*2,RP=.28,SPK=84,LA=1.5,V0K=1.5,TAUV=2.3,V1K=.014;
 function sm(x){x=x<0?0:x>1?1:x;return x*x*(3-2*x)}
-function eo(x){x=x<0?0:x>1?1:x;return 1-(1-x)*(1-x)*(1-x)}
+function eo(x){x=x<0?0:x>1?1:x;return 1-Math.pow(1-x,3)}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-let E,EY=[],GP=[],LID=[],vS=0,lastT=0;
+let E,P=[],NA=0,qs=0;
+/* tur: 0 ambiyans, 1 iris, 2 kapak(metal), 3 halka */
+function S(t){return E.W*(V0K*TAUV*(1-Math.exp(-t/TAUV))+V1K*t)}
+function V(t){return E.W*(V0K*Math.exp(-t/TAUV)+V1K)}
+function mk(kind,g,s,a,tx,ty,tc,dur){
+ const d=.25+Math.random()*.75,sy=Math.random()*E.H,sx=Math.random()*E.W;
+ P.push({kind,g,s,a,tx,ty,tc,dur,d,sy,x0:sx+S(tc)*d,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:(Math.random()<.5?-1:1)*(30+Math.random()*90),hue:Math.random()})
+}
 function init(e){
- E=e;EY=[];GP=[];LID=[];
- for(let i=0;i<E.N;i++){
-  const u=Math.random();let r,g,s,a,sp=0,ph2=0;
+ E=e;P=[];const N=e.N;
+ /* ambiyans: tum hero'yu kaplayan, hic toplanmayan yildiz akisi */
+ NA=Math.round(N*.4);
+ for(let i=0;i<NA;i++){const sy=Math.random()*e.H,sx=Math.random()*e.W,d=.12+Math.random()*.88,m=Math.random();
+  P.push({kind:0,g:m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),s:Math.random()<.05?2.5:.9+Math.random()*.9,a:.3+Math.random()*.6,tc:1e9,dur:1,d,sy,x0:sx,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:0,hue:Math.random(),tx:0,ty:0})}
+ /* iris parcaciklari: logodaki goz iris/foton halkasi (onceki form korunur) */
+ const NI=Math.round(N*.5);
+ for(let i=0;i<NI;i++){
+  const u=Math.random();let r,g,s,a,sp=0;
   if(u<.1){r=1+e.gauss()*.009;g=pick([10,10,0,12]);s=1.2+Math.random()*.6;a=.95}
-  else if(u<.15){r=RP+.025+e.gauss()*.006;g=pick([10,0,10]);s=1.1+Math.random()*.5;a=.95;ph2=1}
+  else if(u<.15){r=RP+.025+e.gauss()*.006;g=pick([10,0,10]);s=1.1+Math.random()*.5;a=.95}
   else if(u<.2){r=.62+e.gauss()*.018;g=pick([10,8,1]);s=1.1+Math.random()*.5;a=.6}
   else{const v=Math.pow(Math.random(),.8);r=RP+.05+(1-RP-.07)*v;const rn=(r-RP)/(1-RP);sp=1;
-   g=rn<.3?pick([9,9,8,9]):rn<.65?pick([8,8,8,9,10]):pick([10,10,8,0]);
-   s=Math.random()<.04?2.5:1+Math.random()*.8;a=.5+Math.random()*.5}
-  const ar=Math.random()*TAU;
-  EY.push({r1:r,g,s,a,ph2,ar,as:sp?Math.round(ar/TAU*SPK)/SPK*TAU+e.gauss()*.0065:ar,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3)});
+   g=rn<.3?pick([9,9,8,9]):rn<.65?pick([8,8,8,9,10]):pick([10,10,8,0]);s=Math.random()<.04?2.5:1+Math.random()*.8;a=.5+Math.random()*.5}
+  let ar=Math.random()*TAU;if(sp)ar=Math.round(ar/TAU*SPK)/SPK*TAU+e.gauss()*.0065;
+  /* once dis halka, sonra iceri: gozun akistan dogusu merkezden disa */
+  const tc=2.4+(1-r)*1.2+Math.random()*2.3;
+  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,1.9+Math.random()*1.6);
  }
- EY.sort((a,b)=>a.g-b.g);
- // goz kapagi / badem cercevesi (celik gri parcacik)
- const nl=Math.round(E.N*.3);
+ /* goz kapagi: gri metalik noktaciklar toplanip cerceveyi olusturur */
+ const nl=Math.round(N*.4);
  for(let i=0;i<nl;i++){
   const kind=i<nl*.45?0:i<nl*.8?1:2;
-  const s=(Math.random()*2-1);const sa=Math.sign(s)*Math.pow(Math.abs(s),1.15);
-  const ex=Math.abs(sa);const sh=1-Math.pow(ex,1.8);
+  const sg=(Math.random()*2-1);const sa=Math.sign(sg)*Math.pow(Math.abs(sg),1.15);
+  const ex=Math.abs(sa),sh=1-Math.pow(ex,1.8);
   let x=sa*LA,y=(kind===1?1.05:1.18)*sh*(kind===1?1:-1);
-  if(kind===2){x*=1.05;y=-1.18*1.14*sh;}
+  if(kind===2){x*=1.05;y=-1.18*1.14*sh}
   const jn=e.gauss()*.011;
-  LID.push({x:x+jn*.4,y:y+jn,g:pick(kind===2?[11,11,11]:[12,11,11,12,10]),s:kind===2?.9+Math.random()*.4:1+Math.random()*.6,a:(kind===2?.5:.9)*(.4+.6*sh)+.12,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*2)});
+  mk(2,pick(kind===2?[11,11,14]:[12,13,14,13,11,12]),kind===2?.9+Math.random()*.4:1+Math.random()*.7,(kind===2?.55:.95)*(.45+.55*sh)+.1,x+jn*.4,y+jn,3.6+Math.random()*3.2,2+Math.random()*1.8);
  }
- LID.sort((a,b)=>a.g-b.g);
- const SH=[.22,.45,.78,1.2,1.75],SHO=SH.map(()=>[(Math.random()-.5)*.05,(Math.random()-.5)*.04,Math.random()*TAU]);
- for(let i=0;i<E.N*1.8;i++){
-  const u=Math.random();let r,th,g,s,a,x0=0,y0=0;
-  if(u>.88){r=Math.abs(e.gauss())*.16;th=Math.random()*TAU;g=pick([0,10,10,1,8]);s=Math.random()<.08?2.6:1+Math.random()*.8;a=.9+Math.random()*.3;
-   GP.push({r,th,z:5+40*Math.pow(Math.random(),1.2),x0:0,y0:0,g,s,a,w:.012,ph:Math.random()*TAU});continue}
-  if(u<.52){const k=Math.floor(Math.random()*5);
-   th=Math.random()*TAU; /* spiral kol yok: acisal yogunluk dugun */
-   r=SH[k]*(1+e.gauss()*.06+(Math.random()<.2?-Math.log(1-Math.random())*.08:0));x0=SHO[k][0];y0=SHO[k][1];
-   g=pick([8,10,10,0,1,9,12,11,10]);s=Math.random()<.06?2.6:1.1+Math.random()*1;a=.95+Math.random()*.3}
-  else{r=Math.sqrt(Math.random())*2.1;th=Math.random()*TAU;
-   g=pick([9,8,8,11,5,10]);s=Math.random()<.04?2.6:1+Math.random()*.7;a=.6+Math.random()*.4}
-  GP.push({r,th,z:1.5+43.5*Math.pow(Math.random(),1.4),x0,y0,g,s,a,w:.012,ph:Math.random()*TAU}); /* tek sabit dusuk acisal hiz: kesme/sarmal yok */
- }
- GP.sort((a,b)=>a.g-b.g);
- if(SCROLL){document.documentElement.style.overflowY='auto';document.body.style.overflowY='auto';
-  const d=document.createElement('div');d.style.cssText='height:700vh;pointer-events:none';document.body.appendChild(d)}
+ P.sort((a,b)=>a.g-b.g);
 }
 function step(){}
-function getV(t){
- if(FV!==null)return parseFloat(FV);
- if(SCROLL){const m=document.documentElement.scrollHeight-innerHeight,pr=m>0?scrollY/m:0;
-  vS+=(pr*2.999-vS)*Math.min(1,(t-lastT)*4);lastT=t;
-  const tx=document.querySelector('.txt');if(tx)tx.style.opacity=Math.max(0,1-pr*8);return vS}
- return ((t%T)/T)*3;
-}
-function disc(ctx,g,rad){ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,rad,0,TAU);ctx.fill()}
 function draw(ctx,E,t){
- const v=getV(t),u=v/3,R=E.R,cx=E.cx,cy=E.cy;
- const wG=sm((v-.35)/.45)*(1-sm((v-1.75)/.45));
- let wE,mE,eta,ent,spin,fl,tilt;
- if(v<1){wE=1-sm((v-.35)/.45);mE=Math.pow(QF,v);eta=1;ent=1;spin=0}
- else{wE=sm((v-1.75)/.45);mE=Math.pow(QF,v-3);eta=sm((v-2.2)/.7);ent=eo((v-1.75)/1.1);spin=5*Math.pow(1-eo((v-1.75)/1.25),2)}
- fl=.5+.5*eta;tilt=-.3*(1-eta);
- const mG=2.4*Math.pow(QF,v-.55),br=1+.02*Math.sin(TAU*u*2);
+ const R=E.R,cx=E.cx,cy=E.cy,W=E.W,H=E.H;
+ const zoom=1+1.15*sm((t-11.5)/9),M=R*zoom*(1+.014*Math.sin(t*.9));
+ const v=V(t),St=S(t);
  ctx.globalCompositeOperation='lighter';
- if(wE>.003){
-  const ct=Math.cos(tilt),st=Math.sin(tilt),M=mE*R*br;
-  // dolu iris diski
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);ctx.scale(1,fl);
-  if(M<9000){
-   const ig=ctx.createRadialGradient(0,0,M*RP*.9,0,0,M*1.05);
-   ig.addColorStop(0,`rgba(1,56,186,${.5*wE})`);ig.addColorStop(.4,`rgba(2,84,240,${.34*wE})`);ig.addColorStop(.8,`rgba(10,147,253,${.2*wE})`);
-   ig.addColorStop(.93,`rgba(10,147,253,${.36*wE})`);ig.addColorStop(1,'rgba(10,147,253,0)');
-   ctx.globalAlpha=1;disc(ctx,ig,M*1.05);
-   const la=.1*wE*eta;
-   if(la>.004){ctx.strokeStyle=`rgba(120,185,255,${la})`;ctx.lineWidth=.8;ctx.beginPath();
-    for(let k=0;k<SPK;k+=1){const a=k/SPK*TAU+Math.sin(k*3.1)*.004;ctx.moveTo(Math.cos(a)*M*(RP+.03),Math.sin(a)*M*(RP+.03));ctx.lineTo(Math.cos(a)*M*.97,Math.sin(a)*M*.97)}ctx.stroke()}
-  }
-  if(eta>.01){ctx.strokeStyle=`rgba(120,128,142,${.38*wE*eta})`;ctx.lineWidth=1;
-   for(const kd of [0,1,2]){ctx.beginPath();for(let i=0;i<=80;i++){const sa=i/40-1,sh=1-Math.pow(Math.abs(sa),1.8);let x=sa*LA,y=(kd===1?1.05:1.18)*sh*(kd===1?1:-1);if(kd===2){x*=1.05;y=-1.18*1.14*sh;ctx.strokeStyle=`rgba(93,99,110,${.18*wE*eta})`}
-    if(i)ctx.lineTo(x*M,y*M);else ctx.moveTo(x*M,y*M)}ctx.stroke()}}
-  ctx.restore();
-  const sz=Math.min(Math.pow(mE,.45),2.2);
-  for(const p of EY){
-   const a0=p.ar+eta*(p.as-p.ar)+spin,rr=p.r1*(1+.7*(1-ent));
-   const x=Math.cos(a0)*rr,y=Math.sin(a0)*rr*fl;
-   const sx=cx+M*(x*ct-y*st),sy=cy+M*(x*st+y*ct);
-   if(sx<-40||sx>E.W+40||sy<-40||sy>E.H+40)continue;
-   E.putB(sx,sy,p.s*sz,p.a*(.8+.2*Math.sin(TAU*u*p.k+p.ph))*wE,p.g);
-  }
-  // goz kapagi
-  if(eta>.01){const lz=Math.min(Math.pow(mE,.35),1.6);
-   for(const p of LID){const x=p.x*(1+(1-eta)*.0),y=p.y*fl;
-    const sx=cx+M*(x*ct-y*st),sy=cy+M*(x*st+y*ct);
-    if(sx<-40||sx>E.W+40||sy<-40||sy>E.H+40)continue;
-    E.putB(sx,sy,p.s*lz,p.a*(.85+.15*Math.sin(TAU*u*p.k+p.ph))*wE*eta,p.g)}}
-  E.flush();
-  // gozbebegi, foton halkasi, goz isigi
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);ctx.scale(1,fl);
-  const rp=M*RP;
-  if(rp>.5&&rp<9000){
-   const pg=ctx.createRadialGradient(0,0,0,0,0,rp);pg.addColorStop(0,'rgba(0,0,0,1)');pg.addColorStop(.88,'rgba(0,0,0,1)');pg.addColorStop(1,'rgba(0,0,0,0)');
-   ctx.globalCompositeOperation='source-over';ctx.globalAlpha=wE;disc(ctx,pg,rp);ctx.globalCompositeOperation='lighter';
-   const ra=M*(RP+.03),r0=Math.max(0,ra-M*.03),r1=ra+M*.05,ga=ctx.createRadialGradient(0,0,r0,0,0,r1);
-   ga.addColorStop(0,'rgba(10,147,253,0)');ga.addColorStop(.42,`rgba(10,147,253,${.26*wE})`);ga.addColorStop(1,'rgba(2,84,240,0)');
-   ctx.globalAlpha=1;disc(ctx,ga,r1);
-   ctx.strokeStyle=`rgba(120,190,255,${.4*wE})`;ctx.lineWidth=1/Math.max(.4,fl);ctx.beginPath();ctx.arc(0,0,ra*.99,0,TAU);ctx.stroke();
-   // goz isigi
-   const ca=wE*eta;
-   if(ca>.01){const c1=M*.09,g1=ctx.createRadialGradient(-M*.085,-M*.095,0,-M*.085,-M*.095,c1);
-    g1.addColorStop(0,`rgba(240,248,255,${1*ca})`);g1.addColorStop(.4,`rgba(150,200,255,${.55*ca})`);g1.addColorStop(1,'rgba(10,147,253,0)');
-    ctx.translate(-M*.085,-M*.095);disc(ctx,g1,c1);ctx.translate(M*.085,M*.095);
-    const c2=M*.03,g2=ctx.createRadialGradient(M*.07,M*.09,0,M*.07,M*.09,c2);g2.addColorStop(0,`rgba(180,220,255,${.35*ca})`);g2.addColorStop(1,'rgba(10,147,253,0)');
-    ctx.translate(M*.07,M*.09);disc(ctx,g2,c2)}
-  }
-  ctx.restore();
+ /* hizli akis cizgileri: yalniz ilk saniyelerde, parlak parcaciklar sola dogru uzar */
+ const sk=Math.min(1,v/(W*.35));
+ if(sk>.03){ctx.lineWidth=1;ctx.strokeStyle='rgba(190,215,255,1)';
+  for(let pass=0;pass<2;pass++){ctx.globalAlpha=(pass?.22:.5)*sk;ctx.beginPath();
+   for(let i=0;i<P.length;i+=3){const p=P[i];if(p.kind&&t>p.tc)continue;if((i%2)!==pass)continue;
+    let x=p.x0-St*p.d;if(p.kind===0||t<p.tc)x=((x%W)+W)%W;
+    const L=Math.min(v*p.d*.05,170);if(L<4||x<-10||x>W+L)continue;
+    ctx.moveTo(x,p.sy);ctx.lineTo(x+L,p.sy)}
+   ctx.stroke()}}
+ /* iris dolgusu + goz bebegi: parcaciklar yerlesince yavasca belirir (cat diye cikmaz) */
+ const fi=sm((t-5.4)/3.2),fp=sm((t-6.2)/2.6),fl=sm((t-8)/2.2);
+ if(fi>.003&&M<9000){ctx.save();ctx.translate(cx,cy);
+  const ig=ctx.createRadialGradient(0,0,M*RP*.9,0,0,M*1.05);
+  ig.addColorStop(0,`rgba(1,56,186,${.42*fi})`);ig.addColorStop(.4,`rgba(2,84,240,${.28*fi})`);ig.addColorStop(.8,`rgba(10,147,253,${.16*fi})`);ig.addColorStop(.93,`rgba(10,147,253,${.3*fi})`);ig.addColorStop(1,'rgba(10,147,253,0)');
+  ctx.globalAlpha=1;ctx.fillStyle=ig;ctx.beginPath();ctx.arc(0,0,M*1.05,0,TAU);ctx.fill();ctx.restore()}
+ /* parcaciklar */
+ const eyeMetal=fl;
+ for(const p of P){
+  let x,y,a=p.a,sz=p.s;
+  if(p.kind===0){x=((p.x0-St*p.d)%W+W)%W;y=p.sy;a*=.75+.25*Math.sin(t*.5*p.k+p.ph);sz*=.7+.5*p.d;
+   const mx=x<W*.45?1:1;x+=0*mx}
+  else{
+   const e=eo((t-p.tc)/p.dur);
+   let fx=p.x0-St*p.d;if(t<p.tc)fx=((fx%W)+W)%W;
+   const fy=p.sy,gx=cx+M*p.tx,gy=cy+M*p.ty;
+   if(e<=0){x=fx;y=fy;a*=.5;sz*=.7+.5*p.d}
+   else{const sw=Math.sin(Math.PI*e)*p.sw,dx=gx-fx,dy=gy-fy,dl=Math.hypot(dx,dy)||1;
+    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=.5+.5*e;sz*=(.7+.5*p.d)*(1-e)+e}
+   if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*eyeMetal;if(bd>.5&&p.g!==14)p.g=p.g}
+   if(p.kind===1&&e>.95)a*=.85+.15*Math.sin(t*p.k+p.ph)}
+  if(x<-20||x>W+20||y<-20||y>H+20)continue;
+  E.putB(x,y,sz,a,p.g);
  }
  E.flush();
- if(wG>.003){
-  const cz=9.5*Math.min(Math.max((v-.35)/1.85,0),1);
-  /* odaklanma: parcaciklar yaricap yonunde (ease-out, yavaslayarak) disaridan halkaya oturur; acisal iz yok */
-  const gp=eo((v-.35)/1.1),rin=1+.9*(1-gp),fo=.5+.5*gp;
-  for(const p of GP){
-   const zc=p.z-cz;if(zc<.15)continue;
-   const l=p.z/zc,k=R*l,a=p.th+p.w*v,sx=cx+(p.x0+Math.cos(a)*p.r*rin)*k,sy=cy+(p.y0+Math.sin(a)*p.r*rin)*k*.96;
-   if(sx<-40||sx>E.W+40||sy<-40||sy>E.H+40)continue;
-   const fz=Math.min((zc-.15)/.5,1);
-   E.putB(sx,sy,p.s*Math.min(Math.max(Math.pow(l,.45),.9),3.2),p.a*fo*(.8+.2*Math.sin(v*5+p.ph))*wG*fz,p.g);
-  }
- }
+ /* goz bebegi (parcaciklarin ustunde, opak karanlik) + foton halkasi + goz isigi */
+ if(fp>.003&&M<9000){ctx.save();ctx.translate(cx,cy);const rp=M*RP;
+  const pg=ctx.createRadialGradient(0,0,0,0,0,rp);pg.addColorStop(0,'rgba(0,0,0,1)');pg.addColorStop(.88,'rgba(0,0,0,1)');pg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fp;ctx.fillStyle=pg;ctx.beginPath();ctx.arc(0,0,rp,0,TAU);ctx.fill();ctx.globalCompositeOperation='lighter';
+  const ra=M*(RP+.03),ga=ctx.createRadialGradient(0,0,Math.max(0,ra-M*.03),0,0,ra+M*.05);
+  ga.addColorStop(0,'rgba(10,147,253,0)');ga.addColorStop(.42,`rgba(10,147,253,${.26*fp})`);ga.addColorStop(1,'rgba(2,84,240,0)');
+  ctx.globalAlpha=1;ctx.fillStyle=ga;ctx.beginPath();ctx.arc(0,0,ra+M*.05,0,TAU);ctx.fill();
+  ctx.strokeStyle=`rgba(120,190,255,${.4*fp})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,ra*.99,0,TAU);ctx.stroke();
+  if(fl>.01){const c1=M*.09,g1=ctx.createRadialGradient(-M*.085,-M*.095,0,-M*.085,-M*.095,c1);
+   g1.addColorStop(0,`rgba(240,248,255,${fl})`);g1.addColorStop(.4,`rgba(150,200,255,${.55*fl})`);g1.addColorStop(1,'rgba(10,147,253,0)');
+   ctx.translate(-M*.085,-M*.095);ctx.fillStyle=g1;ctx.beginPath();ctx.arc(0,0,c1,0,TAU);ctx.fill()}
+  ctx.restore()}
  E.flush();
 }
 return{init,step,draw};
@@ -149,10 +116,10 @@ return{init,step,draw};
 /* ====== MOTOR (siteye ozel) ====== */
 const hero=document.querySelector('.hero'),box=hero&&hero.querySelector('.hero-sahne');
 if(!hero||!box)return;
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,FORCE=new URLSearchParams(location.search).get('zorla')==='1';
 const cv=document.createElement('canvas');cv.className='hero-galaksi';cv.setAttribute('aria-hidden','true');
 const ctx=cv.getContext('2d');if(!ctx)return;
-const PAL=[[232,243,255],[150,190,235],[74,125,190],[34,76,168],[20,44,120],[140,150,165],[255,238,200],[40,110,235],[2,84,240],[1,56,186],[10,147,253],[93,99,110],[156,159,168]];
+const PAL=[[232,243,255],[150,190,235],[74,125,190],[34,76,168],[20,44,120],[140,150,165],[255,238,200],[40,110,235],[2,84,240],[1,56,186],[10,147,253],[93,99,110],[156,159,168],[206,212,224],[120,128,142]];
 const SPR=PAL.map(c=>{const s=document.createElement('canvas');s.width=s.height=32;const g=s.getContext('2d');
  const r=g.createRadialGradient(16,16,0,16,16,16);r.addColorStop(0,`rgba(${c},1)`);r.addColorStop(.25,`rgba(${c},.45)`);r.addColorStop(1,`rgba(${c},0)`);g.fillStyle=r;g.fillRect(0,0,32,32);return s;});
 const FILL=PAL.map(c=>`rgb(${c})`);
@@ -192,13 +159,13 @@ function geometry(){
  E.dpr=level?1:Math.min(window.devicePixelRatio||1,2);
  cv.width=Math.round(E.W*E.dpr);cv.height=Math.round(E.H*E.dpr);
  /* sag-orta agirlikli; mobilde basligin arkasinda (ust yarida) */
- E.cx=E.mobile?E.W*.66:E.W*.74;E.cy=E.mobile?E.H*.22:E.H*.45;
+ E.cx=E.mobile?E.W*.66:E.W*.76;E.cy=E.mobile?E.H*.22:E.H*.45;
  E.R=E.mobile?Math.min(E.W*.34,E.H*.2):Math.min(E.H*.4,E.W*.24)*.85;
 }
 function build(){
  E.mobile=innerWidth<768;
  E.N=(E.mobile?2800:5600)>>level; /* mobilde parcacik yarisi; yavas cihazda bir kademe daha */
- stars=[];const n=E.mobile?[50,25]:[100,50];
+ stars=[];const n=[0,0];
  for(let l=0;l<2;l++)for(let i=0;i<n[l];i++)stars.push({l,x:Math.random(),y:Math.random(),s:l?rng(1,1.5):rng(.6,.9),a:l?rng(.35,.7):rng(.2,.45),g:[0,0,1,5,2][Math.floor(Math.random()*5)],p:rng(0,6.28),f:rng(.2,.6)});
  geometry();scene=window.HERO_SCENE;scene.init(E);
 }
@@ -236,11 +203,13 @@ function loop(ts){
  let dt=(ts-last)/1000;last=ts;const raw=dt;if(dt>.05)dt=.05;
  t+=dt;const c0=performance.now();scene.step(dt,t);render(dt,t,false);
  /* uyarlanir: 3 karelik ortalama (cizim ms ya da kare araligi) >32ms ise once sadelestir (dpr 1, yari parcacik), cok ya da yine yavassa sabit goz karesine don */
- acc+=Math.max(performance.now()-c0,Math.min(raw,.3)*1000*.7);
+ const ms=performance.now()-c0;window.__heroMs=(window.__heroMs||ms)*.92+ms*.08;if(FORCE)return;
+ acc+=Math.max(ms,Math.min(raw,.3)*1000*.7);
  if(++cnt===3){const av=acc/cnt;acc=cnt=0;
   if(av>32){halt();if(level<1&&av<70){level=1;build();run()}else{level=2;t=.001;scene.init(E);renderStill()}}}
 }
-function run(){if(reduce||raf||document.hidden||!inView)return;last=0;raf=requestAnimationFrame(loop)}
+window.__heroSeek=function(tt){window.__heroSeekOn=1;halt();t=tt;render(.016,tt,true)};
+function run(){if(window.__heroSeekOn||reduce||raf||document.hidden||!inView)return;last=0;raf=requestAnimationFrame(loop)}
 function halt(){if(raf){cancelAnimationFrame(raf);raf=0}}
 function start(){
  if(started)return;started=true;
@@ -251,7 +220,8 @@ function start(){
   /* tek kare olcumu: sabit goz karesini ciz, rasteri zorla, sureye gore baslangic kademesi sec (>25ms sade, >60ms sabit kal) */
   const p0=performance.now();renderStill();try{ctx.getImageData(0,0,1,1)}catch(e){}
   const pc=performance.now()-p0;
-  if(pc>25&&pc<=60){level=1;build();renderStill()}
+  if(FORCE){}
+  else if(pc>25&&pc<=60){level=1;build();renderStill()}
   else if(pc>60){level=2}
   nextShoot=rng(3,6);
   document.addEventListener('visibilitychange',()=>{document.hidden?halt():run()});

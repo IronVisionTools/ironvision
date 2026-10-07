@@ -7,28 +7,147 @@
    Sahne sozlesmesi: window.HERO_SCENE={init(E),step(dt,t),draw(ctx,E,t)}; E={W,H,dpr,mobile,cx,cy,R,N,put,gauss,PAL,...} */
 (function(){
 'use strict';
-/* ====== SAHNE BASLA (cila turu 07.10.2026: yildiz akisi -> parcaciklardan goz) ====== */
-window.HERO_STILL={t:11,steps:0};window.HERO_ADAPT=true;
+/* ====== SAHNE BASLA (cila turu 2, 07.10.2026: z-ekseni kavisli yildiz akisi -> logodan olculen goz; kara delik gozbebegi) ======
+   TUM AYARLAR CP icinde; eski (cila 1) degerler yanlarinda yorumda. */
+window.HERO_STILL={t:15,steps:0};window.HERO_ADAPT=true;
 window.HERO_SCENE=(function(){
-const TAU=Math.PI*2,RP=.28,SPK=84,LA=1.5,V0K=1.5,TAUV=2.3,V1K=.014;
+const TAU=Math.PI*2,RP=.28,SPK=84;
+const CP={
+ EYE_R_K:.84,      /* [mad.3] goz bir tik kucuk: iris yaricapi carpani (cila1: 1) */
+ EYE_HW:1.95,      /* [mad.2] logo dis hattinin yari genisligi (iris yaricapi biriminde; cila1 LA=1.5 parametrik kapak) */
+ EYE_VS:1.45,      /* [mad.2] logo hattinin dikey gerilmesi: 1 = birebir oran; iris kapaklarin altinda kalmasin diye 1.45 */
+ LOGO_CX:124,LOGO_CY:134, /* logo (goz-logo.png 240px) iris halkasi merkezi (olculdu) */
+ EDGE_W:12,      /* plaka kenar hucresi agirligi (dis hat belirginligi) */
+ LID_N:.95,        /* kapak parcacik payi (N carpani; cila1: .4) */
+ AMB_N:.6,        /* ambiyans yildiz payi (cila1: .4) */
+ V_MIN:.018,V_MAX:.42,T_ACC:4.4,   /* [mad.4] z hizi: yavas baslar (V_MIN), T_ACC sn'de V_MAX'a hizlanir (cila1: yatay hiz 1.5*W/sn'den inip) */
+ T_G0:4.6,T_G1:9.2,V_END:.014,    /* [mad.1/4] toplanma: hiz T_G0..T_G1 arasi V_END'e iner */
+ CURVE:.34,        /* [mad.3] ekrana gelirken sola kavis (W cinsinden, yakinda en fazla) */
+ SPREAD:.34,        /* z ekseni acilimi */
+ VPX:.64,VPY:.46,  /* kacis noktasi (hero oranlari); goz sagda */
+ SZ_POW:3,SZ_MAX:3.4,   /* [mad.4] boyut dagilimi: .6+rand^SZ_POW*SZ_MAX (cila1: .9+rand*.9) */
+ SF_MIN:.35,SF_MAX:1.7, /* [mad.4] parcacik basina bagimsiz hiz carpani (cila1: .25-1 paralaks) */
+ SHIMMER:1.7,      /* [mad.5] goz olustuktan sonra yerinde salinim (px) */
+ VORT_N:240,VORT_SPD:.22,VORT_TW:3.2, /* [mad.1] kara delik girdabi: parcacik sayisi, akis hizi, burulma */
+ T_IRIS:6.4,T_PUPIL:7.4,T_METAL:9.4, /* iris dolgusu / gozbebegi / metal parlama baslangiclari (cila1: 5.4/6.2/8) */
+ T_ZOOM:13.2       /* irise yakinlasma baslangici (cila1: 11.5) */
+};
+const LOGO_MASK=""+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002333332"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000333333333300"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000232332222333330000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000022222222222223333300000"+
+"000000000000000000000000000000000000000000000000000000000000000000012222211112222222333330000000"+
+"000000000000000000000000000000000000000000000000000000000000002222222212222222222223333300000000"+
+"000000000000000000000000000000000000000000000000000000001212111111111112222222222233330000000000"+
+"000000000000000000000000000000000000000000000000000211111111111111111122222222223333000000000000"+
+"000000000000000000000000000000000000000000000000031111111111111111112222222222333330000000000000"+
+"000000000000000000000000000000000000000000000002211111111111111111122222222333333000000000000000"+
+"000000000000000000000000000000000000000000000023111111111111111111222222223333320000000000000000"+
+"000000000000000000000000000000000000000000000331111111111111111112122222333333000000000000000000"+
+"000000000000000000000000000000000000000000023211111111111111111111222222333300000000000000000000"+
+"000000000000000000000000000000000000000000232211111111111111111111122223333000000000000000000000"+
+"000000000000000000000000000000000000000002321111111111111111111112222223300000000000000000000000"+
+"000000000000000000000000000000000000000233222111111111111111111111222233000000000000000000000000"+
+"000000000000000000000000000000000000002332222111111111111111111111222300000000000000000000000000"+
+"000000000000000000000000000000000000023322222111111111111111111122222000000000000000000000000000"+
+"000000000000000000000000000000000002233322221111111111111111111222000000000000000000000000000000"+
+"000000000000000000000000000000000013333322222222211111111111122200000000000000000000000000000000"+
+"000000000000000000000000000000000233333222222221111111111112200000000000030000000000000000000000"+
+"000000000000000000000000000000012333333222222212111111111100000000000000033300000000000000000000"+
+"000000000000000000000000000000123333333333222222221111100000000000000000003333000000000000000000"+
+"000000000000000000000000000001333333333322222222221120000000000000000000002323330000000000000000"+
+"000000000000000000000000000013333333333322222222220000000000000000000000000322233300000000000000"+
+"000000000000000000000000001233333333333332222222000000000000000000000000000032222333000000000000"+
+"000000000000000000000000012323333333333333222000000000000000000000000000000032222222330000000000"+
+"000000000000000000000000133222333333333333200000000000000000000000000000000002222222223300000000"+
+"000000000000000000000001322222223333333300000000000000000000000000000000000003222221111233000000"+
+"000000000000000000000123211222223333330000000000000000000000000000000000000000211121111112230000"+
+"000000000000000000001221211122223330000000000000000000000000000000000000000000221111111111113200"+
+"000000000000000000012111111122233000000000000000000000000000000000000000000000021111111111111122"+
+"000000000000000001121111111212100000000000000000000000000000000000000000000000021111111111111111"+
+"000000000000000022211111111200000000000000000000000000000000000000000000000000021111111110001100"+
+"000000000000000133111111110000000000000000000000000000000000000000000000000000211111110000000000"+
+"000000000000001333111111000000000000000000000000000000000000000000000000000002111111000000000000"+
+"000000000000012323211000000000000000000000000000000000000000000000000000000002100000000000000000"+
+"000000000000123322300000000000000000000000000000000000000000000000000000000021000000000000000220"+
+"000000000001133320000000000000000000000000000000000000000000000000000000000010000000000000022100"+
+"000000000002333200000000000000000000000000000000000000000000000000000000000200000000000002211000"+
+"000000000023332000000000000000000000000000000000000000000000000000000000003100000000000021110000"+
+"000000000233330000000020000000000000000000000000000000000000000000000000002000000000022111100000"+
+"000000001333000000002200000000000000000000000000000000000000000000000000020000000000211110000000"+
+"000000013330000000221200000000000000000000000000000000000000000000000000020000000022110011000000"+
+"000000133300000002111200000000000000000000000000000000000000000000000000200000002211110010000000"+
+"000001333000000111112000000000000000000000000000000000000000000000000002000000321111000000000000"+
+"000003300000001111112000000000000000000000000000000000000000000000000000000022111100000000000000"+
+"000033000000111111110000000000000000000000000000000000000000000000000000002221111000000000000000"+
+"000230000011101111000000000000000000000000000000000000000000000000000000221111110000000000000000"+
+"002200000100010000000000000000000000000000000000000000000000000000000232111111100000000000000000"+
+"020000010000000000000013320000000000000000000000000000000000000000123211111100000000000000000000"+
+"200000000000000002211222233000000000000000000000000000000000000123322111111000000000000000000000"+
+"000000000001211111111112222310000000000000000000000000000000113332211111110000000010000000000000"+
+"000000111111111111111111222332000000000000000000000000000002322221111111000000000000000000000000"+
+"000012111111111111111111222233200002333333000000000000000112212111111100000000001000000000000000"+
+"000000000111111111111111122233331000111111222222222200000000001111111000000000010000000000000000"+
+"000000000000111111111111222233333100001111111111111112220000000001110000000000000000000000000000"+
+"000000000000000011111111122223333330000111111111111111111122000000001000000000000000000000000000"+
+"000000000000000000001111122223333333000011111111110101000111222000000000000000000000000000000000"+
+"000000000000000000000001222222233333300001111110000000000000000222000000000010000000000000000000"+
+"000000000000000000000000001223333233332000011110000000000000000000121000000000000000000000000000"+
+"000000000000000000000000000000222222222200001100000000000000000000000011000000000000000000000000"+
+"000000000000000000000000000000000012222220000100000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000011211200000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000011110001000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
+"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 function sm(x){x=x<0?0:x>1?1:x;return x*x*(3-2*x)}
 function eo(x){x=x<0?0:x>1?1:x;return 1-Math.pow(1-x,3)}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-let E,P=[],NA=0,qs=0;
-/* tur: 0 ambiyans, 1 iris, 2 kapak(metal), 3 halka */
-function S(t){return E.W*(V0K*TAUV*(1-Math.exp(-t/TAUV))+V1K*t)}
-function V(t){return E.W*(V0K*Math.exp(-t/TAUV)+V1K)}
+let E,P=[],NA=0,ZT=null,VT=null;
+/* tur: 0 ambiyans, 1 iris, 2 kapak(metal) */
+function rate(t){const a=CP.V_MIN+(CP.V_MAX-CP.V_MIN)*sm(t/CP.T_ACC);return CP.V_END+(a-CP.V_END)*(1-sm((t-CP.T_G0)/(CP.T_G1-CP.T_G0)))*1+0}
+/* kumulatif z-ilerlemesi tablosu (deterministik; __heroSeek ile atlanabilir) */
+function tab(){ZT=new Float32Array(2401);let z=0;for(let i=0;i<2401;i++){ZT[i]=z;z+=rate(i/60)/60}}
+function Z(t){const f=t*60,i=Math.min(2399,f|0);if(f>=2400)return ZT[2400]+(t-40)*CP.V_END;return ZT[i]+(ZT[i+1]-ZT[i])*(f-i)}
 function mk(kind,g,s,a,tx,ty,tc,dur){
- const d=.25+Math.random()*.75,sy=Math.random()*E.H,sx=Math.random()*E.W;
- P.push({kind,g,s,a,tx,ty,tc,dur,d,sy,x0:sx+S(tc)*d,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:(Math.random()<.5?-1:1)*(30+Math.random()*90),hue:Math.random()})
+ P.push({kind,g,s,a,tx,ty,tc,dur,z0:Math.random(),sf:CP.SF_MIN+Math.random()*(CP.SF_MAX-CP.SF_MIN),ax:Math.random()*2-1,ay:Math.random()*2-1,wob:.5+Math.random()*1.5,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:(Math.random()<.5?-1:1)*(30+Math.random()*90),sz:1})
 }
+function psize(){return .6+Math.pow(Math.random(),CP.SZ_POW)*CP.SZ_MAX}
 function init(e){
- E=e;P=[];const N=e.N;
- /* ambiyans: tum hero'yu kaplayan, hic toplanmayan yildiz akisi */
- NA=Math.round(N*.4);
- for(let i=0;i<NA;i++){const sy=Math.random()*e.H,sx=Math.random()*e.W,d=.12+Math.random()*.88,m=Math.random();
-  P.push({kind:0,g:m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),s:Math.random()<.05?2.5:.9+Math.random()*.9,a:.3+Math.random()*.6,tc:1e9,dur:1,d,sy,x0:sx,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:0,hue:Math.random(),tx:0,ty:0})}
- /* iris parcaciklari: logodaki goz iris/foton halkasi (onceki form korunur) */
+ E=e;P=[];tab();const N=e.N;
+ NA=Math.round(N*CP.AMB_N);
+ for(let i=0;i<NA;i++){const m=Math.random();
+  mk(0,m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),psize(),.35+Math.random()*.6,0,0,1e9,1)}
+ /* iris parcaciklari: logodaki goz iris/foton halkasi (cila1 formu korunur) */
  const NI=Math.round(N*.5);
  for(let i=0;i<NI;i++){
   const u=Math.random();let r,g,s,a,sp=0;
@@ -38,67 +157,88 @@ function init(e){
   else{const v=Math.pow(Math.random(),.8);r=RP+.05+(1-RP-.07)*v;const rn=(r-RP)/(1-RP);sp=1;
    g=rn<.3?pick([9,9,8,9]):rn<.65?pick([8,8,8,9,10]):pick([10,10,8,0]);s=Math.random()<.04?2.5:1+Math.random()*.8;a=.5+Math.random()*.5}
   let ar=Math.random()*TAU;if(sp)ar=Math.round(ar/TAU*SPK)/SPK*TAU+e.gauss()*.0065;
-  /* once dis halka, sonra iceri: gozun akistan dogusu merkezden disa */
-  const tc=2.4+(1-r)*1.2+Math.random()*2.3;
-  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,1.9+Math.random()*1.6);
+  const tc=CP.T_G0-.3+(1-r)*1.1+Math.random()*2;
+  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,2+Math.random()*1.6);
  }
- /* goz kapagi: gri metalik noktaciklar toplanip cerceveyi olusturur */
- const nl=Math.round(N*.4);
+ /* goz cercevesi: logo dosyasindan olculen dis hat/plakalar (96x96 maske, 3 parlaklik kademesi); gri metalik noktaciklar toplanip olusturur */
+ const nl=Math.round(N*CP.LID_N),cells=[];
+ const mk0=(i,j)=>(i<0||j<0||i>95||j>95)?0:LOGO_MASK.charCodeAt(j*96+i)-48;
+ for(let j=0;j<96;j++)for(let i=0;i<96;i++){const c=mk0(i,j);if(!c)continue;const ed=(!mk0(i-1,j)||!mk0(i+1,j)||!mk0(i,j-1)||!mk0(i,j+1))?CP.EDGE_W:1;for(let q=0;q<ed;q++)cells.push([i,j,c])} /* kenar hucreleri 4x: plaka dis hatti belirgin */
+ const sx=CP.EYE_HW/120,sy=sx*CP.EYE_VS;
  for(let i=0;i<nl;i++){
-  const kind=i<nl*.45?0:i<nl*.8?1:2;
-  const sg=(Math.random()*2-1);const sa=Math.sign(sg)*Math.pow(Math.abs(sg),1.15);
-  const ex=Math.abs(sa),sh=1-Math.pow(ex,1.8);
-  let x=sa*LA,y=(kind===1?1.05:1.18)*sh*(kind===1?1:-1);
-  if(kind===2){x*=1.05;y=-1.18*1.14*sh}
-  const jn=e.gauss()*.011;
-  mk(2,pick(kind===2?[11,11,14]:[12,13,14,13,11,12]),kind===2?.9+Math.random()*.4:1+Math.random()*.7,(kind===2?.55:.95)*(.45+.55*sh)+.1,x+jn*.4,y+jn,3.6+Math.random()*3.2,2+Math.random()*1.8);
+  const c=cells[Math.floor(Math.random()*cells.length)];
+  const X=(c[0]+Math.random())*2.5,Y=(c[1]+Math.random())*2.5;
+  const tx=(X-CP.LOGO_CX)*sx,ty=(Y-CP.LOGO_CY)*sy;
+  const lv=c[2],g=lv===1?pick([11,14,11,12]):lv===2?pick([12,13,14,12]):pick([13,13,0,12]);
+  mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.6+Math.random()*2.8,2+Math.random()*1.6);
  }
+ /* kara delik girdabi parcaciklari: gozbebegine dogru donerek akar */
+ for(let i=0;i<CP.VORT_N;i++)P.vort=(P.vort||[]),P.vort.push({u:Math.random(),th:Math.random()*TAU,sp:.6+Math.random()*.8,s:.7+Math.random()*.9});
  P.sort((a,b)=>a.g-b.g);
 }
 function step(){}
+/* z-akisi konumu: (x,y,olcek,seffaflik carpani) -- kavisli (sola) ekrana dogru */
+const FP=[0,0,1,1];
+function flow(p,t,zeta){
+ const W=E.W,H=E.H;let z=(p.z0-zeta*p.sf)%1;if(z<0)z+=1;z=.07+z*.93;
+ const iz=1/z,wob=Math.sin(t*.4*p.wob+p.ph)*.012;
+ FP[0]=W*CP.VPX+(p.ax+wob)*W*CP.SPREAD*iz-CP.CURVE*W*Math.pow(1-z,1.7);
+ FP[1]=H*CP.VPY+p.ay*H*CP.SPREAD*1.6*iz;
+ FP[2]=1+Math.min(iz-1,6)*.28;
+ FP[3]=(z>.9?(1-z)*10:1)*(z<.16?(z-.07)/.09:1)*(.45+.55*(1-z));
+}
 function draw(ctx,E,t){
  const R=E.R,cx=E.cx,cy=E.cy,W=E.W,H=E.H;
- const zoom=1+1.15*sm((t-11.5)/9),M=R*zoom*(1+.014*Math.sin(t*.9));
- const v=V(t),St=S(t);
+ const zoom=1+1.15*sm((t-CP.T_ZOOM)/9),M=R*zoom*(1+.014*Math.sin(t*.9));
+ const zeta=Z(t),rt=rate(t);
  ctx.globalCompositeOperation='lighter';
- /* hizli akis cizgileri: yalniz ilk saniyelerde, parlak parcaciklar sola dogru uzar */
- const sk=Math.min(1,v/(W*.35));
- if(sk>.03){ctx.lineWidth=1;ctx.strokeStyle='rgba(190,215,255,1)';
-  for(let pass=0;pass<2;pass++){ctx.globalAlpha=(pass?.22:.5)*sk;ctx.beginPath();
-   for(let i=0;i<P.length;i+=3){const p=P[i];if(p.kind&&t>p.tc)continue;if((i%2)!==pass)continue;
-    let x=p.x0-St*p.d;if(p.kind===0||t<p.tc)x=((x%W)+W)%W;
-    const L=Math.min(v*p.d*.05,170);if(L<4||x<-10||x>W+L)continue;
-    ctx.moveTo(x,p.sy);ctx.lineTo(x+L,p.sy)}
-   ctx.stroke()}}
- /* iris dolgusu + goz bebegi: parcaciklar yerlesince yavasca belirir (cat diye cikmaz) */
- const fi=sm((t-5.4)/3.2),fp=sm((t-6.2)/2.6),fl=sm((t-8)/2.2);
+ /* hiz cizgileri: hizlanirken yakin parcaciklar z-yonunde (disa, sola kivrilarak) uzar */
+ const sk=Math.max(0,Math.min(1,(rt-.08)/.3));
+ if(sk>.03){ctx.lineWidth=1;ctx.strokeStyle='rgba(190,215,255,1)';ctx.globalAlpha=.42*sk;ctx.beginPath();
+  for(let i=0;i<P.length;i+=3){const p=P[i];if(p.kind&&t>p.tc)continue;
+   flow(p,t,zeta);const x1=FP[0],y1=FP[1],sc=FP[2],al=FP[3];if(sc<1.8||al<.3)continue;
+   flow(p,t,zeta-rt*.05);const x0=FP[0],y0=FP[1];if(x1<-20||x1>W+20||y1<-20||y1>H+20)continue;
+   ctx.moveTo(x0,y0);ctx.lineTo(x1,y1)}
+  ctx.stroke()}
+ /* iris dolgusu: parcaciklar yerlesince yavasca belirir */
+ const fi=sm((t-CP.T_IRIS)/3.2),fp=sm((t-CP.T_PUPIL)/2.6),fl=sm((t-CP.T_METAL)/2.2);
  if(fi>.003&&M<9000){ctx.save();ctx.translate(cx,cy);
   const ig=ctx.createRadialGradient(0,0,M*RP*.9,0,0,M*1.05);
   ig.addColorStop(0,`rgba(1,56,186,${.42*fi})`);ig.addColorStop(.4,`rgba(2,84,240,${.28*fi})`);ig.addColorStop(.8,`rgba(10,147,253,${.16*fi})`);ig.addColorStop(.93,`rgba(10,147,253,${.3*fi})`);ig.addColorStop(1,'rgba(10,147,253,0)');
   ctx.globalAlpha=1;ctx.fillStyle=ig;ctx.beginPath();ctx.arc(0,0,M*1.05,0,TAU);ctx.fill();ctx.restore()}
- /* parcaciklar */
- const eyeMetal=fl;
+ const eyeMetal=fl,J=CP.SHIMMER;
  for(const p of P){
   let x,y,a=p.a,sz=p.s;
-  if(p.kind===0){x=((p.x0-St*p.d)%W+W)%W;y=p.sy;a*=.75+.25*Math.sin(t*.5*p.k+p.ph);sz*=.7+.5*p.d;
-   const mx=x<W*.45?1:1;x+=0*mx}
+  flow(p,t,zeta);const fx=FP[0],fy=FP[1],fs=FP[2],fa=FP[3];
+  if(p.kind===0){x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph));sz*=fs}
   else{
-   const e=eo((t-p.tc)/p.dur);
-   let fx=p.x0-St*p.d;if(t<p.tc)fx=((fx%W)+W)%W;
-   const fy=p.sy,gx=cx+M*p.tx,gy=cy+M*p.ty;
-   if(e<=0){x=fx;y=fy;a*=.5;sz*=.7+.5*p.d}
+   const e=eo((t-p.tc)/p.dur),gx=cx+M*p.tx,gy=cy+M*p.ty;
+   if(e<=0){x=fx;y=fy;a*=fa*.6;sz*=fs}
    else{const sw=Math.sin(Math.PI*e)*p.sw,dx=gx-fx,dy=gy-fy,dl=Math.hypot(dx,dy)||1;
-    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=.5+.5*e;sz*=(.7+.5*p.d)*(1-e)+e}
-   if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*eyeMetal;if(bd>.5&&p.g!==14)p.g=p.g}
+    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=(fa*.6)*(1-e)+e;sz*=fs*(1-e)+e}
+   if(e>.9){const m=sm((e-.9)/.1)*J;x+=Math.cos(t*(.8+.5*p.k)+p.ph)*m;y+=Math.sin(t*(.7+.4*p.k)+p.ph*1.7)*m}
+   if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*eyeMetal}
    if(p.kind===1&&e>.95)a*=.85+.15*Math.sin(t*p.k+p.ph)}
   if(x<-20||x>W+20||y<-20||y>H+20)continue;
   E.putB(x,y,sz,a,p.g);
  }
  E.flush();
- /* goz bebegi (parcaciklarin ustunde, opak karanlik) + foton halkasi + goz isigi */
+ /* goz bebegi = kara delik: opak karanlik + surekli iceri akan girdap + foton halkasi + goz isigi */
  if(fp>.003&&M<9000){ctx.save();ctx.translate(cx,cy);const rp=M*RP;
   const pg=ctx.createRadialGradient(0,0,0,0,0,rp);pg.addColorStop(0,'rgba(0,0,0,1)');pg.addColorStop(.88,'rgba(0,0,0,1)');pg.addColorStop(1,'rgba(0,0,0,0)');
   ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fp;ctx.fillStyle=pg;ctx.beginPath();ctx.arc(0,0,rp,0,TAU);ctx.fill();ctx.globalCompositeOperation='lighter';
+  /* girdap kollari: logaritmik spiral, yavasca doner, merkeze dogru solar (olay ufku siyah kalir) */
+  const rot=t*CP.VORT_SPD*TAU*.35;ctx.lineWidth=Math.max(1,rp*.018);
+  for(let arm=0;arm<3;arm++){
+   for(let seg=0;seg<2;seg++){ctx.beginPath();
+    for(let k=0;k<=26;k++){const q=k/26,r=rp*(.96-.7*q)*(1-seg*.06),th=rot+arm*TAU/3+seg*.07+CP.VORT_TW*Math.pow(q,.8)*TAU*.5;
+     const X=Math.cos(th)*r,Y=Math.sin(th)*r;k?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}
+    ctx.strokeStyle=seg?'rgba(150,200,255,1)':'rgba(10,147,253,1)';ctx.globalAlpha=fp*(seg?.07:.13);ctx.stroke()}}
+  /* iceri akan parcaciklar: yaricap kuculurken aci hizlanir */
+  ctx.fillStyle='rgba(190,225,255,1)';
+  for(const v of P.vort){const u=(v.u+t*CP.VORT_SPD*v.sp)%1,q=1-u,r=rp*(.97*q+.02),th=v.th+rot*.4+CP.VORT_TW*TAU*.4*Math.pow(u,1.4);
+   const al=Math.sin(Math.PI*Math.min(1,u*1.15))*(.2+.8*q)*.9*(r/rp>.2?1:(r/rp)/.2);
+   ctx.globalAlpha=fp*Math.max(0,al);const s=v.s*(.6+.6*q);ctx.fillRect(Math.cos(th)*r-s/2,Math.sin(th)*r-s/2,s,s)}
   const ra=M*(RP+.03),ga=ctx.createRadialGradient(0,0,Math.max(0,ra-M*.03),0,0,ra+M*.05);
   ga.addColorStop(0,'rgba(10,147,253,0)');ga.addColorStop(.42,`rgba(10,147,253,${.26*fp})`);ga.addColorStop(1,'rgba(2,84,240,0)');
   ctx.globalAlpha=1;ctx.fillStyle=ga;ctx.beginPath();ctx.arc(0,0,ra+M*.05,0,TAU);ctx.fill();
@@ -109,7 +249,7 @@ function draw(ctx,E,t){
   ctx.restore()}
  E.flush();
 }
-return{init,step,draw};
+return{init,step,draw,EYE_R_K:CP.EYE_R_K};
 })();
 /* ====== SAHNE BITIS ====== */
 
@@ -159,8 +299,8 @@ function geometry(){
  E.dpr=level?1:Math.min(window.devicePixelRatio||1,2);
  cv.width=Math.round(E.W*E.dpr);cv.height=Math.round(E.H*E.dpr);
  /* sag-orta agirlikli; mobilde basligin arkasinda (ust yarida) */
- E.cx=E.mobile?E.W*.66:E.W*.76;E.cy=E.mobile?E.H*.22:E.H*.45;
- E.R=E.mobile?Math.min(E.W*.34,E.H*.2):Math.min(E.H*.4,E.W*.24)*.85;
+ E.cx=E.mobile?E.W*.66:E.W*.77;E.cy=E.mobile?E.H*.22:E.H*.45;
+ E.R=(E.mobile?Math.min(E.W*.34,E.H*.2):Math.min(E.H*.4,E.W*.24)*.85)*((window.HERO_SCENE&&window.HERO_SCENE.EYE_R_K)||1); /* cila2: goz bir tik kucuk, EYE_R_K sahne CP'sinden (cila1: *1) */
 }
 function build(){
  E.mobile=innerWidth<768;

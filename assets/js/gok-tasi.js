@@ -1,6 +1,7 @@
 /* gok-tasi.js — urun ikonlari: parcaciklardan olusan kucuk gok taslari (assemble + havada salinim) */
 (function(){'use strict';
 var imgs=[].slice.call(document.querySelectorAll('img.urun-ikon'));if(!imgs.length)return;
+var SEP=1.07; /* [cila2 mad.7] toplandiktan sonra taslar birbirinden cok az daha ayrik (cila1: 1) */
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,TAU=Math.PI*2,list=[],raf=0;
 function rnd(s){return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
 function build(seed,tint){
@@ -25,7 +26,7 @@ function draw(o,tm){
  var c=o.cx,S=o.cv.width,d=o.d,t=(tm-o.t0)/1000,asm=reduce?1:Math.min(1,t/1.8);
  c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,S,S);
  var bob=reduce?0:Math.sin(tm/1400+d.ph)*S*.025,rot=reduce?0:tm/9000*(d.ph>3?-1:1)*0+Math.sin(tm/3600+d.ph)*.18;
- c.translate(S/2,S/2+bob);c.rotate(rot);var u=S*.95,t3=d.tint;
+ c.translate(S/2,S/2+bob);c.rotate(rot);var u=S*.95*SEP,t3=d.tint;
  for(var i=0;i<d.k.length;i++){var p=d.k[i],e=Math.min(1,Math.max(0,(asm-p.tc*.55)/.45));e=1-Math.pow(1-e,3);
   var x=(p.sx+(p.x-p.sx)*e)*u,y=(p.sy+(p.y-p.sy)*e)*u,l=.28+.72*p.sh,a=(.25+.75*e)*Math.min(1,.35+p.sh*1.1);
   c.fillStyle='rgba('+((t3[0]*l)|0)+','+((t3[1]*l+20*l)|0)+','+Math.min(255,(t3[2]*l+40*p.sh)|0)+','+a.toFixed(2)+')';

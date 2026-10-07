@@ -70,7 +70,7 @@ article.serit.ters{--n1:40,70,200;--n2:10,147,253}
 @media (max-width:767px){.hero-sahne.hazir .hero-galaksi{opacity:.8}}
 
 /* ====== CILA 2 (07.10.2026) — parametreler :root'ta; eski (cila 1) degerler yorumda ====== */
-:root{--sis-a1:.38;--sis-a2:.28;--sis-a3:.22;--sis-mask:700px;--sis-hiz:80s;--rz:120,170,255;--toz-nokta:5px;--toz-saydamlik:.55}
+:root{--sis-a1:.5;--sis-a2:.38;--sis-a3:.3; /* [cila3 mad.4] cila2: .38/.28/.22 */ --sis-mask:700px;--sis-hiz:80s;--rz:120,170,255;--toz-nokta:5px;--toz-saydamlik:.55}
 /* [mad.8] Vyron bolumundeki sis dili tum bolumlere: ayni maske boyutu, ayni hareket, ayni radial yapi (cila1: bolum basina .40/.32, 820px, 70/95s) */
 #isler::before,#nasil::before,.hakkinda::before,#contact::before,.yakinda::before,footer::before{
  background:radial-gradient(42% 56% at 24% 46%,rgba(var(--n1),var(--sis-a1)),transparent 72%),radial-gradient(34% 46% at 80% 58%,rgba(var(--n2),var(--sis-a2)),transparent 72%);
@@ -104,3 +104,25 @@ article.serit.gorsel-genis{--rz:110,222,170}
 .hero-serit b{color:#aebfdc}
 .hero-serit b::before{z-index:1}
 @media (prefers-reduced-motion:reduce){.rozet::after,.rozet::before,.hero-serit b::after{animation:none}}
+
+/* ====== CILA 3 (07.10.2026) — parametreler :root'ta; eski (cila 2) degerler yorumda ====== */
+:root{--hero-fade:.45s;--hero-sol-a:.3;--mob-goz-ust:165px}
+/* [mad.2] canvas hizli belirir (cila2: 1.4s) -> ilk saniyede hero dolu */
+.hero-galaksi{transition:opacity var(--hero-fade) ease}
+/* [mad.2/6] akis hero'nun tamamini kaplasin: sol yari .16 -> .3 (cila2: .16) */
+@media (min-width:768px){.hero-galaksi{-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,var(--hero-sol-a)) 0,rgba(0,0,0,var(--hero-sol-a)) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%);mask-image:linear-gradient(90deg,rgba(0,0,0,var(--hero-sol-a)) 0,rgba(0,0,0,var(--hero-sol-a)) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%)}}
+/* [mad.5] mobil: goz basligin USTUNDE (hero ust bosluk acilir), yazi ile cakismaz (cila2: gozbasligin arkasinda) */
+@media (max-width:767px){.hero{padding-top:calc(150px + var(--mob-goz-ust))}}
+/* [mad.4] pembe sis (Yakinda): Vyron yesilindeki yogunluga cekildi (cila2: --n1 214,96,140 / a1 .42 / a2 .3) */
+.yakinda{--n1:236,108,164;--n2:176,84,206;--n3:250,170,200;--sis-a1:.66;--sis-a2:.5;--sis-a3:.4}
+/* [mad.7 kusur 1] hero seridi Microsoft Store cipi: nokta ile yazi ayri satira dusuyordu (a{display:block}) -> tek satir, ortali */
+.hero-serit b:has(a){display:inline-flex;align-items:center}
+.hero-serit b:has(a)::before{flex:none}
+/* [mad.7 kusur 2] tipografi hizasi: hero metni 100px iceride basliyordu (max-width 1000 ortali), bolum basliklari/header ile ayni sol cizgiye (cila2: .hero-in max-width 1000) */
+.hero-in{max-width:var(--wrap)}.hero h1{max-width:952px}.hero-serit{max-width:none}
+/* [mad.7 kusur 3] buton hover: hero dugmeleri hafif yukselir + isik halesi (cila2: sadece renk) */
+.hero .btn{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease}
+.hero .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(10,100,255,.38)}
+.hero .btn-2:hover{box-shadow:0 8px 26px rgba(120,170,255,.22)}
+/* [mad.7 kusur 4] rozet kenarlari: nokta ile yazi arasi (9px) mobilde sikisiyordu */
+@media (max-width:767px){.hero-serit b{letter-spacing:.11em}}

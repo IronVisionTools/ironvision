@@ -14,23 +14,30 @@ window.HERO_SCENE=(function(){
 const TAU=Math.PI*2,RP=.28,SPK=84;
 const CP={
  EYE_R_K:.84,      /* [mad.3] goz bir tik kucuk: iris yaricapi carpani (cila1: 1) */
- EYE_HW:1.95,      /* [mad.2] logo dis hattinin yari genisligi (iris yaricapi biriminde; cila1 LA=1.5 parametrik kapak) */
+ EYE_HW:1.7,       /* [cila3 mad.3] 1.7: cerceve ekran disina/basligin altina tasmasin (cila2: 1.95) */
+ /*EYE_HW_ESKI:1.95,*/      /* [mad.2] logo dis hattinin yari genisligi (iris yaricapi biriminde; cila1 LA=1.5 parametrik kapak) */
+ EYE_VS_M:1.05,   /* [cila3 mad.5] mobilde dikey gerilme (kapaklar basliga inmesin) */
  EYE_VS:1.45,      /* [mad.2] logo hattinin dikey gerilmesi: 1 = birebir oran; iris kapaklarin altinda kalmasin diye 1.45 */
  LOGO_CX:124,LOGO_CY:134, /* logo (goz-logo.png 240px) iris halkasi merkezi (olculdu) */
  EDGE_W:12,      /* plaka kenar hucresi agirligi (dis hat belirginligi) */
  LID_N:.95,        /* kapak parcacik payi (N carpani; cila1: .4) */
- AMB_N:.6,        /* ambiyans yildiz payi (cila1: .4) */
- V_MIN:.018,V_MAX:.42,T_ACC:4.4,   /* [mad.4] z hizi: yavas baslar (V_MIN), T_ACC sn'de V_MAX'a hizlanir (cila1: yatay hiz 1.5*W/sn'den inip) */
- T_G0:4.6,T_G1:9.2,V_END:.014,    /* [mad.1/4] toplanma: hiz T_G0..T_G1 arasi V_END'e iner */
+ AMB_N:.9,        /* [cila3 mad.2] ilk saniye dolu gorunsun (cila2: .6) */
+ FLOW_SZ:1.6,FLOW_A:1.0, /* [cila3 mad.2] akis asamasi parcacik boyut/parlaklik carpani (cila2: 1 / .6 pay) */
+ AMB_A:2.0,       /* [cila3 mad.2] ambiyans parlakligi carpani (cila2: 1) */        /* ambiyans yildiz payi (cila1: .4) */
+ V_MIN:.05,V_MAX:.42,T_ACC:2.8,   /* [mad.4] z hizi: yavas baslar (V_MIN), T_ACC sn'de V_MAX'a hizlanir (cila1: yatay hiz 1.5*W/sn'den inip) */
+ T_G0:2.9,T_G1:5.6,V_END:.014,   /* [cila3 mad.1] cila2: V_MIN .018, T_ACC 4.4, T_G0 4.6, T_G1 9.2 */
+ TC_SPAN:1.3,TL_SPAN:1.7,DUR_A:1.6,DUR_B:1.2, /* [cila3 mad.1] parcacik yerlesme yayilimi: iris rand*TC_SPAN, kapak rand*TL_SPAN, sure DUR_A+rand*DUR_B (cila2: 2 / 2.8 / 2+rand*1.6) */    /* [mad.1/4] toplanma: hiz T_G0..T_G1 arasi V_END'e iner */
  CURVE:.34,        /* [mad.3] ekrana gelirken sola kavis (W cinsinden, yakinda en fazla) */
- SPREAD:.34,        /* z ekseni acilimi */
+ SPREAD:.5,         /* [cila3 mad.2] z acilimi, sol/orta de dolsun (cila2: .34) */        /* z ekseni acilimi */
  VPX:.64,VPY:.46,  /* kacis noktasi (hero oranlari); goz sagda */
  SZ_POW:3,SZ_MAX:3.4,   /* [mad.4] boyut dagilimi: .6+rand^SZ_POW*SZ_MAX (cila1: .9+rand*.9) */
  SF_MIN:.35,SF_MAX:1.7, /* [mad.4] parcacik basina bagimsiz hiz carpani (cila1: .25-1 paralaks) */
  SHIMMER:1.7,      /* [mad.5] goz olustuktan sonra yerinde salinim (px) */
  VORT_N:240,VORT_SPD:.22,VORT_TW:3.2, /* [mad.1] kara delik girdabi: parcacik sayisi, akis hizi, burulma */
- T_IRIS:6.4,T_PUPIL:7.4,T_METAL:9.4, /* iris dolgusu / gozbebegi / metal parlama baslangiclari (cila1: 5.4/6.2/8) */
- T_ZOOM:13.2       /* irise yakinlasma baslangici (cila1: 11.5) */
+ T_IRIS:3.9,T_PUPIL:4.7,T_METAL:6.2, /* [cila3 mad.1] cila2: 6.4/7.4/9.4 */
+ ZOOM_G:.22,       /* [cila3 mad.3] irise yakinlasma payi: zoom=1+ZOOM_G (cila2: 1.15; cerceve tasiyordu) */
+ PAR:.16,          /* [cila3 mad.6] scroll'da goz/akis parallax (hero'dan yavas kayar) */ /* iris dolgusu / gozbebegi / metal parlama baslangiclari (cila1: 5.4/6.2/8) */
+ T_ZOOM:8.6       /* irise yakinlasma baslangici (cila2: 13.2) */
 };
 const LOGO_MASK=""+
 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"+
@@ -157,20 +164,20 @@ function init(e){
   else{const v=Math.pow(Math.random(),.8);r=RP+.05+(1-RP-.07)*v;const rn=(r-RP)/(1-RP);sp=1;
    g=rn<.3?pick([9,9,8,9]):rn<.65?pick([8,8,8,9,10]):pick([10,10,8,0]);s=Math.random()<.04?2.5:1+Math.random()*.8;a=.5+Math.random()*.5}
   let ar=Math.random()*TAU;if(sp)ar=Math.round(ar/TAU*SPK)/SPK*TAU+e.gauss()*.0065;
-  const tc=CP.T_G0-.3+(1-r)*1.1+Math.random()*2;
-  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,2+Math.random()*1.6);
+  const tc=CP.T_G0-.3+(1-r)*1.1+Math.random()*CP.TC_SPAN;
+  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,CP.DUR_A+Math.random()*CP.DUR_B);
  }
  /* goz cercevesi: logo dosyasindan olculen dis hat/plakalar (96x96 maske, 3 parlaklik kademesi); gri metalik noktaciklar toplanip olusturur */
  const nl=Math.round(N*CP.LID_N),cells=[];
  const mk0=(i,j)=>(i<0||j<0||i>95||j>95)?0:LOGO_MASK.charCodeAt(j*96+i)-48;
  for(let j=0;j<96;j++)for(let i=0;i<96;i++){const c=mk0(i,j);if(!c)continue;const ed=(!mk0(i-1,j)||!mk0(i+1,j)||!mk0(i,j-1)||!mk0(i,j+1))?CP.EDGE_W:1;for(let q=0;q<ed;q++)cells.push([i,j,c])} /* kenar hucreleri 4x: plaka dis hatti belirgin */
- const sx=CP.EYE_HW/120,sy=sx*CP.EYE_VS;
+ const sx=CP.EYE_HW/120,sy=sx*(e.mobile?CP.EYE_VS_M:CP.EYE_VS);
  for(let i=0;i<nl;i++){
   const c=cells[Math.floor(Math.random()*cells.length)];
   const X=(c[0]+Math.random())*2.5,Y=(c[1]+Math.random())*2.5;
   const tx=(X-CP.LOGO_CX)*sx,ty=(Y-CP.LOGO_CY)*sy;
   const lv=c[2],g=lv===1?pick([11,14,11,12]):lv===2?pick([12,13,14,12]):pick([13,13,0,12]);
-  mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.6+Math.random()*2.8,2+Math.random()*1.6);
+  mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.4+Math.random()*CP.TL_SPAN,CP.DUR_A+Math.random()*CP.DUR_B);
  }
  /* kara delik girdabi parcaciklari: gozbebegine dogru donerek akar */
  for(let i=0;i<CP.VORT_N;i++)P.vort=(P.vort||[]),P.vort.push({u:Math.random(),th:Math.random()*TAU,sp:.6+Math.random()*.8,s:.7+Math.random()*.9});
@@ -189,7 +196,7 @@ function flow(p,t,zeta){
 }
 function draw(ctx,E,t){
  const R=E.R,cx=E.cx,cy=E.cy,W=E.W,H=E.H;
- const zoom=1+1.15*sm((t-CP.T_ZOOM)/9),M=R*zoom*(1+.014*Math.sin(t*.9));
+ const zoom=1+CP.ZOOM_G*sm((t-CP.T_ZOOM)/9),M=R*zoom*(1+.014*Math.sin(t*.9));
  const zeta=Z(t),rt=rate(t);
  ctx.globalCompositeOperation='lighter';
  /* hiz cizgileri: hizlanirken yakin parcaciklar z-yonunde (disa, sola kivrilarak) uzar */
@@ -210,12 +217,12 @@ function draw(ctx,E,t){
  for(const p of P){
   let x,y,a=p.a,sz=p.s;
   flow(p,t,zeta);const fx=FP[0],fy=FP[1],fs=FP[2],fa=FP[3];
-  if(p.kind===0){x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph));sz*=fs}
+  if(p.kind===0){x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph))*CP.AMB_A;sz*=fs*CP.FLOW_SZ}
   else{
    const e=eo((t-p.tc)/p.dur),gx=cx+M*p.tx,gy=cy+M*p.ty;
-   if(e<=0){x=fx;y=fy;a*=fa*.6;sz*=fs}
+   if(e<=0){x=fx;y=fy;a*=fa*.6*CP.FLOW_A*1.4;sz*=fs*CP.FLOW_SZ}
    else{const sw=Math.sin(Math.PI*e)*p.sw,dx=gx-fx,dy=gy-fy,dl=Math.hypot(dx,dy)||1;
-    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=(fa*.6)*(1-e)+e;sz*=fs*(1-e)+e}
+    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=(fa*.6*CP.FLOW_A*1.4)*(1-e)+e;sz*=fs*CP.FLOW_SZ*(1-e)+e}
    if(e>.9){const m=sm((e-.9)/.1)*J;x+=Math.cos(t*(.8+.5*p.k)+p.ph)*m;y+=Math.sin(t*(.7+.4*p.k)+p.ph*1.7)*m}
    if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*eyeMetal}
    if(p.kind===1&&e>.95)a*=.85+.15*Math.sin(t*p.k+p.ph)}
@@ -249,7 +256,7 @@ function draw(ctx,E,t){
   ctx.restore()}
  E.flush();
 }
-return{init,step,draw,EYE_R_K:CP.EYE_R_K};
+return{init,step,draw,EYE_R_K:CP.EYE_R_K,PAR:CP.PAR,EYE_HW:CP.EYE_HW};
 })();
 /* ====== SAHNE BITIS ====== */
 
@@ -264,6 +271,7 @@ const SPR=PAL.map(c=>{const s=document.createElement('canvas');s.width=s.height=
  const r=g.createRadialGradient(16,16,0,16,16,16);r.addColorStop(0,`rgba(${c},1)`);r.addColorStop(.25,`rgba(${c},.45)`);r.addColorStop(1,`rgba(${c},0)`);g.fillStyle=r;g.fillRect(0,0,32,32);return s;});
 const FILL=PAL.map(c=>`rgb(${c})`);
 const E={W:0,H:0,dpr:1,mobile:false,cx:0,cy:0,R:0,N:0,mx:0,my:0,PAL};
+const PARK=(window.HERO_SCENE&&window.HERO_SCENE.PAR)||0; /* [cila3 mad.6] scroll parallax */
 let level=0,acc=0,cnt=0,smx=0,smy=0,stars=[],shoot=null,nextShoot=0,scene=null,raf=0,last=0,t=0,lastG=-1,inView=true,started=false;
 function rng(a,b){return a+Math.random()*(b-a)}
 function gauss(){let u=0;for(let i=0;i<4;i++)u+=Math.random();return (u-2)/0.577}
@@ -293,14 +301,15 @@ E.flush=function(){
   for(let i=0;i<n;i++)ctx.rect(X[i]-h,Y[i]-h,sz,sz);ctx.fill()}
  lastG=-1;
 };
+const MOB_CY=196,MOB_RK=.225; /* [cila3 mad.5] mobil goz merkezi (px, ust) ve R=MOB_RK*W; cila.css --mob-goz-ust ile ayni bolgeyi acar */
 function geometry(){
  const r=box.getBoundingClientRect();
  E.W=Math.max(1,Math.round(r.width));E.H=Math.max(1,Math.round(r.height));
  E.dpr=level?1:Math.min(window.devicePixelRatio||1,2);
  cv.width=Math.round(E.W*E.dpr);cv.height=Math.round(E.H*E.dpr);
  /* sag-orta agirlikli; mobilde basligin arkasinda (ust yarida) */
- E.cx=E.mobile?E.W*.66:E.W*.77;E.cy=E.mobile?E.H*.22:E.H*.45;
- E.R=(E.mobile?Math.min(E.W*.34,E.H*.2):Math.min(E.H*.4,E.W*.24)*.85)*((window.HERO_SCENE&&window.HERO_SCENE.EYE_R_K)||1); /* cila2: goz bir tik kucuk, EYE_R_K sahne CP'sinden (cila1: *1) */
+ E.cx=E.mobile?E.W*.5:E.W*.775;E.cy=E.mobile?MOB_CY:E.H*.45; /* [cila3 mad.3/5] masaustu cx .77->.775; mobil: goz basligin USTUNDE ortada (cila2: .66W/.22H basligin arkasinda) */
+ E.R=(E.mobile?E.W*MOB_RK:Math.min(E.H*.4,E.W*.24)*.85)*((window.HERO_SCENE&&window.HERO_SCENE.EYE_R_K)||1); /* cila2: goz bir tik kucuk, EYE_R_K sahne CP'sinden (cila1: *1) */
 }
 function build(){
  E.mobile=innerWidth<768;
@@ -332,7 +341,7 @@ function render(dt,tt,still){
  ctx.setTransform(E.dpr,0,0,E.dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.clearRect(0,0,E.W,E.H);
  lastG=-1;smx+=(E.mx-smx)*Math.min(1,dt*3);smy+=(E.my-smy)*Math.min(1,dt*3);
  drawStars(tt);
- ctx.save();ctx.translate(-smx*10,-smy*8);scene.draw(ctx,E,tt);ctx.restore();lastG=-1;
+ ctx.save();ctx.translate(-smx*10,-smy*8+Math.min(window.scrollY||0,E.H)*PARK);scene.draw(ctx,E,tt);ctx.restore();lastG=-1;
  ctx.globalCompositeOperation='lighter';
  if(!still)drawShoot(dt,tt);
 }
@@ -366,7 +375,7 @@ function start(){
   nextShoot=rng(3,6);
   document.addEventListener('visibilitychange',()=>{document.hidden?halt():run()});
   if('IntersectionObserver' in window)new IntersectionObserver(es=>{inView=es[0].isIntersecting;inView?run():halt()},{threshold:0}).observe(hero);
-  if(level<2)run()}
+  if(level<2){render(0,0,true);run()}} /* [cila3 mad.2] ilk gorunen kare t=0 akisi (cila2: sabit goz karesi) */
  requestAnimationFrame(()=>box.classList.add('hazir'));
  let rt=0,pw=innerWidth;
  addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{
@@ -380,7 +389,7 @@ function ready(){
   if(innerWidth<768){ /* mobil: load + 2.5 sn ya da ilk scroll/dokunma, hangisi once */
    let done=false;const fire=()=>{if(done)return;done=true;['scroll','touchstart','pointerdown'].forEach(n=>removeEventListener(n,fire));start()};
    ['scroll','touchstart','pointerdown'].forEach(n=>addEventListener(n,fire,{passive:true,once:true}));setTimeout(fire,2500);return}
-  setTimeout(()=>('requestIdleCallback' in window)?requestIdleCallback(start,{timeout:2000}):start(),400)};
+  setTimeout(()=>('requestIdleCallback' in window)?requestIdleCallback(start,{timeout:250}):start(),0)}; /* [cila3 mad.2] cila2: 400ms / timeout 2000 */
  document.readyState==='complete'?go():addEventListener('load',go,{once:true})}
 ready();
 })();

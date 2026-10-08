@@ -1,0 +1,53 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:04.247
+Voice Chief is in early access. Here is how
+we set it up together.
+
+2
+00:00:05.047 --> 00:00:14.939
+Voice Chief is in early access. Email
+founder at ironvisiontools dot com to
+request the app. Setup support is included,
+so you do not set it up alone.
+
+3
+00:00:15.739 --> 00:00:24.795
+We set up the bridge together on your own
+server. Speech to text runs locally, so your
+audio never leaves that machine. Your
+terminal agent receives what you say.
+
+4
+00:00:25.595 --> 00:00:34.929
+On your Windows PC you add the small
+microphone app. We walk you through these
+commands together: install the requirements,
+copy the config file, then start the app.
+
+5
+00:00:35.729 --> 00:00:43.949
+In the config file you enter your server
+address. Together we check the address
+works, so the microphone app can reach your
+bridge before you try to talk.
+
+6
+00:00:44.749 --> 00:00:54.037
+Next we bind a channel, which links your
+terminal agent session to the voice app.
+After that, what you say lands in that
+session, and the answer comes back to you.
+
+7
+00:00:54.837 --> 00:01:05.379
+Now hold the hotkey and speak. For example,
+say: what is on my list today. Release the
+key, and the agent answers out loud. You can
+also type instead.
+
+8
+00:01:06.179 --> 00:01:11.334
+Done. Need help? Email
+support@ironvisiontools.com.

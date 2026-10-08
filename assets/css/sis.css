@@ -1,0 +1,48 @@
+/* sis.css — NEBULA/SIS bolum bazli duman (08.10.2026). cila.css'ten SONRA yuklenir. Seciciler yalniz [data-sis].
+   Zemin boyanmaz (derin uzay siyahi kalir); yalniz sis renklidir. */
+
+/* ===== RENKLER — "rengi degistir" denirse yalniz buradaki satir degisir =====
+   --sis-1 = ana duman tonu (r,g,b)   --sis-2 = isikli cekirdek tonu (r,g,b)
+   --sis-x = yogun cekirdegin yatay konumu (gorsel sutuna dogru; metinden uzak)   --sis-k = genel yogunluk carpani */
+[data-sis="agentos"]  {--sis-1:26,48,108; --sis-2:58,92,168; --sis-x:72%; --sis-k:1.1}   /* koyu lacivert */
+[data-sis="sesli-sef"]{--sis-1:196,146,20;--sis-2:244,194,60; --sis-x:28%; --sis-k:1.15} /* hardal sarisi */
+[data-sis="moymote"]  {--sis-1:22,108,132; --sis-2:56,170,190; --sis-x:30%; --sis-k:1}  /* koyu celik mavisi / camgobegi */
+[data-sis="sosyal"]   {--sis-1:100,58,168; --sis-2:150,104,222;--sis-x:70%; --sis-k:1}  /* koyu mor / eflatun */
+[data-sis="tryon"]    {--sis-1:222,76,144; --sis-2:255,148,200;--sis-x:70%; --sis-k:.9} /* pembe */
+[data-sis="whatsapp"] {--sis-1:20,126,92;  --sis-2:60,184,140; --sis-x:70%; --sis-k:1}  /* (opsiyonel) koyu zumrut */
+
+/* ===== eski bolum sisi ezildi ===== */
+/* [sis 08.10] eski kural ezildi: cila.css `#urunler article.serit::before/::after` (700px bloklu maske, radial sis) ve
+   cila2 `.yakinda::before/::after` — data-sis tasiyan bolumlerde kapali; kuralin kendisi cila.css'te duruyor (geri alma: bu blogu sil) */
+#urunler article.serit[data-sis]::before,#urunler article.serit[data-sis]::after,
+.yakinda[data-sis]::before,.yakinda[data-sis]::after,
+[data-sis]::before,[data-sis]::after,
+#urunler:has([data-sis])::before,#urunler:has([data-sis])::after{content:none!important;display:none!important} /* [sis 08.10] #urunler bolum-duzeyi mavi sis (cila.css satir ~14-24) de kapali: bolgeler kendi renginde */
+/* zemin boyanmaz: data-sis bolumlerinin kendisi/ustu duz renk almaz */
+[data-sis]{position:relative;background:transparent!important}
+
+/* ===== katmanlar ===== */
+.sis-k{position:absolute;inset:-26% -14%;z-index:-1;pointer-events:none;contain:layout style;opacity:0;transition:opacity 1.6s ease}
+.sis-hazir .sis-k{opacity:1}
+.sis-k i{position:absolute;display:block;pointer-events:none;
+ -webkit-mask-image:var(--sis-tex);mask-image:var(--sis-tex);-webkit-mask-repeat:repeat;mask-repeat:repeat; /* doku periyodik: dikey tekrar dikissiz, en-boy orani korunur (cizgi/ germe yok) */
+ background:radial-gradient(closest-side,rgba(var(--c),1) 0%,rgba(var(--c),.62) 38%,rgba(var(--c),.22) 68%,rgba(var(--c),0) 100%);
+ opacity:calc(var(--o)*var(--sis-k,1));animation:sis-a var(--d) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
+/* a: genis ana duman (cekirdek --sis-x'te) */
+.sis-a{--c:var(--sis-1);--o:.62;--d:96s;width:86%;height:104%;left:calc(var(--sis-x,50%) - 43%);top:-2%;
+ -webkit-mask-size:100% auto;mask-size:100% auto;-webkit-mask-position:12% 30%;mask-position:12% 30%}
+/* b: isikli cekirdek (daha kucuk, acik ton) */
+.sis-b{--c:var(--sis-2);--o:.36;--d:64s;--dl:-21s;width:46%;height:72%;left:calc(var(--sis-x,50%) - 23%);top:14%;animation-name:sis-b;
+ -webkit-mask-size:130% auto;mask-size:130% auto;-webkit-mask-position:70% 10%;mask-position:70% 10%}
+/* c: karsi yandan sizan ince duman */
+.sis-c{--c:var(--sis-1);--o:.42;--d:124s;--dl:-47s;width:62%;height:84%;left:calc(100% - var(--sis-x,50%) - 31%);top:8%;animation-name:sis-c;
+ -webkit-mask-size:110% auto;mask-size:110% auto;-webkit-mask-position:90% 70%;mask-position:90% 70%}
+@keyframes sis-a{from{transform:translate3d(-4%,2%,0) rotate(-5deg) scale(.96)}to{transform:translate3d(5%,-3%,0) rotate(6deg) scale(1.08)}}
+@keyframes sis-b{from{transform:translate3d(6%,-4%,0) rotate(8deg) scale(1.1)}to{transform:translate3d(-5%,5%,0) rotate(-7deg) scale(.9)}}
+@keyframes sis-c{from{transform:translate3d(-6%,4%,0) rotate(4deg) scale(1.05)}to{transform:translate3d(4%,-5%,0) rotate(-9deg) scale(.94)}}
+/* yalniz gorunen bolum animasyonlu + katman tutar (sis.js .sis-on/.sis-off) */
+.sis-on .sis-k i{will-change:transform}
+.sis-off .sis-k i{animation-play-state:paused}
+/* telefon: tek katman, daha yavas */
+@media (max-width:767px){.sis-b,.sis-c{display:none}.sis-a{--d:170s;width:130%;left:calc(var(--sis-x,50%) - 65%)}.sis-k{inset:-16% -14%}}
+@media (prefers-reduced-motion:reduce){.sis-k i{animation:none!important;will-change:auto!important}}

@@ -1,0 +1,54 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:04.247
+This is how AgentOS goes onto your own Linux
+server, step by step.
+
+2
+00:00:05.047 --> 00:00:15.496
+After your order, we hand you the Agency
+Package. It is one folder with the install
+script, two ready-made agents and demo data.
+Copy it to your server and open a terminal
+there.
+
+3
+00:00:16.296 --> 00:00:26.002
+You need a Linux server with Python 3.12 or
+newer. Systemd user services are used for
+the schedules. Check your version with one
+command before you go on.
+
+4
+00:00:26.802 --> 00:00:36.276
+Run the install script with the dry run
+flag. It prints every step it would take,
+and writes nothing to your disk. Read the
+list, so you know exactly what will happen.
+
+5
+00:00:37.076 --> 00:00:46.596
+When the preview looks right, run the same
+command without the dry run flag. The script
+creates the folders, a Python environment,
+and the daily and weekly schedules.
+
+6
+00:00:47.396 --> 00:00:54.548
+Now open the AgentOS panel in your browser.
+This is where you watch your agents work and
+see what they have done, all from one
+screen.
+
+7
+00:00:55.348 --> 00:01:05.100
+The package ships with two ready agents.
+Lead Triage sorts your incoming leads.
+Client Reporting builds your client reports.
+Start with one, and check its result.
+
+8
+00:01:05.900 --> 00:01:11.055
+Done. Need help? Email
+support@ironvisiontools.com.

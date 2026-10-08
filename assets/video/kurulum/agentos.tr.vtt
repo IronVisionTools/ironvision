@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:04.247
+AgentOS kendi Linux sunucunuza boyle
+kurulur, adim adim.
+
+2
+00:00:05.047 --> 00:00:15.496
+Siparisten sonra Ajans Paketini teslim
+ederiz. Kurulum betigi, iki hazir ajan ve
+demo verisi tek klasorde.
+
+3
+00:00:16.296 --> 00:00:26.002
+Python 3.12 veya ustu olan bir Linux sunucu
+gerekir. Zamanlamalar systemd ile calisir.
+Devam etmeden surumu kontrol edin.
+
+4
+00:00:26.802 --> 00:00:36.276
+Kurulum betigini kuru calisma bayragiyla
+calistirin. Atacagi adimlari yazar, diske
+hicbir sey yazmaz.
+
+5
+00:00:37.076 --> 00:00:46.596
+Onizleme dogruysa ayni komutu bayraksiz
+calistirin. Betik klasorleri, Python
+ortamini ve gunluk ile haftalik
+zamanlamalari kurar.
+
+6
+00:00:47.396 --> 00:00:54.548
+Simdi AgentOS panelini tarayicida acin.
+Ajanlarin calismasini ve yaptiklarini tek
+ekrandan izlersiniz.
+
+7
+00:00:55.348 --> 00:01:05.100
+Paketle iki hazir ajan gelir. Lead Triage
+gelen musterileri siniflar, Client Reporting
+musteri raporlari hazirlar. Birinden
+baslayin.
+
+8
+00:01:05.900 --> 00:01:11.055
+Bitti. Yardim lazim mi?
+support@ironvisiontools.com adresine yazin.

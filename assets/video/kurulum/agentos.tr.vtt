@@ -1,49 +1,105 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:04.247
-AgentOS kendi Linux sunucunuza boyle
-kurulur, adim adim.
+00:00:00.300 --> 00:00:05.362
+AgentOS kendi Linux sunucunuza böyle
+kurulur: ilk görüşmeden ilk rapora.
 
 2
-00:00:05.047 --> 00:00:15.496
-Siparisten sonra Ajans Paketini teslim
-ederiz. Kurulum betigi, iki hazir ajan ve
-demo verisi tek klasorde.
+00:00:06.162 --> 00:00:13.546
+Her şey bir tanışma görüşmesiyle başlar.
+Ajansınızın bugün müşteri adaylarını ve
+raporları nasıl yürüttüğünü anlatırsınız,
+önce neyi kuracağımıza karar veririz.
 
 3
-00:00:16.296 --> 00:00:26.002
-Python 3.12 veya ustu olan bir Linux sunucu
-gerekir. Zamanlamalar systemd ile calisir.
-Devam etmeden surumu kontrol edin.
+00:00:14.346 --> 00:00:21.823
+Kurulum görüşmesinde Ajans Paketi'ni teslim
+ederiz. Tek bir klasördür, ihtiyacınız olan
+her şey içindedir. Sunucunuza kopyalayın.
 
 4
-00:00:26.802 --> 00:00:36.276
-Kurulum betigini kuru calisma bayragiyla
-calistirin. Atacagi adimlari yazar, diske
-hicbir sey yazmaz.
+00:00:22.623 --> 00:00:31.451
+İçine bakalım: kurulum betiği, iki hazır
+ajan, bir rapor teması ve gerçek adaylara
+geçmeden her şeyi denemek için demo verisi.
 
 5
-00:00:37.076 --> 00:00:46.596
-Onizleme dogruysa ayni komutu bayraksiz
-calistirin. Betik klasorleri, Python
-ortamini ve gunluk ile haftalik
-zamanlamalari kurar.
+00:00:32.251 --> 00:00:40.007
+Kurmadan önce sunucunuzu kontrol edin. Linux
+ve Python 3.12 veya üstü gerekir. Tek komut
+Python sürümünüzü gösterir.
 
 6
-00:00:47.396 --> 00:00:54.548
-Simdi AgentOS panelini tarayicida acin.
-Ajanlarin calismasini ve yaptiklarini tek
-ekrandan izlersiniz.
+00:00:40.807 --> 00:00:49.491
+Zamanlamalar systemd kullanıcı servisi
+olarak çalışır. Sunucunuzda systemd yoksa
+betikte elle çalıştırma modu var. PDF rapor
+için ayrıca playwright eklenir.
 
 7
-00:00:55.348 --> 00:01:05.100
-Paketle iki hazir ajan gelir. Lead Triage
-gelen musterileri siniflar, Client Reporting
-musteri raporlari hazirlar. Birinden
-baslayin.
+00:00:50.291 --> 00:00:57.861
+Kurulum betiğini kuru çalışma bayrağıyla
+çalıştırın. Atacağı adımları yazar, diske
+hiçbir şey yazmaz. Önce listeyi okuyun.
 
 8
-00:01:05.900 --> 00:01:11.055
-Bitti. Yardim lazim mi?
-support@ironvisiontools.com adresine yazin.
+00:00:58.661 --> 00:01:05.395
+Önizleme doğruysa aynı komutu bayraksız
+çalıştırın. Betik işi üç parçada yapar.
+
+9
+00:01:06.195 --> 00:01:17.201
+Kurulum klasörleri, Python ortamını ve ayar
+dosyasını hazırlar. Ayrıca her gün sekizde,
+Pazartesi yedide çalışan zamanlayıcıları
+kurar. Her müşterinin kurulumu ayrıdır.
+
+10
+00:01:18.001 --> 00:01:26.314
+Şimdi ilk aracı pakete gömülü örnek
+adaylarla deneyin. Tek komut beş demo adayı
+puanlar, tabloya yazar ve kısa bir günlük
+özet çıkarır.
+
+11
+00:01:27.114 --> 00:01:38.863
+Lead Triage her yeni adayı bütçe, aciliyet
+ve uyuma göre sıfırdan yüze kadar puanlar.
+Sıcak, ılık, soğuk diye ayırır ve satış
+ekibine bir gün içinde kimi arayacağını
+söyler.
+
+12
+00:01:39.663 --> 00:01:49.791
+Adaylar üç yoldan gelebilir: doldurduğunuz
+bir JSON dosyası, yalnız okunan bir e-posta
+kutusu veya tam AgentOS kurulumunda bir
+webhook.
+
+13
+00:01:50.591 --> 00:02:00.761
+Sıra Client Reporting'de. CRM tablosunu, bir
+haftayı ve müşteri adını verin; rapor
+tarayıcıda açacağınız bir HTML dosyası
+olarak yazılır.
+
+14
+00:02:01.561 --> 00:02:14.704
+Client Reporting CRM'den bir haftanın
+rakamlarını toplar: yeni ve nitelikli
+adaylar, geçen haftaya göre değişim, sıcak
+adaylardan tahmini gelir. Sonuç HTML
+rapordur, isterseniz PDF de olur.
+
+15
+00:02:15.504 --> 00:02:26.400
+Bundan sonra rutini zamanlayıcılar yürütür.
+Lead Triage her sabah sekizde çalışır,
+haftalık rapor her Pazartesi yedide yazılır.
+Siz yalnızca sonuçlara bakarsınız.
+
+16
+00:02:27.200 --> 00:02:32.768
+Bitti. Yardım lazım mı?
+founder@ironvisiontools.com adresine yazın.

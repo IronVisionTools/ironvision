@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 686 140" role="img" aria-label="İçerik Otomasyonu akış şeması: konu, senaryo, ses, video, yayın">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 686 140" role="img" aria-label="Content automation flow: topic, script, voice, video, publish">
 <defs>
 <linearGradient id="ioG1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a53d3" stop-opacity=".22"/><stop offset="1" stop-color="#0a53d3" stop-opacity=".04"/></linearGradient>
 <marker id="ioOk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7d9bd0"/></marker>
@@ -9,21 +9,21 @@
 </style>
 </defs>
 <rect x="0" y="0" width="686" height="140" fill="none"/>
-<text class="iol" x="59" y="24" text-anchor="middle">1 · KONU</text>
+<text class="iol" x="59" y="24" text-anchor="middle">1 · TOPIC</text>
 <rect class="iok" x="6" y="38" width="106" height="78" rx="14"/>
-<text class="iot" x="59" y="84" text-anchor="middle">Konu</text>
-<text class="iol" x="201" y="24" text-anchor="middle">2 · SENARYO</text>
+<text class="iot" x="59" y="84" text-anchor="middle">Topic</text>
+<text class="iol" x="201" y="24" text-anchor="middle">2 · SCRIPT</text>
 <rect class="iok" x="148" y="38" width="106" height="78" rx="14"/>
-<text class="iot" x="201" y="84" text-anchor="middle">Senaryo</text>
-<text class="iol" x="343" y="24" text-anchor="middle">3 · SES</text>
+<text class="iot" x="201" y="84" text-anchor="middle">Script</text>
+<text class="iol" x="343" y="24" text-anchor="middle">3 · VOICE</text>
 <rect class="iok" x="290" y="38" width="106" height="78" rx="14"/>
-<text class="iot" x="343" y="84" text-anchor="middle">Ses</text>
-<text class="iol" x="485" y="24" text-anchor="middle">4 · VİDEO</text>
+<text class="iot" x="343" y="84" text-anchor="middle">Voice</text>
+<text class="iol" x="485" y="24" text-anchor="middle">4 · VIDEO</text>
 <rect class="iok" x="432" y="38" width="106" height="78" rx="14"/>
 <text class="iot" x="485" y="84" text-anchor="middle">Video</text>
-<text class="iol" x="627" y="24" text-anchor="middle">5 · YAYIN</text>
+<text class="iol" x="627" y="24" text-anchor="middle">5 · PUBLISH</text>
 <rect x="574" y="38" width="106" height="78" rx="18" fill="url(#ioG1)" stroke="#0a53d3" stroke-opacity=".55" stroke-width="1.6"/>
-<text class="iot" x="627" y="84" text-anchor="middle">Yayın</text>
+<text class="iot" x="627" y="84" text-anchor="middle">Publish</text>
 <g fill="none" stroke="#5f7396" stroke-width="1.6" marker-end="url(#ioOk)">
 <path d="M112 77 H147"/>
 <path d="M254 77 H289"/>

@@ -1,53 +1,95 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:04.247
+00:00:00.300 --> 00:00:07.596
 Voice Chief is in early access. Here is how
-we set it up together.
+we set it up together, from your request to
+your first spoken command.
 
 2
-00:00:05.047 --> 00:00:14.939
+00:00:08.396 --> 00:00:18.288
 Voice Chief is in early access. Email
 founder at ironvisiontools dot com to
 request the app. Setup support is included,
 so you do not set it up alone.
 
 3
-00:00:15.739 --> 00:00:24.795
-We set up the bridge together on your own
-server. Speech to text runs locally, so your
-audio never leaves that machine. Your
-terminal agent receives what you say.
+00:00:19.088 --> 00:00:33.392
+Voice Chief has a few parts. A microphone
+window on your PC, a hotkey, a bridge on
+your server, speech to text, your terminal
+agent session, and spoken answers. We will
+go through them one by one.
 
 4
-00:00:25.595 --> 00:00:34.929
+00:00:34.192 --> 00:00:41.576
+We set up the bridge together, on your own
+server. It receives your voice from the
+microphone and passes the text on to your
+terminal agent.
+
+5
+00:00:42.376 --> 00:00:51.472
+The bridge turns your speech into text.
+Speech to text can run on your own server.
+And if you prefer, you can type instead of
+speaking.
+
+6
+00:00:52.272 --> 00:01:01.606
 On your Windows PC you add the small
 microphone app. We walk you through these
 commands together: install the requirements,
 copy the config file, then start the app.
 
-5
-00:00:35.729 --> 00:00:43.949
-In the config file you enter your server
-address. Together we check the address
-works, so the microphone app can reach your
-bridge before you try to talk.
-
-6
-00:00:44.749 --> 00:00:54.037
-Next we bind a channel, which links your
-terminal agent session to the voice app.
-After that, what you say lands in that
-session, and the answer comes back to you.
-
 7
-00:00:54.837 --> 00:01:05.379
-Now hold the hotkey and speak. For example,
-say: what is on my list today. Release the
-key, and the agent answers out loud. You can
-also type instead.
+00:01:02.406 --> 00:01:10.584
+The app sits in your Windows tray and shows
+a round microphone window. It records your
+voice, sends it to the bridge, and plays the
+answer back to you.
 
 8
-00:01:06.179 --> 00:01:11.334
-Done. Need help? Email
-support@ironvisiontools.com.
+00:01:11.384 --> 00:01:19.419
+In the config file you enter your server
+address. Together we check that the address
+works, so the app can reach your bridge
+before you try to talk.
+
+9
+00:01:20.219 --> 00:01:28.283
+The hotkey is push to talk. Hold right
+Control and right Shift while you speak.
+When you let go, your voice is sent.
+
+10
+00:01:29.083 --> 00:01:36.838
+Next we bind a channel. A channel is one of
+your terminal agent sessions, linked to the
+voice app. What you say lands in that
+session.
+
+11
+00:01:37.638 --> 00:01:44.702
+Each agent session can have its own channel.
+Your voice goes to the active one, so you
+never have to choose a target before you
+speak.
+
+12
+00:01:45.502 --> 00:01:53.164
+Now hold the hotkey and ask a question out
+loud. Release the key, and the agent answers
+out loud. You can also type instead.
+
+13
+00:01:53.964 --> 00:02:01.348
+This is the point of Voice Chief. It is not
+dictation. The agent answers out loud, so
+you can keep working without looking at the
+screen.
+
+14
+00:02:02.148 --> 00:02:07.716
+Done. Need help? Email founder at
+ironvisiontools dot com.

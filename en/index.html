@@ -24,6 +24,11 @@
 <meta name="twitter:image" content="https://ironvisiontools.com/assets/img/og-uzay.jpg">
 <link rel="icon" type="image/png" href="../assets/goz-logo.png">
 <link rel="apple-touch-icon" href="../assets/goz-logo.png">
+<link rel="preload" href="../assets/fonts/michroma-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/michroma-latinext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/space-grotesk-latinext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/black-ops-one-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/yenileme.css">
 <link rel="stylesheet" href="../assets/css/kurulum.css?v=k1">
@@ -41,7 +46,7 @@
       "@id": "https://ironvisiontools.com/#org",
       "name": "IRON VISION tools",
       "url": "https://ironvisiontools.com/",
-      "logo": "https://ironvisiontools.com/assets/og-tools.png",
+      "logo": "https://ironvisiontools.com/assets/goz-logo.png",
       "description": "A team based in Türkiye building AI tools for businesses that actually run.",
       "foundingDate": "2026-04",
       "address": {
@@ -87,8 +92,8 @@
 
 <!-- TOP BAR -->
 <nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border-subtle flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto left-0 right-0">
-<a class="marka" href="/en/" aria-label="IRON VISION tools — home">
-<img alt="IRON VISION — steel eye logo" class="marka-logo" src="../assets/goz-logo.png" width="52" height="52"/>
+<a class="marka" href="/en/">
+<img alt="" class="marka-logo" src="../assets/goz-logo-104.webp" width="52" height="52"/>
 <span class="marka-yazi">
 <span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span>
 <span class="marka-tools">tools</span>
@@ -151,11 +156,11 @@
 <div class="serit-gorsel gir">
 <div class="gorsel-yigin">
 <div class="gorsel-kutu zoomlu uzun">
-<img class="buyu" src="../assets/img/agentos-ana.webp" width="1400" height="2472" loading="lazy" decoding="async" alt="VYRON AgentOS home screen top to bottom: deep-space landing screen, project cards, usage counters, daily and nightly analysis">
+<img class="buyu" src="../assets/img/agentos-ana.webp" srcset="../assets/img/agentos-ana-700.webp 700w, ../assets/img/agentos-ana.webp 1400w" sizes="(min-width:1024px) 540px, 92vw" width="1400" height="2472" loading="lazy" decoding="async" alt="VYRON AgentOS home screen top to bottom: deep-space landing screen, project cards, usage counters, daily and nightly analysis">
 <p class="gorsel-alt">AgentOS home screen — top to bottom, a screen from our own system, entries shown are sample data</p>
 </div>
 <div class="gorsel-kutu zoomlu">
-<img class="buyu" src="../assets/img/agentos-gorev.webp" width="1400" height="972" loading="lazy" decoding="async" alt="AgentOS task panel: list of tasks waiting on you and tasks agents have finished, with status tags">
+<img class="buyu" src="../assets/img/agentos-gorev.webp" srcset="../assets/img/agentos-gorev-700.webp 700w, ../assets/img/agentos-gorev.webp 1400w" sizes="(min-width:1024px) 540px, 92vw" width="1400" height="972" loading="lazy" decoding="async" alt="AgentOS task panel: list of tasks waiting on you and tasks agents have finished, with status tags">
 <p class="gorsel-alt">Task panel — what's waiting on you, and what the agents have finished</p>
 </div>
 <div class="video-kutu">
@@ -187,7 +192,7 @@
 <div class="wrap sema-genis">
 <p class="sema-bas">A task's path from start to finish</p>
 <div class="sema">
-<img src="../assets/img/agentos-akis.svg" width="980" height="420" loading="lazy" decoding="async" alt="Flow diagram: trigger (cron, Telegram, email, watchdog) → agent runs → browser task, report, backup, cost tracking → panel and Telegram">
+<img src="../assets/img/agentos-akis-en.svg" width="980" height="420" loading="lazy" decoding="async" alt="Flow diagram: trigger (cron, Telegram, email, watchdog) → agent runs → browser task, report, backup, cost tracking → panel and Telegram">
 </div>
 <p class="sema-alt">Trigger → agent → the work gets done → where you see it. All four boxes are live today.</p>
 </div>
@@ -199,10 +204,10 @@
 <div class="serit-gorsel gir">
 <div class="ikili">
 <div class="gorsel-kutu zoomlu">
-<img class="buyu" src="../assets/img/sesli-sef-dinliyor.webp" width="840" height="1720" loading="lazy" decoding="async" alt="Sesli Şef interface mockup: microphone active, 'Listening…' state, sample conversation flow">
+<img class="buyu" src="../assets/img/sesli-sef-dinliyor.webp" srcset="../assets/img/sesli-sef-dinliyor-600.webp 600w, ../assets/img/sesli-sef-dinliyor.webp 840w" sizes="(min-width:1024px) 320px, 92vw" width="840" height="1720" loading="lazy" decoding="async" alt="Sesli Şef interface mockup: microphone active, 'Listening…' state, sample conversation flow">
 </div>
 <div class="gorsel-kutu zoomlu">
-<img class="buyu" src="../assets/img/sesli-sef-cevap.webp" width="840" height="1720" loading="lazy" decoding="async" alt="Sesli Şef interface mockup: several generic channel tabs open, the agent's reply highlighted while being read aloud">
+<img class="buyu" src="../assets/img/sesli-sef-cevap.webp" srcset="../assets/img/sesli-sef-cevap-600.webp 600w, ../assets/img/sesli-sef-cevap.webp 840w" sizes="(min-width:1024px) 320px, 92vw" width="840" height="1720" loading="lazy" decoding="async" alt="Sesli Şef interface mockup: several generic channel tabs open, the agent's reply highlighted while being read aloud">
 </div>
 </div>
 <p class="gorsel-alt">Design mockup — a real app interface, entirely made-up content; not a real recording</p>
@@ -285,7 +290,7 @@
 <h4>Video automation</h4>
 <p>The video branch of the same flow: you just give a topic; the tool writes a script from it, records a voiceover, edits the video and publishes it along with the caption. It produces anything from short vertical videos to 40-minute long-form content.</p>
 <div class="gorsel-kutu">
-<img src="../assets/img/icerik-otomasyonu-akis.svg" width="980" height="200" loading="lazy" decoding="async" alt="Flow diagram: a topic is given, a script is written, a voiceover is recorded, the video is edited, and it is published on TikTok, Instagram or YouTube">
+<img src="../assets/img/icerik-otomasyonu-akis-en.svg" width="980" height="200" loading="lazy" decoding="async" alt="Flow diagram: a topic is given, a script is written, a voiceover is recorded, the video is edited, and it is published on TikTok, Instagram or YouTube">
 <p class="gorsel-alt">Flow: topic → script → voice → video → publish</p>
 </div>
 <div class="kurulum-slot" data-video="video-otomasyonu"></div>
@@ -324,30 +329,30 @@
 <div class="is-izgara">
 <div class="is-kart gir">
 <div class="zoomlu">
-<img class="buyu" src="../assets/img/isler/is-kervankiran.webp" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Kervankıran night camp site: a starry-sky photo and the headline 'Here the sky is still an event'">
+<img class="buyu" src="../assets/img/isler/is-kervankiran.webp" srcset="../assets/img/isler/is-kervankiran-720.webp 720w, ../assets/img/isler/is-kervankiran.webp 1440w" sizes="(min-width:1024px) 380px, 92vw" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Kervankıran night camp site: a starry-sky photo and the headline 'Here the sky is still an event'">
 </div>
 <div class="is-govde">
-<h4>Kervankıran</h4>
+<h4 role="heading" aria-level="3">Kervankıran</h4>
 <span class="is-etiket">Sample work</span>
-<a class="git" href="https://erdemirigiz-dotcom.github.io/astro-kamp/" target="_blank" rel="noopener">Open site →</a>
+<a class="git" href="https://ironvisiontools.github.io/astro-kamp/" target="_blank" rel="noopener">Open site →</a>
 </div>
 </div>
 <div class="is-kart gir">
 <div class="zoomlu">
-<img class="buyu" src="../assets/img/isler/is-sahan.webp" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Sahan tasting kitchen site: a table-top glass photo and the headline 'Pan-fried liver, a table for six'">
+<img class="buyu" src="../assets/img/isler/is-sahan.webp" srcset="../assets/img/isler/is-sahan-720.webp 720w, ../assets/img/isler/is-sahan.webp 1440w" sizes="(min-width:1024px) 380px, 92vw" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Sahan tasting kitchen site: a table-top glass photo and the headline 'Pan-fried liver, a table for six'">
 </div>
 <div class="is-govde">
-<h4>Sahan</h4>
+<h4 role="heading" aria-level="3">Sahan</h4>
 <span class="is-etiket">Sample work</span>
-<a class="git" href="https://erdemirigiz-dotcom.github.io/sahan-tadim/" target="_blank" rel="noopener">Open site →</a>
+<a class="git" href="https://ironvisiontools.github.io/sahan-tadim/" target="_blank" rel="noopener">Open site →</a>
 </div>
 </div>
 <div class="is-kart gir">
 <div class="zoomlu">
-<img class="buyu" src="../assets/img/isler/is-atolye-butik-2026-09-03.webp" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Atölye Butik site: a photo of hanging clothes and the headline 'Calm cuts, timeless fabrics'">
+<img class="buyu" src="../assets/img/isler/is-atolye-butik-2026-09-03.webp" srcset="../assets/img/isler/is-atolye-butik-2026-09-03-720.webp 720w, ../assets/img/isler/is-atolye-butik-2026-09-03.webp 1440w" sizes="(min-width:1024px) 380px, 92vw" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of the Atölye Butik site: a photo of hanging clothes and the headline 'Calm cuts, timeless fabrics'">
 </div>
 <div class="is-govde">
-<h4>Atölye Butik</h4>
+<h4 role="heading" aria-level="3">Atölye Butik</h4>
 <span class="is-etiket">Sample work</span>
 <a class="git" href="https://ironvisiontools.com/vitrin/vitrin-11-butik-kadin/" target="_blank" rel="noopener">Open site →</a>
 </div>
@@ -435,7 +440,7 @@
 <footer class="w-full py-section-gap-min border-t border-border-subtle bg-surface-dim mt-auto z-10 relative">
 <div class="flex flex-col md:flex-row justify-between items-center px-gutter gap-8 max-w-container-max mx-auto">
 <div class="marka">
-<img alt="" aria-hidden="true" class="marka-logo" src="../assets/goz-logo.png" width="52" height="52"/>
+<img alt="" aria-hidden="true" class="marka-logo" src="../assets/goz-logo-104.webp" width="52" height="52"/>
 <span class="marka-yazi">
 <span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span>
 <span class="marka-tools">tools</span>
@@ -488,7 +493,7 @@
   if (!kutu || !img) return;
   function ac(kaynak) {
     son = kaynak;
-    img.src = kaynak.currentSrc || kaynak.src;
+    img.src = kaynak.src; /* srcset'in kucuk surumu degil, tam boyutlu src acilir */
     img.alt = kaynak.alt || '';
     alt.textContent = kaynak.alt || '';
     kutu.classList.add('acik');
@@ -555,19 +560,22 @@
 })();
 </script>
 
-<!-- Motion: GSAP. Content stays visible via CSS even if it fails to load. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<!-- Motion: Web Animations API (GSAP removed 08.10: 70 KB JS, ScrollTrigger was unused). Content stays visible via CSS if this fails. -->
 <script>
 window.addEventListener('load', function () {
   var az = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (az || !window.gsap) return;                 /* content already visible via CSS */
+  if (az || !document.documentElement.animate) return;  /* content already visible via CSS */
   document.body.classList.add('hareketli');       /* hiding only starts here */
 
   /* entrance animation: IntersectionObserver trigger — independent of scroll driver */
-  gsap.to('.hero .gir', { opacity: 1, y: 0, duration: .8, ease: 'power3.out', stagger: .09 });
+  var goster = function (n, sure, ease, gecik) {
+    var a = n.animate([{ opacity: 0, transform: 'translateY(28px)' }, { opacity: 1, transform: 'none' }],
+      { duration: sure, easing: ease, delay: gecik || 0, fill: 'both' });
+    a.onfinish = function () { n.style.opacity = '1'; n.style.transform = 'none'; a.cancel(); };
+  };
+  [].slice.call(document.querySelectorAll('.hero .gir')).forEach(function (n, i) { goster(n, 800, 'cubic-bezier(.215,.61,.355,1)', i * 90); });
   var kalan = [].slice.call(document.querySelectorAll('.gir')).filter(function (n) { return !n.closest('.hero'); });
-  var ac = function (n) { gsap.to(n, { opacity: 1, y: 0, duration: .7, ease: 'power2.out' }); };
+  var ac = function (n) { goster(n, 700, 'cubic-bezier(.25,.46,.45,.94)', 0); };
   if (!('IntersectionObserver' in window)) { kalan.forEach(ac); return; }
   var io = new IntersectionObserver(function (girisler) {
     girisler.forEach(function (g) { if (g.isIntersecting) { ac(g.target); io.unobserve(g.target); } });
@@ -578,10 +586,15 @@ window.addEventListener('load', function () {
   setTimeout(function () { document.body.classList.remove('hareketli'); }, 8000);
 });
 </script>
-<script src="../assets/js/uzay-arka.js?v=0810"></script>
+<script>/* uzay-arka (yildiz tuvali) kritik yolu bloklamasin: yuklendikten sonra, bosta enjekte edilir */
+window.addEventListener('load', function () {
+  var y = function () { var t = document.createElement('script'); t.src = '../assets/js/uzay-arka.js?v=0810'; document.body.appendChild(t); };
+  if ('requestIdleCallback' in window) requestIdleCallback(y, { timeout: 1200 }); else setTimeout(y, 300);
+});
+</script>
 <script src="../assets/js/hero-galaksi.js?v=0810" defer></script>
 <script src="../assets/js/gok-tasi.js?v=0810" defer></script>
 <script src="../assets/js/sis.js?v=0810" defer></script>
 <script src="/js/moymote-urun.js" defer></script>
-<script src="/assets/js/kurulum.js?v=k1" defer></script>
+<script src="/assets/js/kurulum.js?v=k3" defer></script>
 </body></html>

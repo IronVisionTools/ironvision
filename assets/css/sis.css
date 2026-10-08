@@ -23,7 +23,7 @@
 
 /* ===== katmanlar ===== */
 .sis-k{position:absolute;inset:-26% -14%;z-index:-1;pointer-events:none;contain:layout style;opacity:0;transition:opacity 1.6s ease}
-.sis-hazir .sis-k{opacity:1}
+.sis-k.sis-hazir{opacity:1} /* [perf 08.10] eski: .sis-hazir .sis-k (kok sinifi) */
 .sis-k i{position:absolute;display:block;pointer-events:none;
  -webkit-mask-image:var(--sis-tex);mask-image:var(--sis-tex);-webkit-mask-repeat:repeat;mask-repeat:repeat; /* doku periyodik: dikey tekrar dikissiz, en-boy orani korunur (cizgi/ germe yok) */
  background:radial-gradient(closest-side,rgba(var(--c),1) 0%,rgba(var(--c),.62) 38%,rgba(var(--c),.22) 68%,rgba(var(--c),0) 100%);
@@ -44,5 +44,9 @@
 .sis-on .sis-k i{will-change:transform}
 .sis-off .sis-k i{animation-play-state:paused}
 /* telefon: tek katman, daha yavas */
-@media (max-width:767px){.sis-b,.sis-c{display:none}.sis-a{--d:170s;width:130%;left:calc(var(--sis-x,50%) - 65%)}.sis-k{inset:-16% -14%}}
+@media (max-width:767px){.sis-b,.sis-c{display:none}.sis-a{--d:170s;width:130%;left:calc(var(--sis-x,50%) - 65%)}.sis-k{inset:-16% -14%}
+ /* [perf 08.10] telefon: tek katman STATIK (animasyon yok, will-change yok): doku ve renkler ayni, hareket yok -> kare basi yeniden boyama/kompozit maliyeti sifir */
+ .sis-k i,.sis-on .sis-k i,.sis-off .sis-k i{animation:none!important;will-change:auto!important}
+ .sis-k i{-webkit-mask-image:none!important;mask-image:none!important} /* doku yerine duz radial-gradient (arka plan zaten radial) */
+ .sis-a{transform:translate3d(0,0,0) rotate(0) scale(1.02)}}
 @media (prefers-reduced-motion:reduce){.sis-k i{animation:none!important;will-change:auto!important}}

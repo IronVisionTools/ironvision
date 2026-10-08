@@ -27,6 +27,12 @@ var els=d.querySelectorAll('[data-sis]');
 els.forEach(function(e){var k=d.createElement('div');k.className='sis-k';k.setAttribute('aria-hidden','true');k.innerHTML='<i class="sis-a"></i><i class="sis-b"></i><i class="sis-c"></i>';e.insertBefore(k,e.firstChild);e.classList.add('sis-off')});
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){en.target.classList.toggle('sis-on',en.isIntersecting);en.target.classList.toggle('sis-off',!en.isIntersecting)})},{rootMargin:'160px 0px'});els.forEach(function(e){io.observe(e)})}
 else els.forEach(function(e){e.classList.add('sis-on');e.classList.remove('sis-off')});
-tex(function(t){R.style.setProperty('--sis-tex',t);R.style.setProperty('--duman',t);R.classList.add('sis-hazir')}); /* --duman: eski rozet tozu da bu yumusak dokuyu kullanir */
+/* [perf 08.10] degiskenler :root'a degil ilgili elemanlara yazilir: :root'ta custom property degisimi tum agacta stil yeniden hesabi (477 eleman, ~60 ms gercek / ~240 ms 4x yavas CPU) tetikliyordu */
+var mob=window.matchMedia&&matchMedia('(max-width:767px)').matches;
+/* [perf 08.10] telefon: doku (112x112 gurultu + Blob + mask katmanlari) uretilmez; sis = yalniz radial-gradient (sis.css mobil blogu), anlik hazir */
+if(mob){d.querySelectorAll('.sis-k').forEach(function(k){k.classList.add('sis-hazir')});d.querySelectorAll('.rozet,.hero-serit b').forEach(function(e){e.style.setProperty('--duman','none')})}
+else tex(function(t){d.querySelectorAll('.sis-k').forEach(function(k){k.style.setProperty('--sis-tex',t);k.classList.add('sis-hazir')});
+ d.querySelectorAll('.rozet,.hero-serit b').forEach(function(e){e.style.setProperty('--duman',t)}) /* --duman: rozet tozu bu yumusak dokuyu kullanir */
+});
 }catch(e){}
 })();

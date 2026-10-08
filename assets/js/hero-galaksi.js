@@ -1,10 +1,5 @@
-/* [CILA 07.10: SAHNE bolumu elle yeniden yazildi; hero-galaksi-sync.py ile ezilmemeli]
-   hero-galaksi.js — "sonsuz goz" hero sahnesi (IRON VISION, 03.10.2026)
-   YAPI: [SAHNE] prototipten BIREBIR kopyalanan blok + [MOTOR] siteye ozel kapsayici/performans kodu.
-   Prototip yenilenince SADECE sahne blogu degisir:
-     python3 ~/vyron/wt/hero-galaksi-sync.py   (sablon + prototip -> assets/js/hero-galaksi.js)
-   Kaynak prototip: /home/erdemirigiz/vyron/site-fabrikasi-onizleme/hero-uzay-2026-10-03/sonsuz-goz.html  (degistirilme: 2026-10-03 21:22:12 TR (UTC+3))
-   Sahne sozlesmesi: window.HERO_SCENE={init(E),step(dt,t),draw(ctx,E,t)}; E={W,H,dpr,mobile,cx,cy,R,N,put,gauss,PAL,...} */
+/* hero-galaksi.js — IRON VISION "sonsuz goz" hero sahnesi (03.10.2026, cila 08.10).
+   Sahne sozlesmesi: window.HERO_SCENE={init(E),step(dt,t),draw(ctx,E,t)}. */
 (function(){
 'use strict';
 /* ====== SAHNE BASLA (cila turu 2, 07.10.2026: z-ekseni kavisli yildiz akisi -> logodan olculen goz; kara delik gozbebegi) ======
@@ -20,7 +15,7 @@ const CP={
  EYE_VS:1.45,      /* [mad.2] logo hattinin dikey gerilmesi: 1 = birebir oran; iris kapaklarin altinda kalmasin diye 1.45 */
  LOGO_CX:124,LOGO_CY:134, /* logo (goz-logo.png 240px) iris halkasi merkezi (olculdu) */
  EDGE_W:12,      /* plaka kenar hucresi agirligi (dis hat belirginligi) */
- LID_N:0,          /* [goz 08.10] eski: .95 -- GOZ CERCEVESI YOK (Demir karari): kapak/metal parcaciklari kapali. Geri almak icin .95 yap + LID_TO_IRIS/LID_TO_AMB'yi 0 yap, SPEC_A:1 */
+ LID_N:0,          /* [goz 08.10] eski: .95 -- GOZ CERCEVESI YOK (karar 08.10): kapak/metal parcaciklari kapali. Geri almak icin .95 yap + LID_TO_IRIS/LID_TO_AMB'yi 0 yap, SPEC_A:1 */
  LID_TO_IRIS:.55,  /* [goz 08.10] eski: yok -- kapak payindan irise giden pay (N carpani) */
  LID_TO_AMB:.4,    /* [goz 08.10] eski: yok -- kapak payindan ambiyans/yildiz akisina giden pay (N carpani); toplam yogunluk korunur (.55+.4=.95) */
  SPEC_A:0,         /* [goz 08.10] eski: 1 (gozbebegi ustunde metal parlama beyaz noktasi) */
@@ -45,7 +40,7 @@ const CP={
  SZ_POW:3,SZ_MAX:3.4,   /* [mad.4] boyut dagilimi: .6+rand^SZ_POW*SZ_MAX (cila1: .9+rand*.9) */
  SF_MIN:.35,SF_MAX:1.7, /* [mad.4] parcacik basina bagimsiz hiz carpani (cila1: .25-1 paralaks) */
  SHIMMER:1.7,      /* [mad.5] goz olustuktan sonra yerinde salinim (px) */
- VORT_N:240,VORT_SPD:.22,VORT_TW:3.2, /* [mad.1] kara delik girdabi: parcacik sayisi, akis hizi, burulma */
+ VORT_N:240,VORT_NM:90,VORT_SPD:.22,VORT_TW:3.2, /* [mad.1] kara delik girdabi: parcacik sayisi, akis hizi, burulma */
  T_IRIS:3.9,T_PUPIL:4.7,T_METAL:6.2, /* [cila3 mad.1] cila2: 6.4/7.4/9.4 */
  ZOOM_G:.22,       /* [cila3 mad.3] irise yakinlasma payi: zoom=1+ZOOM_G (cila2: 1.15; cerceve tasiyordu) */
  PAR:.16,          /* [cila3 mad.6] scroll'da goz/akis parallax (hero'dan yavas kayar) */ /* iris dolgusu / gozbebegi / metal parlama baslangiclari (cila1: 5.4/6.2/8) */
@@ -168,14 +163,15 @@ const ST_N=256,ST_MAX=1.6,ST=new Float32Array(ST_N+1);
  ST[ST_N]=1})();
 function spr(e){if(e<=0)return 0;if(e>=ST_MAX)return 1;const q=e/ST_MAX*ST_N,i=q|0;return ST[i]+(ST[i+1]-ST[i])*(q-i)}
 function psize(){return .6+Math.pow(Math.random(),CP.SZ_POW)*CP.SZ_MAX}
-function init(e){
+/* [perf 08.10] initGen: parcacik uretimi jenerator; her 64 parcacikta yield -> telefonda surucu (startMobile) <=5 ms'lik dilimlerle ilerletir (uzun gorev yok). init(e) = hepsini tek seferde (masaustu, eskisi gibi) */
+function* initGen(e){
  E=e;P=[];tab();const N=e.N;
  NA=Math.round(N*(CP.AMB_N+CP.LID_TO_AMB)); /* [goz 08.10] eski: N*CP.AMB_N */
  for(let i=0;i<NA;i++){const m=Math.random();
-  mk(0,m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),psize(),.35+Math.random()*.6,0,0,1e9,1)}
+  mk(0,m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),psize(),.35+Math.random()*.6,0,0,1e9,1);if((i&63)===63)yield}
  /* iris parcaciklari: logodaki goz iris/foton halkasi (cila1 formu korunur) */
  const NI=Math.round(N*(.5+CP.LID_TO_IRIS)); /* [goz 08.10] eski: N*.5 */
- for(let i=0;i<NI;i++){
+ for(let i=0;i<NI;i++){if((i&63)===63)yield;
   const u=Math.random();let r,g,s,a,sp=0;
   if(u<.16){r=1+e.gauss()*.011;g=pick([10,10,0,8]);s=1.2+Math.random()*.6;a=.95} /* [goz 08.10] eski: u<.1, gauss .009, g [10,10,0,12] (12 = metal gri) */
   else if(u<.21){r=RP+.025+e.gauss()*.006;g=pick([10,0,10]);s=1.1+Math.random()*.5;a=.95}
@@ -199,9 +195,11 @@ function init(e){
   mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.4+Math.random()*CP.TL_SPAN,CP.DUR_A+Math.random()*CP.DUR_B);depart(P[P.length-1]);
  }
  /* kara delik girdabi parcaciklari: gozbebegine dogru donerek akar */
- for(let i=0;i<CP.VORT_N;i++)P.vort=(P.vort||[]),P.vort.push({u:Math.random(),th:Math.random()*TAU,sp:.6+Math.random()*.8,s:.7+Math.random()*.9});
+ const NV=e.mobile?CP.VORT_NM:CP.VORT_N; /* [perf 08.10] telefon: gozbebegi ~25px, 240 girdap noktasi gereksiz -> 90 */
+ for(let i=0;i<NV;i++)P.vort=(P.vort||[]),P.vort.push({u:Math.random(),th:Math.random()*TAU,sp:.6+Math.random()*.8,s:.7+Math.random()*.9});
  P.sort((a,b)=>a.g-b.g);
 }
+function init(e){const g=initGen(e);while(!g.next().done);}
 function step(){}
 /* z-akisi konumu: (x,y,olcek,seffaflik carpani) -- kavisli (sola) ekrana dogru */
 const FP=[0,0,1,1];
@@ -233,7 +231,7 @@ function draw(ctx,E,t){
  /* hiz cizgileri: hizlanirken yakin parcaciklar z-yonunde (disa, sola kivrilarak) uzar */
  const sk=Math.max(0,Math.min(1,(rt-.08)/.3));
  if(sk>.03){ctx.lineWidth=1;ctx.strokeStyle='rgba(190,215,255,1)';ctx.globalAlpha=.42*sk;ctx.beginPath();
-  for(let i=0;i<P.length;i+=3){const p=P[i];if(p.kind&&t>p.tc)continue;
+  for(let i=0;i<P.length;i+=(E.mobile?6:3)){const p=P[i];if(p.kind&&t>p.tc)continue; /* [perf 08.10] telefon: hiz cizgileri her 6. parcacik */
    flow(p,t,zeta);const x1=FP[0],y1=FP[1],sc=FP[2],al=FP[3];if(sc<1.8||al<.3)continue;
    flow(p,t,zeta-rt*.05);const x0=FP[0],y0=FP[1];if(x1<-20||x1>W+20||y1<-20||y1>H+20)continue;
    ctx.moveTo(x0,y0);ctx.lineTo(x1,y1)}
@@ -250,8 +248,8 @@ function draw(ctx,E,t){
  const J=CP.SHIMMER,wob=CP.MV_WOB*Math.max(.6,R/246); /* [goz 08.10] eyeMetal kaldirildi */
  for(const p of P){
   let x,y,a=p.a,sz=p.s;
-  flow(p,t,zeta);const fx=FP[0],fy=FP[1],fs=FP[2],fa=FP[3];
-  if(p.kind===0){x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph))*CP.AMB_A;sz*=fs*CP.FLOW_SZ}
+  /* [perf 08.10] flow() yalniz ambiyans ve akistaki (e<=0) parcacik icin lazim; yerlesen/yolda olanlar icin hesaplanmaz (cikti ayni) */
+  if(p.kind===0){flow(p,t,zeta);const fx=FP[0],fy=FP[1],fs=FP[2],fa=FP[3];x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph))*CP.AMB_A;sz*=fs*CP.FLOW_SZ}
   else{
    /* [goz 08.10] eski: lerp(akis_konumu, hedef, easeOutCubic) + duz yay + metal parlama. Yeni: bagimsiz gecikme/sure, yay ilerlemesi (hafif asma),
       akis ivmesini koruyan ayrilis, hedefe donerek spiral, dusuk frekansli sapma; hepsi t'nin saf fonksiyonu (__heroSeek uyumlu) */
@@ -298,7 +296,7 @@ function draw(ctx,E,t){
   ctx.restore()}
  E.flush();
 }
-return{init,step,draw,EYE_R_K:CP.EYE_R_K,PAR:CP.PAR,EYE_HW:CP.EYE_HW,ZOOM_G:CP.ZOOM_G,EYE_CLEAR:CP.EYE_CLEAR};
+return{init,initGen,step,draw,EYE_R_K:CP.EYE_R_K,PAR:CP.PAR,EYE_HW:CP.EYE_HW,ZOOM_G:CP.ZOOM_G,EYE_CLEAR:CP.EYE_CLEAR};
 })();
 /* ====== SAHNE BITIS ====== */
 
@@ -320,7 +318,7 @@ function gauss(){let u=0;for(let i=0;i<4;i++)u+=Math.random();return (u-2)/0.577
 E.rng=rng;E.gauss=gauss;
 E.put=function(x,y,s,a,g){
  if(a<=0.01)return;ctx.globalAlpha=a>1?1:a;
- if(s>=2.4){const d=s*3;ctx.drawImage(SPR[g],x-d/2,y-d/2,d,d);return;}
+ if(s>=E.spr){const d=s*3;ctx.drawImage(SPR[g],x-d/2,y-d/2,d,d);return;}
  if(g!==lastG){ctx.fillStyle=FILL[g];lastG=g}
  ctx.fillRect(x-s/2,y-s/2,s,s);
 };
@@ -329,7 +327,7 @@ const NB=6,NS=3,BX=[],BY=[],BC=[],SZ=[1.05,1.6,2.1];
 for(let i=0;i<PAL.length*NB*NS;i++){BX.push(null);BY.push(null);BC.push(0)}
 E.putB=function(x,y,s,a,g){
  if(a<.02||s<.3)return;
- if(s>=2.4){E.put(x,y,s,a,g);return}
+ if(s>=E.spr){E.put(x,y,s,a,g);return}
  let ab=(a*NB)|0;if(ab>=NB)ab=NB-1;const sb=s<1.25?0:s<1.85?1:2,k=(g*NB+ab)*NS+sb,n=BC[k];
  if(n>=16384)return;
  if(!BX[k]){BX[k]=new Float32Array(16384);BY[k]=new Float32Array(16384)}
@@ -339,7 +337,8 @@ E.flush=function(){
  const nk=BC.length;
  for(let k=0;k<nk;k++){const n=BC[k];if(!n)continue;BC[k]=0;
   const sb=k%NS,ab=((k/NS)|0)%NB,g=(k/(NS*NB))|0,sz=SZ[sb],h=sz/2,X=BX[k],Y=BY[k];
-  ctx.globalAlpha=(ab+.5)/NB;ctx.fillStyle=FILL[g];ctx.beginPath();
+  ctx.globalAlpha=(ab+.5)/NB;ctx.fillStyle=FILL[g];
+  ctx.beginPath();
   for(let i=0;i<n;i++)ctx.rect(X[i]-h,Y[i]-h,sz,sz);ctx.fill()}
  lastG=-1;
 };
@@ -347,7 +346,7 @@ const MOB_CY=196,MOB_RK=.225; /* [cila3 mad.5] mobil goz merkezi (px, ust) ve R=
 function geometry(){
  const r=box.getBoundingClientRect();
  E.W=Math.max(1,Math.round(r.width));E.H=Math.max(1,Math.round(r.height));
- E.dpr=level?1:Math.min(window.devicePixelRatio||1,2);
+ E.dpr=level?1:Math.min(window.devicePixelRatio||1,E.mobile?1.5:2); /* [perf 08.10] telefon: dpr <=1.5 (eski: 2) */
  cv.width=Math.round(E.W*E.dpr);cv.height=Math.round(E.H*E.dpr);
  /* sag-orta agirlikli; mobilde basligin arkasinda (ust yarida) */
  E.cx=E.mobile?E.W*.5:E.W*.775;E.cy=E.mobile?MOB_CY:E.H*.45; /* [cila3 mad.3/5] masaustu cx .77->.775; mobil: goz basligin USTUNDE ortada (cila2: .66W/.22H basligin arkasinda) */
@@ -363,12 +362,14 @@ function geometry(){
    best=R0*s;bcx=need;if(need+M<=E.W*.95)break} /* [goz 08.10] sag sinir .95W (maske .92W sonrasi solar); eski: yok */
   E.R=best;E.cx=bcx}
 }
-function build(){
- E.mobile=innerWidth<768;
- E.N=(E.mobile?2800:5600)>>level; /* mobilde parcacik yarisi; yavas cihazda bir kademe daha */
+function build(gen){
+ E.mobile=innerWidth<768;E.spr=E.mobile?3.4:2.4; /* [perf 08.10] telefon: parlak sprite esigi (drawImage pahali) */
+ E.N=(E.mobile?1200:5600)>>level; /* [perf 08.10] telefon 2800 -> 1200: Lighthouse 4x CPU'da kare basi gorev <=~12 ms icin olculdu (1800'de TBT ~600, 1200'de ~400) */ /* mobilde parcacik yarisi; yavas cihazda bir kademe daha */
  stars=[];const n=[0,0];
  for(let l=0;l<2;l++)for(let i=0;i<n[l];i++)stars.push({l,x:Math.random(),y:Math.random(),s:l?rng(1,1.5):rng(.6,.9),a:l?rng(.35,.7):rng(.2,.45),g:[0,0,1,5,2][Math.floor(Math.random()*5)],p:rng(0,6.28),f:rng(.2,.6)});
- geometry();scene=window.HERO_SCENE;scene.init(E);
+ geometry();scene=window.HERO_SCENE;
+ if(gen){initG=scene.initGen(E);return}
+ initG=null;scene.init(E);
 }
 addEventListener('mousemove',e=>{if(inView){E.mx=e.clientX/innerWidth-.5;E.my=e.clientY/innerHeight-.5}},{passive:true});
 function drawStars(tt){
@@ -401,11 +402,12 @@ function renderStill(){const s=window.HERO_STILL||{};for(let i=0;i<(s.steps||0);
 function loop(ts){
  raf=requestAnimationFrame(loop);
  if(!last){last=ts;return}
+ if(E.mobile&&ts-last<25)return; /* [perf 08.10] telefon: ~30 fps sinir (kare atlanir, t gercek zamanla ilerler) */
  let dt=(ts-last)/1000;last=ts;const raw=dt;if(dt>.05)dt=.05;
  t+=dt;const c0=performance.now();scene.step(dt,t);render(dt,t,false);
  /* uyarlanir: 3 karelik ortalama (cizim ms ya da kare araligi) >32ms ise once sadelestir (dpr 1, yari parcacik), cok ya da yine yavassa sabit goz karesine don */
  const ms=performance.now()-c0;window.__heroMs=(window.__heroMs||ms)*.92+ms*.08;if(FORCE)return;
- acc+=Math.max(ms,Math.min(raw,.3)*1000*.7);
+ acc+=Math.max(ms,E.mobile&&raw<.07?0:Math.min(raw,.3)*1000*.7); /* [perf 08.10] telefonda 30 fps siniri kasitli: 70 ms alti kare araligi yavaslik sayilmaz (yalniz cizim suresi sayilir) */
  if(++cnt===3){const av=acc/cnt;acc=cnt=0;
   if(av>32){halt();if(level<1&&av<70){level=1;build();run()}else{level=2;t=.001;scene.init(E);renderStill()}}}
 }
@@ -413,9 +415,32 @@ window.__heroEye=function(){return[E.cx,E.cy,E.R]}; /* [goz 08.10] test/olcum: g
 window.__heroSeek=function(tt){window.__heroSeekOn=1;halt();t=tt;render(.016,tt,true)};
 function run(){if(window.__heroSeekOn||reduce||raf||document.hidden||!inView)return;last=0;raf=requestAnimationFrame(loop)}
 function halt(){if(raf){cancelAnimationFrame(raf);raf=0}}
+/* [perf 08.10] ortak son: gorunurluk/IntersectionObserver dinleyicileri, 'hazir' sinifi, resize */
+function listen(){
+ document.addEventListener('visibilitychange',()=>{document.hidden?halt():run()});
+ if('IntersectionObserver' in window)new IntersectionObserver(es=>{inView=es[0].isIntersecting;inView?run():halt()},{threshold:0}).observe(hero);
+}
+function tail(){
+ requestAnimationFrame(()=>box.classList.add('hazir'));
+ let rt=0,pw=innerWidth;
+ addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{
+  const wasM=E.mobile;E.mobile=innerWidth<768;
+  if(wasM!==E.mobile||innerWidth!==pw){pw=innerWidth;build()}else geometry();
+  if(reduce)renderStill()},150)});
+}
+/* [perf 08.10] TELEFON: is parcalara bolunur (her biri ayri gorev, uzun gorev yok): (1) tuval+geometri+parcacik uretimi, (2) ilk kare (t=0 akis, ucuz),
+   (3) animasyon dongusu. Olcum karesi (renderStill+getImageData) ve ikinci build() YOK: telefon profili zaten hafif (N 1200, dpr<=1.5, 30fps);
+   yavassa dongudeki uyarlama (av>32ms) kademeyi dusurur. */
+let initG=null;
+function startMobile(){
+ const first=()=>{nextShoot=rng(3,6);listen();render(0,0,true);setTimeout(()=>{run();tail()},0)},
+  pump=()=>{if(!initG)return;const t0=performance.now();let r;do{r=initG.next()}while(!r.done&&performance.now()-t0<5);r.done?setTimeout(first,0):setTimeout(pump,0)};
+ setTimeout(()=>{build(true);setTimeout(pump,0)},0)
+}
 function start(){
  if(started)return;started=true;
  box.insertBefore(cv,box.querySelector('.hero-golge'));
+ if(innerWidth<768&&!reduce)return startMobile();
  build();
  if(reduce)renderStill();
  else{
@@ -439,9 +464,9 @@ function start(){
 /* sayfa yuklendikten sonra, bosta: LCP (h1) ve GSAP girisi etkilenmez */
 function ready(){
  const go=()=>{
-  if(innerWidth<768){ /* mobil: load + 2.5 sn ya da ilk scroll/dokunma, hangisi once */
+  if(innerWidth<768){ /* mobil: load + 1.2 sn ya da ilk scroll/dokunma, hangisi once; [perf 08.10] baslangic artik parcali (startMobile) */
    let done=false;const fire=()=>{if(done)return;done=true;['scroll','touchstart','pointerdown'].forEach(n=>removeEventListener(n,fire));start()};
-   ['scroll','touchstart','pointerdown'].forEach(n=>addEventListener(n,fire,{passive:true,once:true}));setTimeout(fire,2500);return}
+   ['scroll','touchstart','pointerdown'].forEach(n=>addEventListener(n,fire,{passive:true,once:true}));setTimeout(fire,1200);return}
   setTimeout(()=>('requestIdleCallback' in window)?requestIdleCallback(start,{timeout:250}):start(),0)}; /* [cila3 mad.2] cila2: 400ms / timeout 2000 */
  document.readyState==='complete'?go():addEventListener('load',go,{once:true})}
 ready();

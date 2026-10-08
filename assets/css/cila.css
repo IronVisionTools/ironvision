@@ -180,4 +180,7 @@ article.serit.gorsel-genis{--rz:110,222,170}
 /* [cila4 kusur 4] urun seritleri telefonda 78px+78px dikey bosluk birakiyordu (iki urun arasi ~160px bos, ekran yarisi); 52px'e cekildi. Eski: .serit{padding:78px 0} */
 @media (max-width:767px){.serit{padding:52px 0}}
 
-/* [cila4 kusur 5] EN akis semalari: en/index.html dogrudan assets/img/*-en.svg kullanir (CSS yedegi kaldirildi). */
+/* [cila4 kusur 5] EN akis semalari: en/index.html dogrudan assets/img/(ad)-en.svg kullanir (CSS yedegi kaldirildi). */
+
+/* [perf 08.10] telefon: rozet/serit tozunun mask-position animasyonu her karede yeniden boyar (ana is parcacigi); telefonda toz statik, gorunum ayni */
+@media (max-width:767px){.rozet::before,.rozet::after,.hero-serit b::after{animation:none!important}}

@@ -36,7 +36,7 @@ body{overflow-x:hidden}
 
 /* ---------- hero ---------- */
 .hero{position:relative;padding:150px 0 84px;overflow:hidden}
-/* 04.09: ayni mavi parlama alt bolumlere de tasindi (Demir sesli emri) — kural
+/* 04.09: ayni mavi parlama alt bolumlere de tasindi (sesli emri) — kural
    KOPYALANMADI, secici listesi genisletildi. .hakkinda/#contact/footer icin
    position+overflow asagida tek satirda verildi. */
 .hero::before,.hakkinda::before,#contact::before,footer::before{content:"";position:absolute;width:900px;height:900px;right:-280px;top:-360px;border-radius:50%;
@@ -204,7 +204,7 @@ body.hareketli .gir{opacity:0;transform:translateY(28px)}
 .sema-genis .sema{padding:26px 22px}
 .sema-alt{font-family:'Space Grotesk',Arial,sans-serif;font-size:13.5px;color:var(--dim2);margin:14px 0 0}
 
-/* ================= 03.09 duzeltmeleri (Demir sesli emri) ================= */
+/* ================= 03.09 duzeltmeleri (sesli emri) ================= */
 
 /* ---------- marka (ust cubuk + footer) ----------
    Logo 32 -> 52px (1.63x), marka yazisi 18 -> 25px (1.39x).
@@ -220,7 +220,7 @@ body.hareketli .gir{opacity:0;transform:translateY(28px)}
   line-height:1;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap}
 .marka-ad .iron{color:#B4B7BF}
 .marka-ad .vision{color:#2450C8}
-/* 03.10 nav yazisi: IRON krom/celik, VISION koyu lacivert (goz iris tonu). Zemine (#0a0a0b) kontrast: krom 12.6/7.5/3.3, lacivert koyu uc 3:1 alti, okunurluk iris-mavisi glow ile (Demir: daha koyu lacivert) */
+/* 03.10 nav yazisi: IRON krom/celik, VISION koyu lacivert (goz iris tonu). Zemine (#0a0a0b) kontrast: krom 12.6/7.5/3.3, lacivert koyu uc 3:1 alti, okunurluk iris-mavisi glow ile (daha koyu lacivert) */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
 .marka-ad .iron{color:transparent;-webkit-background-clip:text;background-clip:text;
   background-image:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.65) 49%,rgba(255,255,255,0) 60%),linear-gradient(180deg,#CDCED2 0%,#9C9FA8 52%,#5D636E 100%);
@@ -296,7 +296,7 @@ footer .marka-tools{font-size:11px}
 img.buyu{cursor:zoom-in}
 img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
 
-/* ================= 04.09 urun bolumu renkleri (Demir sesli emri, ekran goruntusuyle A/B
+/* ================= 04.09 urun bolumu renkleri (sesli emri, ekran goruntusuyle A/B
    karsilastirildi, VARYANT A secildi) ================= */
 
 /* ---------- 1) WhatsApp Randevu Botu — WhatsApp koyu yesili ---------- */
@@ -327,7 +327,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
   border-top:none;
 }
 
-/* ---------- 11.09 blog sayfalari (Gemini metni, Demir onayli) ---------- */
+/* ---------- 11.09 blog sayfalari (Gemini metni, onayli) ---------- */
 .yazi-govde{max-width:760px}
 .yazi-govde h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;text-transform:uppercase;
   font-size:clamp(20px,3vw,28px);line-height:1.2;margin:38px 0 16px}
@@ -348,7 +348,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
   font-size:clamp(18px,2.6vw,22px);line-height:1.2;margin:0 0 10px}
 .blog-kart p{font-family:'Space Grotesk',Arial,sans-serif;font-size:14.5px;line-height:1.65;color:var(--dim);margin:0 0 14px}
 
-/* ---------- 3) Sesli Şef — kendi amberi (Demir: "bir tık kısılsın"), koyu metin ---------- */
+/* ---------- 3) Sesli Şef — kendi amberi ("bir tık kısılsın"), koyu metin ---------- */
 #sesli-sef{
   background:#E0A70A;
   border-top:none;
@@ -363,7 +363,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
 #sesli-sef .liste li{color:#332a05}
 #sesli-sef .liste li::before{background:#1a1a1a}
 #sesli-sef .gorsel-kutu{border-color:rgba(26,26,26,.28)}
-/* 11.09 Demir geri bildirimi: iki arayüz görseli küçük/sıkışık duruyordu —
+/* 11.09 geri bildirim: iki arayüz görseli küçük/sıkışık duruyordu —
    görsel sütununa biraz daha pay verildi (renk/arkaplan DEĞİŞMEDİ, yalnız oran). */
 @media (min-width:960px){
   #sesli-sef .serit-in{grid-template-columns:minmax(0,1.22fr) minmax(0,.88fr);gap:56px}

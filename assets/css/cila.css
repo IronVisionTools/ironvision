@@ -118,3 +118,66 @@ article.serit.gorsel-genis{--rz:110,222,170}
 .hero .btn-2:hover{box-shadow:0 8px 26px rgba(120,170,255,.22)}
 /* [mad.7 kusur 4] rozet kenarlari: nokta ile yazi arasi (9px) mobilde sikisiyordu */
 @media (max-width:767px){.hero-serit b{letter-spacing:.11em}}
+
+/* ====== [cila4 08.10] duzen/cila turu — eski degerler yorumda ====== */
+/* [cila4 mad.1] YATAY TASMA SIFIR: tasan dekor (sis katmanlari inset -14%, nebula, mm sahnesi) kendi kapsayicisinda x ekseninde kirpilir.
+   overflow-x:clip scroll kapsayici YARATMAZ (sticky bozulmaz), y ekseni gorunur kalir (sis dikeyde tasabilir). Eski: kirpma yok, body overflow-x:hidden yalniz gorunumu kesiyordu. */
+#urunler,#urunler article.serit,.yakinda,#isler,#nasil,.hakkinda,#contact,footer,[data-sis],.hero{overflow-x:clip}
+.hero-sahne{overflow:hidden}
+/* (mm-stage'e clip konmadi: masaustunde telefon gövdesi sahne disina tasar; tasma .serit overflow-x:clip ile kesiliyor) */
+@media (max-width:640px){
+ /* mm-cap: nowrap + translate(-50%) 360px'te solda kesiliyordu -> normal akis, ortali, satir kirar (eski: position:absolute;left:50%;translate:-50% 0;white-space:nowrap) */
+ .mm-cap{position:static;translate:none;white-space:normal;text-align:center;margin:18px auto 0;padding:0 8px;max-width:100%;font-size:14px;line-height:1.5}
+ .mm .serit-gorsel{padding-bottom:0}
+}
+
+/* [cila4 mad.2] AgentOS: gorsel sutunu (3 uzun ekran, ~1800px) metinden (~1150px) cok uzun. Eski: .serit-in align-items:center -> metin dikey ortalanip ust/altta ~330px bosluk.
+   Simdi metin ustten hizali + sticky (mobilde/<1024px sticky YOK). Metin pencereden uzun oldugu icin top = min(112px, 100svh - metin yuksekligi - 24px):
+   kisa pencerede top negatif olur -> once ustu okunur, alt kenar pencere altina oturunca sabitlenir; uzun pencerede nav altinda (112px) sabitlenir.
+   --mh metin sutununun olculen yuksekligi (1440/1280: 1153px, 1024: 1280px). Gorsel sutunu align-self:center kalir (kisa gorselli seritlerde eski gorunum aynen). */
+@media (min-width:1024px){
+ article.serit .serit-in{align-items:start}
+ article.serit .serit-gorsel{align-self:center}
+ #agentos{--mh:1300px}
+ #agentos .serit-metin{align-self:start;position:sticky;top:min(112px,calc(100svh - var(--mh) - 24px))}
+}
+@media (min-width:1200px){#agentos{--mh:1170px}}
+
+/* [cila4 mad.3] AKIS SEMALARI: SVG <img> kucuk sutunda %50 olceklenince 11px etiket ~6px oluyordu. SVG icindeki fontlar buyutuldu (agentos: 12.5->14 / 11->13.5; video: 17->19 / 11->14, viewBox 980x200 -> 686x140), kontrast artirildi.
+   Dar ekranda sayfa taşırmadan yatay kaydirilir; olcek ≥~.9 kalir. */
+@media (max-width:1100px){
+ .sema-genis .sema{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .sema-genis .sema img{min-width:900px;max-width:none}
+}
+@media (max-width:600px){
+ #video-otomasyonu .gorsel-kutu{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ #video-otomasyonu .gorsel-kutu img{min-width:620px;max-width:none}
+ #video-otomasyonu .gorsel-kutu .gorsel-alt{position:sticky;left:0;width:calc(100vw - 112px);max-width:100%}
+}
+/* [cila4 mad.3b] grid ogeleri icerik genisligine (min-content) gore sismesin: kaydirilan sema kutusu sutunu tasirmasin */
+.serit-in>*{min-width:0}
+
+/* [cila4 mad.4] HERO ALT KENARI: sahne/kanvas/nebula alta dogru sayfaya dikissiz erisin.
+   Eski: .hero-sahne mask ...#000 74%,transparent 100% (cila.css, ~satir 60); .hero-golge alt gradyani opak var(--bg) #0a0a0b (uzay zemini #010208'den acik -> alt kenarda ton farki/duz cizgi).
+   Yeni: maske daha erken (%52) ve daha uzun solar, golgedeki opak alt gradyan kalkti (solda metin karartmasi aynen). */
+.hero-sahne{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 52%,rgba(0,0,0,.55) 78%,transparent 99%);mask-image:linear-gradient(180deg,#000 0,#000 52%,rgba(0,0,0,.55) 78%,transparent 99%)}
+.hero-golge{background:linear-gradient(90deg,rgba(10,10,11,.9) 0,rgba(10,10,11,.66) 38%,rgba(10,10,11,0) 66%)}
+@media (max-width:767px){
+ .hero-golge{background:linear-gradient(180deg,rgba(10,10,11,.55) 0,rgba(10,10,11,.45) 55%,rgba(10,10,11,.2) 100%)}
+}
+
+/* [cila4 kusur 1] hakkinda/blog ust cubuk telefonda: "IRON VISION" yazisi EN dugmesine biniyor, "DEMO ISTE" iki satira kiriliyordu (nav yuksekligi 80px).
+   Eski: tailwind px-6 py-2 (24px yan bosluk), nav px-gutter. Ana sayfada bu dugme md alti gizli oldugundan etkilenmez. */
+@media (max-width:767px){
+ nav.fixed{padding-left:16px;padding-right:16px;gap:8px}
+ nav.fixed a.inline-flex{padding:8px 13px;font-size:11px;line-height:1.2;white-space:nowrap}
+ nav.fixed .flex.items-center.gap-3{gap:8px}
+}
+/* [cila4 kusur 2] ic sayfa baslik bandi (sahnesiz .hero): cila3 mobil kurali (150px + 165px goz payi) goz olmayan sayfada ~315px bos bant birakiyordu. Eski: .hero{padding-top:calc(150px + var(--mob-goz-ust))} */
+@media (max-width:767px){.hero:not(:has(.hero-sahne)){padding-top:124px}}
+/* [cila4 kusur 3] hakkinda sag kutucuk sutunu: uzun metin sutunuyla yan yana kaydirirken sabit kalir (eski: ilk ekrandan sonra sag yarim bos). Yalniz >=900px */
+@media (min-width:900px){.hakkinda-in>div:last-child{align-self:start;position:sticky;top:112px}}
+/* [cila4 kusur 4] urun seritleri telefonda 78px+78px dikey bosluk birakiyordu (iki urun arasi ~160px bos, ekran yarisi); 52px'e cekildi. Eski: .serit{padding:78px 0} */
+@media (max-width:767px){.serit{padding:52px 0}}
+
+/* [cila4 kusur 5] EN akis semalari: en/index.html dogrudan assets/img/*-en.svg kullanir (CSS yedegi kaldirildi). */

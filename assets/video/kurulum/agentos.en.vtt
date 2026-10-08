@@ -1,54 +1,111 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:04.247
+00:00:00.300 --> 00:00:05.362
 This is how AgentOS goes onto your own Linux
-server, step by step.
+server, from the first call to your first
+report.
 
 2
-00:00:05.047 --> 00:00:15.496
-After your order, we hand you the Agency
-Package. It is one folder with the install
-script, two ready-made agents and demo data.
-Copy it to your server and open a terminal
-there.
+00:00:06.162 --> 00:00:13.546
+It starts with an intro call. You tell us
+how your agency handles leads and client
+reports today, and we agree what to set up
+first.
 
 3
-00:00:16.296 --> 00:00:26.002
-You need a Linux server with Python 3.12 or
-newer. Systemd user services are used for
-the schedules. Check your version with one
-command before you go on.
+00:00:14.346 --> 00:00:21.823
+In your setup call, we hand you the Agency
+Package. It is one folder, and everything
+you need is inside it. Copy it to your
+server.
 
 4
-00:00:26.802 --> 00:00:36.276
+00:00:22.623 --> 00:00:31.451
+Let us look at what is inside. The install
+script, two ready agents, a report theme,
+and demo data so you can try everything
+before using real leads.
+
+5
+00:00:32.251 --> 00:00:40.007
+Before installing, check your server. You
+need Linux and Python 3.12 or newer. One
+command shows your Python version.
+
+6
+00:00:40.807 --> 00:00:49.491
+The schedules run as systemd user services.
+If your server has no systemd, the script
+has a manual mode. For PDF reports you also
+add playwright.
+
+7
+00:00:50.291 --> 00:00:57.861
 Run the install script with the dry run
 flag. It prints every step it would take,
 and writes nothing to your disk. Read the
-list, so you know exactly what will happen.
-
-5
-00:00:37.076 --> 00:00:46.596
-When the preview looks right, run the same
-command without the dry run flag. The script
-creates the folders, a Python environment,
-and the daily and weekly schedules.
-
-6
-00:00:47.396 --> 00:00:54.548
-Now open the AgentOS panel in your browser.
-This is where you watch your agents work and
-see what they have done, all from one
-screen.
-
-7
-00:00:55.348 --> 00:01:05.100
-The package ships with two ready agents.
-Lead Triage sorts your incoming leads.
-Client Reporting builds your client reports.
-Start with one, and check its result.
+list first.
 
 8
-00:01:05.900 --> 00:01:11.055
-Done. Need help? Email
-support@ironvisiontools.com.
+00:00:58.661 --> 00:01:05.395
+When the preview looks right, run the same
+command without the dry run flag. The script
+then does the work in three parts.
+
+9
+00:01:06.195 --> 00:01:17.201
+The install makes the folders, a Python
+environment and a settings file. It also
+sets a daily timer at eight and a weekly
+timer on Monday at seven. Each client gets a
+separate install.
+
+10
+00:01:18.001 --> 00:01:26.314
+Now try the first tool on the bundled sample
+leads. One command scores five demo leads,
+writes them to a table, and creates a short
+daily summary.
+
+11
+00:01:27.114 --> 00:01:38.863
+Lead Triage scores every new lead from zero
+to one hundred, using budget, urgency and
+fit. It sorts them into hot, warm and cold,
+and tells your sales team who to call within
+a day.
+
+12
+00:01:39.663 --> 00:01:49.791
+Leads can come in three ways: a JSON file
+you fill in, an email inbox that is only
+read, or a webhook when you run the full
+AgentOS setup.
+
+13
+00:01:50.591 --> 00:02:00.761
+Next, Client Reporting. Point it at the CRM
+table, pick a week and a client name, and it
+writes the report as an HTML file you open
+in your browser.
+
+14
+00:02:01.561 --> 00:02:14.704
+Client Reporting collects one week of
+numbers from the CRM: new and qualified
+leads, the change from last week, and
+estimated revenue from hot leads. The result
+is an HTML report, with PDF if you want it.
+
+15
+00:02:15.504 --> 00:02:26.400
+From now on, the timers do the routine. Lead
+Triage runs every morning at eight, and the
+weekly report is written every Monday at
+seven. You only read the results.
+
+16
+00:02:27.200 --> 00:02:32.768
+Done. Need help? Email founder at
+ironvisiontools dot com.

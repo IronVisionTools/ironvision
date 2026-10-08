@@ -4,7 +4,7 @@
 .ks-cerceve{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:linear-gradient(135deg,#131a2b 0%,#0d111b 55%,#0a0a0b 100%);isolation:isolate}
 .ks-kapak,.ks-cerceve video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
 .ks-cerceve video{background:#000;object-fit:contain}
-.ks-oynat{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:var(--acc,#0a53d3);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 8px rgba(10,83,211,.22),0 8px 28px rgba(0,0,0,.5)}
+.ks-oynat{position:absolute;right:22px;bottom:22px;width:60px;height:60px;margin:0;/* [08.10] eski: left/top 50% ortada, kapak basligini kapatiyordu */padding:0;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:var(--acc,#0a53d3);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 8px rgba(10,83,211,.22),0 8px 28px rgba(0,0,0,.5)}
 .ks-oynat svg{width:26px;height:26px;margin-left:3px;fill:currentColor}
 .ks-oynat:focus-visible,.ks-cerceve video:focus-visible{outline:3px solid var(--acc-yazi,#397df6);outline-offset:3px}
 .ks-yok{position:absolute;inset:auto 0 0 0;padding:14px 16px;text-align:center;font:500 15px/1.35 "Space Grotesk",Arial,sans-serif;color:var(--txt,#f2f4f6);background:rgba(10,10,11,.78)}
@@ -13,4 +13,4 @@
 .ks-cerceve[aria-disabled=true]{cursor:default}
 .ks-cerceve[aria-disabled=true] .ks-kapak{filter:saturate(.8) brightness(.8)}
 @media (prefers-reduced-motion:no-preference){.ks-oynat{transition:transform .2s ease,box-shadow .2s ease,background-color .2s}.ks-oynat:hover{transform:scale(1.08);background:#1a66ee;box-shadow:0 0 0 12px rgba(10,83,211,.26),0 8px 28px rgba(0,0,0,.5)}}
-@media (max-width:480px){.ks-oynat{width:56px;height:56px;margin:-28px 0 0 -28px}.ks-yok{font-size:14px;padding:12px}}
+@media (max-width:480px){.ks-oynat{width:48px;height:48px;right:14px;bottom:14px}.ks-yok{font-size:14px;padding:12px}}

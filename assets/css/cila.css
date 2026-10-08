@@ -32,10 +32,6 @@ body{background:transparent!important}
 .hakkinda{--n1:84,104,176;--n2:10,83,211;--n3:30,120,190}
 #contact{--n1:10,83,211;--n2:2,150,199;--n3:50,80,190}
 footer{--n1:20,60,150;--n2:10,83,211;--n3:40,100,170}
-.yakinda .rozet,.yakinda .gorsel-kutu{border-color:rgba(130,220,210,.34)}
-.yakinda .rozet{color:#c8f3ee;background:rgba(16,150,140,.14)}
-.yakinda h3{color:#e6faf7}.yakinda .btn-2{border-color:rgba(130,220,210,.5);color:#e6faf7}.yakinda .btn-2:hover{border-color:#c8f3ee}
-.yakinda .liste li::before{background:#5ad1c4}
 @media (prefers-reduced-motion:reduce){#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before,#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{animation:none}}
 /* metal IRON: fircalanmis celik (ince yatay tel + gezen isik yansimasi), VISION mavisi aynen */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
@@ -55,7 +51,7 @@ footer{--n1:20,60,150;--n2:10,83,211;--n3:40,100,170}
 article.serit.gorsel-genis{--n1:18,150,110;--n2:10,100,190}
 article.serit.ters{--n1:40,70,200;--n2:10,147,253}
 #sesli-sef{--n1:200,140,40;--n2:10,83,211}
-#icerik-otomasyonu{--n1:70,60,190;--n2:2,150,199}
+#sosyal-medya{--n1:70,60,190;--n2:2,150,199}
 #sesli-sef .serit-metin h3{color:#fff}#sesli-sef .serit-metin p,#sesli-sef .serit-metin p[style]{color:#d4dcee!important}
 #sesli-sef .rozet{color:#ffe2a8;background:rgba(200,140,40,.16);border-color:rgba(255,226,168,.45)}
 #sesli-sef .rozet .nokta{background:#4ade80}#sesli-sef .liste li{color:#d4dcee}#sesli-sef .liste li::before{background:#ffc766}
@@ -79,11 +75,7 @@ article.serit.ters{--n1:40,70,200;--n2:10,147,253}
  background:radial-gradient(30% 40% at 60% 20%,rgba(var(--n2),var(--sis-a3)),transparent 72%);
  -webkit-mask-size:var(--sis-mask) var(--sis-mask);mask-size:var(--sis-mask) var(--sis-mask);animation:duman-b 110s ease-in-out infinite alternate}
 /* [mad.8] pembe bolum (Yakinda): duz pembe degil, ayni sis hareketiyle pembemsi bulut (cila1: turkuaz 16,150,140) */
-.yakinda{--n1:214,96,140;--n2:150,70,176;--n3:240,150,185;--sis-a1:.42;--sis-a2:.3;--rz:240,160,196}
-.yakinda .rozet,.yakinda .gorsel-kutu{border-color:rgba(255,190,214,.4)}
-.yakinda .rozet{color:#ffd9e6;background:transparent}
-.yakinda h3{color:#fff0f5}.yakinda .btn-2{border-color:rgba(255,190,214,.5);color:#fff0f5}.yakinda .btn-2:hover{border-color:#ffd9e6}
-.yakinda .liste li::before{background:#f08ab4}
+.yakinda{--n1:214,96,140;--n2:150,70,176;--n3:240,150,185;--sis-a1:.42;--sis-a2:.3}
 /* [mad.6] rozet/kutular: noktali + seffaf, dagilacakmis gibi ama sekli korunur; mavi (varsayilan), gumus-celik (Sesli Sef, kahve yerine), pembe (Yakinda), yesil (WhatsApp). Ton: --rz */
 .rozet,.hero-serit b{background:transparent!important;border:1.5px dotted rgba(var(--rz),.62)!important;position:relative;box-shadow:0 0 18px rgba(var(--rz),.10),inset 0 0 14px rgba(var(--rz),.06)}
 .rozet{color:rgb(var(--rz))}

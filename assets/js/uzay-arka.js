@@ -1,4 +1,4 @@
-/* uzay-arka.js — tum sayfa icin uzaktan yildiz manzarasi (sabit, hero'dan bagimsiz) + sis dokusu */
+/* uzay-arka.js — tum sayfa icin uzaktan yildiz manzarasi (sabit, hero'dan bagimsiz) */
 (function(){'use strict';
 try{
 var d=document,b=d.body,W=Math.max(innerWidth,320),H=Math.round(innerHeight*1.32),dpr=Math.min(devicePixelRatio||1,2),mob=innerWidth<768;
@@ -15,15 +15,6 @@ for(var k=0;k<(mob?6:14);k++){var sx=Math.random()*W,sy=Math.random()*H,rg=x.cre
 var k=d.createElement('div');k.id='uzay-kat';k.setAttribute('aria-hidden','true');
 b.insertBefore(k,b.firstChild);b.insertBefore(c,b.firstChild);
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var t=0;addEventListener('scroll',function(){if(t)return;t=requestAnimationFrame(function(){t=0;c.style.transform='translate3d(0,'+(-scrollY*.04).toFixed(1)+'px,0)'})},{passive:true})}
-/* sis dokusu: 256px fbm (deger gurultusu, 4 oktav), alfa kanali maske olarak */
-var N=256,nc=d.createElement('canvas');nc.width=nc.height=N;var nx=nc.getContext('2d'),im=nx.createImageData(N,N),G=[],O=[8,16,32,64];
-O.forEach(function(o){var a=[];for(var i=0;i<o*o;i++)a.push(Math.random());G.push(a)});
-function vn(gr,o,u,v){var fx=u*o,fy=v*o,x0=Math.floor(fx),y0=Math.floor(fy),tx=fx-x0,ty=fy-y0;tx=tx*tx*(3-2*tx);ty=ty*ty*(3-2*ty);
- function q(i,j){return gr[((j%o+o)%o)*o+((i%o+o)%o)]}
- return (q(x0,y0)*(1-tx)+q(x0+1,y0)*tx)*(1-ty)+(q(x0,y0+1)*(1-tx)+q(x0+1,y0+1)*tx)*ty}
-for(var j=0;j<N;j++)for(var i=0;i<N;i++){var u=i/N,v=j/N,s=0,w=.5;
- for(var l=0;l<4;l++){s+=vn(G[l],O[l],u,v)*w;w*=.5}
- s=Math.max(0,Math.min(1,(s-.28)*1.9));var p=(j*N+i)*4;im.data[p]=im.data[p+1]=im.data[p+2]=255;im.data[p+3]=Math.round(s*255)}
-nx.putImageData(im,0,0);d.documentElement.style.setProperty('--duman','url('+nc.toDataURL('image/png')+')');
+/* [sis 08.10] 256px bloklu --duman gurultusu kaldirildi; yumusak doku artik assets/js/sis.js'te uretilir (eski kod: git gecmisi) */
 }catch(e){}
 })();

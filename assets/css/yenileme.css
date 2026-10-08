@@ -124,13 +124,6 @@ body{overflow-x:hidden}
 /* ---------- yakında / try-on ---------- */
 .yakinda{position:relative;padding:92px 0;border-top:1px solid var(--line);
   background:linear-gradient(135deg,rgba(122,32,72,.34) 0%,rgba(198,107,126,.18) 46%,rgba(10,10,11,0) 78%)}
-.yakinda .rozet{color:#ffd0dd;background:rgba(198,107,126,.16);border-color:rgba(255,208,221,.42)}
-.yakinda .rozet .nokta{background:#f9a8c8}
-.yakinda h3{color:#ffe6ee}
-.yakinda .liste li::before{background:#e58aa4}
-.yakinda .btn-2{border-color:rgba(255,208,221,.5);color:#ffe6ee}
-.yakinda .btn-2:hover{border-color:#ffd0dd}
-.yakinda .gorsel-kutu{border-color:rgba(255,208,221,.28)}
 
 /* ---------- yaptığımız işler ---------- */
 .is-izgara{display:grid;grid-template-columns:1fr;gap:18px}
@@ -433,3 +426,12 @@ nav.fixed::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50
 @media (max-width:767px){
   .hero-sahne.hazir .hero-galaksi{opacity:.4}
 }
+
+/* ====== ana sayfa urun yapisi (08.10) ====== */
+.kurulum-slot:empty{display:none}
+.abonelik-yok{margin:0 0 22px}
+.abonelik-yok strong{font-weight:600;color:var(--txt)}
+.alt-dal{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:26px 24px}
+.alt-dal-etiket{display:block;font-family:'Space Grotesk',Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:10px}
+.alt-dal h4{font-family:'Space Grotesk',Arial,sans-serif;font-size:21px;font-weight:600;margin:0 0 12px;color:var(--txt)}
+.alt-dal p{font-family:'Space Grotesk',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:var(--dim);margin:0 0 18px}

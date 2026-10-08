@@ -20,13 +20,25 @@ const CP={
  EYE_VS:1.45,      /* [mad.2] logo hattinin dikey gerilmesi: 1 = birebir oran; iris kapaklarin altinda kalmasin diye 1.45 */
  LOGO_CX:124,LOGO_CY:134, /* logo (goz-logo.png 240px) iris halkasi merkezi (olculdu) */
  EDGE_W:12,      /* plaka kenar hucresi agirligi (dis hat belirginligi) */
- LID_N:.95,        /* kapak parcacik payi (N carpani; cila1: .4) */
+ LID_N:0,          /* [goz 08.10] eski: .95 -- GOZ CERCEVESI YOK (Demir karari): kapak/metal parcaciklari kapali. Geri almak icin .95 yap + LID_TO_IRIS/LID_TO_AMB'yi 0 yap, SPEC_A:1 */
+ LID_TO_IRIS:.55,  /* [goz 08.10] eski: yok -- kapak payindan irise giden pay (N carpani) */
+ LID_TO_AMB:.4,    /* [goz 08.10] eski: yok -- kapak payindan ambiyans/yildiz akisina giden pay (N carpani); toplam yogunluk korunur (.55+.4=.95) */
+ SPEC_A:0,         /* [goz 08.10] eski: 1 (gozbebegi ustunde metal parlama beyaz noktasi) */
+ RING_A:.5,RING_W:.032, /* [goz 08.10] iris dis halkasi (logodaki parlak elektrik mavisi halka): opaklik, kalinlik (M carpani); eski: yok */
+ MV_ZETA:.75,      /* [goz 08.10] toplanma yayi sonumleme orani: asma ~%2.8 (eski: eo() easeOutCubic, asma yok) */
+ MV_X:5.6,         /* [goz 08.10] yayin yerlesme olcegi (buyuk = daha cabuk oturur) */
+ MV_SM:.8,         /* [goz 08.10] yumusak baslangic: e -> mix(e,smoothstep(e),MV_SM) (0 = dogrusal) */
+ MV_MOM:.35,MV_MOMMAX:.1, /* [goz 08.10] akistan ayrilirken ivme korunumu: sonum suresi (sn), en cok surukleme (W carpani) */
+ MV_SW0:.45,MV_SW1:1.1,MV_SWB:.75, /* [goz 08.10] girdaba spiral: donus acisi (rad) = SW0+rand*SW1, %SWB ayni yon (eski: sw=+-(30..120)px duz yay) */
+ MV_WOB:4.2,       /* [goz 08.10] yol boyu dusuk frekansli sapma genligi (px, R/246 ile olceklenir) */
+ EYE_CLEAR:14,     /* [goz 08.10] masaustu: goz (son zoom'da) h1 satir kutularina en az bu kadar px yaklasir; carparsa once saga kayar, sigmazsa kuculur (0 = kapali; eski: yok) */
+ MV_OSCAP:.045,    /* [goz 08.10] asma ust siniri (R carpani, px) -- uzak parcacik 30px asmasin */
  AMB_N:.9,        /* [cila3 mad.2] ilk saniye dolu gorunsun (cila2: .6) */
  FLOW_SZ:1.6,FLOW_A:1.0, /* [cila3 mad.2] akis asamasi parcacik boyut/parlaklik carpani (cila2: 1 / .6 pay) */
  AMB_A:2.0,       /* [cila3 mad.2] ambiyans parlakligi carpani (cila2: 1) */        /* ambiyans yildiz payi (cila1: .4) */
  V_MIN:.05,V_MAX:.42,T_ACC:2.8,   /* [mad.4] z hizi: yavas baslar (V_MIN), T_ACC sn'de V_MAX'a hizlanir (cila1: yatay hiz 1.5*W/sn'den inip) */
  T_G0:2.9,T_G1:5.6,V_END:.014,   /* [cila3 mad.1] cila2: V_MIN .018, T_ACC 4.4, T_G0 4.6, T_G1 9.2 */
- TC_SPAN:1.3,TL_SPAN:1.7,DUR_A:1.6,DUR_B:1.2, /* [cila3 mad.1] parcacik yerlesme yayilimi: iris rand*TC_SPAN, kapak rand*TL_SPAN, sure DUR_A+rand*DUR_B (cila2: 2 / 2.8 / 2+rand*1.6) */    /* [mad.1/4] toplanma: hiz T_G0..T_G1 arasi V_END'e iner */
+ TC_SPAN:1.3,TL_SPAN:1.7,DUR_A:1.6,DUR_B:1.4, /* [goz 08.10] DUR_B eski: 1.2 */ /* [cila3 mad.1] parcacik yerlesme yayilimi: iris rand*TC_SPAN, kapak rand*TL_SPAN, sure DUR_A+rand*DUR_B (cila2: 2 / 2.8 / 2+rand*1.6) */    /* [mad.1/4] toplanma: hiz T_G0..T_G1 arasi V_END'e iner */
  CURVE:.34,        /* [mad.3] ekrana gelirken sola kavis (W cinsinden, yakinda en fazla) */
  SPREAD:.5,         /* [cila3 mad.2] z acilimi, sol/orta de dolsun (cila2: .34) */        /* z ekseni acilimi */
  VPX:.64,VPY:.46,  /* kacis noktasi (hero oranlari); goz sagda */
@@ -146,38 +158,45 @@ function rate(t){const a=CP.V_MIN+(CP.V_MAX-CP.V_MIN)*sm(t/CP.T_ACC);return CP.V
 function tab(){ZT=new Float32Array(2401);let z=0;for(let i=0;i<2401;i++){ZT[i]=z;z+=rate(i/60)/60}}
 function Z(t){const f=t*60,i=Math.min(2399,f|0);if(f>=2400)return ZT[2400]+(t-40)*CP.V_END;return ZT[i]+(ZT[i+1]-ZT[i])*(f-i)}
 function mk(kind,g,s,a,tx,ty,tc,dur){
- P.push({kind,g,s,a,tx,ty,tc,dur,z0:Math.random(),sf:CP.SF_MIN+Math.random()*(CP.SF_MAX-CP.SF_MIN),ax:Math.random()*2-1,ay:Math.random()*2-1,wob:.5+Math.random()*1.5,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:(Math.random()<.5?-1:1)*(30+Math.random()*90),sz:1})
+ P.push({kind,g,s,a,tx,ty,tc,dur,z0:Math.random(),sf:CP.SF_MIN+Math.random()*(CP.SF_MAX-CP.SF_MIN),ax:Math.random()*2-1,ay:Math.random()*2-1,wob:.5+Math.random()*1.5,ph:Math.random()*TAU,k:1+Math.floor(Math.random()*3),sw:(Math.random()<CP.MV_SWB?1:-1)*(CP.MV_SW0+Math.random()*CP.MV_SW1)/* [goz 08.10] eski: +-(30..120)px */,f1:.7+Math.random()*.9,f2:1.7+Math.random()*1.3,ph2:Math.random()*TAU,wa:.5+Math.random()*.7,sx:0,sy:0,vx:0,vy:0,fa0:1,fs0:1,oc:1,sz:1})
 }
+/* [goz 08.10] yay tablosu: e (0..ST_MAX, 1 = sure sonu) -> ilerleme (alt sonumlu yay, ~%3 asma); tek seferlik, sicak dongude exp/cos yok */
+const ST_N=256,ST_MAX=1.6,ST=new Float32Array(ST_N+1);
+(function(){const z=CP.MV_ZETA,wd=Math.sqrt(1-z*z);
+ for(let i=0;i<=ST_N;i++){const e=i/ST_N*ST_MAX,ee=e<1?e*(1-CP.MV_SM)+CP.MV_SM*(e*e*(3-2*e)):e,x=CP.MV_X*ee;
+  ST[i]=e>=ST_MAX?1:1-Math.exp(-z*x)*(Math.cos(wd*x)+z/wd*Math.sin(wd*x))}
+ ST[ST_N]=1})();
+function spr(e){if(e<=0)return 0;if(e>=ST_MAX)return 1;const q=e/ST_MAX*ST_N,i=q|0;return ST[i]+(ST[i+1]-ST[i])*(q-i)}
 function psize(){return .6+Math.pow(Math.random(),CP.SZ_POW)*CP.SZ_MAX}
 function init(e){
  E=e;P=[];tab();const N=e.N;
- NA=Math.round(N*CP.AMB_N);
+ NA=Math.round(N*(CP.AMB_N+CP.LID_TO_AMB)); /* [goz 08.10] eski: N*CP.AMB_N */
  for(let i=0;i<NA;i++){const m=Math.random();
   mk(0,m<.5?pick([0,1,2]):m<.8?pick([5,3,8]):pick([6,10]),psize(),.35+Math.random()*.6,0,0,1e9,1)}
  /* iris parcaciklari: logodaki goz iris/foton halkasi (cila1 formu korunur) */
- const NI=Math.round(N*.5);
+ const NI=Math.round(N*(.5+CP.LID_TO_IRIS)); /* [goz 08.10] eski: N*.5 */
  for(let i=0;i<NI;i++){
   const u=Math.random();let r,g,s,a,sp=0;
-  if(u<.1){r=1+e.gauss()*.009;g=pick([10,10,0,12]);s=1.2+Math.random()*.6;a=.95}
-  else if(u<.15){r=RP+.025+e.gauss()*.006;g=pick([10,0,10]);s=1.1+Math.random()*.5;a=.95}
-  else if(u<.2){r=.62+e.gauss()*.018;g=pick([10,8,1]);s=1.1+Math.random()*.5;a=.6}
+  if(u<.16){r=1+e.gauss()*.011;g=pick([10,10,0,8]);s=1.2+Math.random()*.6;a=.95} /* [goz 08.10] eski: u<.1, gauss .009, g [10,10,0,12] (12 = metal gri) */
+  else if(u<.21){r=RP+.025+e.gauss()*.006;g=pick([10,0,10]);s=1.1+Math.random()*.5;a=.95}
+  else if(u<.26){r=.62+e.gauss()*.018;g=pick([10,8,1]);s=1.1+Math.random()*.5;a=.6}
   else{const v=Math.pow(Math.random(),.8);r=RP+.05+(1-RP-.07)*v;const rn=(r-RP)/(1-RP);sp=1;
    g=rn<.3?pick([9,9,8,9]):rn<.65?pick([8,8,8,9,10]):pick([10,10,8,0]);s=Math.random()<.04?2.5:1+Math.random()*.8;a=.5+Math.random()*.5}
   let ar=Math.random()*TAU;if(sp)ar=Math.round(ar/TAU*SPK)/SPK*TAU+e.gauss()*.0065;
   const tc=CP.T_G0-.3+(1-r)*1.1+Math.random()*CP.TC_SPAN;
-  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,CP.DUR_A+Math.random()*CP.DUR_B);
+  mk(1,g,s,a,Math.cos(ar)*r,Math.sin(ar)*r,tc,CP.DUR_A+Math.random()*CP.DUR_B);depart(P[P.length-1]);
  }
  /* goz cercevesi: logo dosyasindan olculen dis hat/plakalar (96x96 maske, 3 parlaklik kademesi); gri metalik noktaciklar toplanip olusturur */
- const nl=Math.round(N*CP.LID_N),cells=[];
+ const nl=Math.round(N*CP.LID_N),cells=[]; /* [goz 08.10] LID_N=0 -> hucre/kapak uretimi atlanir */
  const mk0=(i,j)=>(i<0||j<0||i>95||j>95)?0:LOGO_MASK.charCodeAt(j*96+i)-48;
- for(let j=0;j<96;j++)for(let i=0;i<96;i++){const c=mk0(i,j);if(!c)continue;const ed=(!mk0(i-1,j)||!mk0(i+1,j)||!mk0(i,j-1)||!mk0(i,j+1))?CP.EDGE_W:1;for(let q=0;q<ed;q++)cells.push([i,j,c])} /* kenar hucreleri 4x: plaka dis hatti belirgin */
+ for(let j=0;j<(nl>0?96:0);j++)for(let i=0;i<96;i++){const c=mk0(i,j);if(!c)continue;const ed=(!mk0(i-1,j)||!mk0(i+1,j)||!mk0(i,j-1)||!mk0(i,j+1))?CP.EDGE_W:1;for(let q=0;q<ed;q++)cells.push([i,j,c])} /* kenar hucreleri 4x: plaka dis hatti belirgin */
  const sx=CP.EYE_HW/120,sy=sx*(e.mobile?CP.EYE_VS_M:CP.EYE_VS);
  for(let i=0;i<nl;i++){
   const c=cells[Math.floor(Math.random()*cells.length)];
   const X=(c[0]+Math.random())*2.5,Y=(c[1]+Math.random())*2.5;
   const tx=(X-CP.LOGO_CX)*sx,ty=(Y-CP.LOGO_CY)*sy;
   const lv=c[2],g=lv===1?pick([11,14,11,12]):lv===2?pick([12,13,14,12]):pick([13,13,0,12]);
-  mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.4+Math.random()*CP.TL_SPAN,CP.DUR_A+Math.random()*CP.DUR_B);
+  mk(2,g,1.05+Math.random()*.9,(lv===3?1:.9)*(.7+.3*Math.random()),tx,ty,CP.T_G0+.4+Math.random()*CP.TL_SPAN,CP.DUR_A+Math.random()*CP.DUR_B);depart(P[P.length-1]);
  }
  /* kara delik girdabi parcaciklari: gozbebegine dogru donerek akar */
  for(let i=0;i<CP.VORT_N;i++)P.vort=(P.vort||[]),P.vort.push({u:Math.random(),th:Math.random()*TAU,sp:.6+Math.random()*.8,s:.7+Math.random()*.9});
@@ -193,6 +212,18 @@ function flow(p,t,zeta){
  FP[1]=H*CP.VPY+p.ay*H*CP.SPREAD*1.6*iz;
  FP[2]=1+Math.min(iz-1,6)*.28;
  FP[3]=(z>.9?(1-z)*10:1)*(z<.16?(z-.07)/.09:1)*(.45+.55*(1-z));
+}
+/* [goz 08.10] parcacigin akistan ayrildigi nokta/hiz/alfa (bir kez, init'te): yol akisla surekli baslar; ekran disindan cok uzaktaysa ayrilis zamani kaydirilir */
+function depart(p){
+ const W=E.W,H=E.H;let tc=p.tc;
+ for(let k=0;k<6;k++){flow(p,tc,Z(tc));if(FP[0]>-.15*W&&FP[0]<1.15*W&&FP[1]>-.15*H&&FP[1]<1.15*H&&FP[3]>.25)break;tc=p.tc+(Math.random()-.5)*1.2}
+ p.tc=tc;const x0=FP[0],y0=FP[1];p.sx=x0/W;p.sy=y0/H;p.fa0=FP[3];p.fs0=FP[2];
+ flow(p,tc+.03,Z(tc+.03));let vx=(FP[0]-x0)/.03,vy=(FP[1]-y0)/.03;
+ if(Math.abs(vx)>.5*W/.03||Math.abs(vy)>.5*H/.03){vx=0;vy=0}
+ const d=Math.hypot(vx,vy)*CP.MV_MOM,mx=CP.MV_MOMMAX*W;if(d>mx){vx*=mx/d;vy*=mx/d}
+ p.vx=vx/W;p.vy=vy/H;
+ const gx=E.cx+E.R*p.tx,gy=E.cy+E.R*p.ty,dl=Math.hypot(x0-gx,y0-gy)||1;
+ p.oc=Math.min(1,CP.MV_OSCAP*E.R/(dl*.03));
 }
 function draw(ctx,E,t){
  const R=E.R,cx=E.cx,cy=E.cy,W=E.W,H=E.H;
@@ -212,19 +243,30 @@ function draw(ctx,E,t){
  if(fi>.003&&M<9000){ctx.save();ctx.translate(cx,cy);
   const ig=ctx.createRadialGradient(0,0,M*RP*.9,0,0,M*1.05);
   ig.addColorStop(0,`rgba(1,56,186,${.42*fi})`);ig.addColorStop(.4,`rgba(2,84,240,${.28*fi})`);ig.addColorStop(.8,`rgba(10,147,253,${.16*fi})`);ig.addColorStop(.93,`rgba(10,147,253,${.3*fi})`);ig.addColorStop(1,'rgba(10,147,253,0)');
-  ctx.globalAlpha=1;ctx.fillStyle=ig;ctx.beginPath();ctx.arc(0,0,M*1.05,0,TAU);ctx.fill();ctx.restore()}
- const eyeMetal=fl,J=CP.SHIMMER;
+  ctx.globalAlpha=1;ctx.fillStyle=ig;ctx.beginPath();ctx.arc(0,0,M*1.05,0,TAU);ctx.fill();
+  if(CP.RING_A>0){ctx.lineWidth=Math.max(1.5,M*CP.RING_W);ctx.strokeStyle=`rgba(10,147,253,${Math.min(1,CP.RING_A*(E.mobile?1.7:1))*fi})`;ctx.beginPath();ctx.arc(0,0,M*.985,0,TAU);ctx.stroke();
+   ctx.lineWidth=1;ctx.strokeStyle=`rgba(170,215,255,${.45*fi})`;ctx.beginPath();ctx.arc(0,0,M*.99,0,TAU);ctx.stroke()} /* [goz 08.10] parlak elektrik mavisi iris halkasi */
+  ctx.restore()}
+ const J=CP.SHIMMER,wob=CP.MV_WOB*Math.max(.6,R/246); /* [goz 08.10] eyeMetal kaldirildi */
  for(const p of P){
   let x,y,a=p.a,sz=p.s;
   flow(p,t,zeta);const fx=FP[0],fy=FP[1],fs=FP[2],fa=FP[3];
   if(p.kind===0){x=fx;y=fy;a*=fa*(.8+.2*Math.sin(t*.5*p.k+p.ph))*CP.AMB_A;sz*=fs*CP.FLOW_SZ}
   else{
-   const e=eo((t-p.tc)/p.dur),gx=cx+M*p.tx,gy=cy+M*p.ty;
-   if(e<=0){x=fx;y=fy;a*=fa*.6*CP.FLOW_A*1.4;sz*=fs*CP.FLOW_SZ}
-   else{const sw=Math.sin(Math.PI*e)*p.sw,dx=gx-fx,dy=gy-fy,dl=Math.hypot(dx,dy)||1;
-    x=fx+(gx-fx)*e+(-dy/dl)*sw;y=fy+(gy-fy)*e+(dx/dl)*sw;a*=(fa*.6*CP.FLOW_A*1.4)*(1-e)+e;sz*=fs*CP.FLOW_SZ*(1-e)+e}
-   if(e>.9){const m=sm((e-.9)/.1)*J;x+=Math.cos(t*(.8+.5*p.k)+p.ph)*m;y+=Math.sin(t*(.7+.4*p.k)+p.ph*1.7)*m}
-   if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*eyeMetal}
+   /* [goz 08.10] eski: lerp(akis_konumu, hedef, easeOutCubic) + duz yay + metal parlama. Yeni: bagimsiz gecikme/sure, yay ilerlemesi (hafif asma),
+      akis ivmesini koruyan ayrilis, hedefe donerek spiral, dusuk frekansli sapma; hepsi t'nin saf fonksiyonu (__heroSeek uyumlu) */
+   const e=(t-p.tc)/p.dur,gx=cx+M*p.tx,gy=cy+M*p.ty;
+   if(e<=0){flow(p,t,zeta);x=FP[0];y=FP[1];a*=FP[3]*.6*CP.FLOW_A*1.4;sz*=FP[2]*CP.FLOW_SZ}
+   else if(e>=ST_MAX){x=gx;y=gy}
+   else{
+    const k=CP.MV_MOM*(1-Math.exp(-(t-p.tc)/CP.MV_MOM)),bx=(p.sx+p.vx*k)*W,by=(p.sy+p.vy*k)*H;
+    let f=spr(e);if(f>1)f=1+(f-1)*p.oc;
+    const g=1-f,gp=g>0?g:0,ph=p.sw*gp,c=Math.cos(ph),sn=Math.sin(ph),dx=(bx-gx)*g,dy=(by-gy)*g,env=Math.sin(Math.PI*(e<1?e:1))*wob;
+    x=gx+dx*c-dy*sn+(Math.sin(t*p.f1+p.ph)+.6*Math.sin(t*p.f2+p.ph2))*p.wa*env;
+    y=gy+dx*sn+dy*c+(Math.cos(t*p.f1+p.ph2)+.6*Math.cos(t*p.f2+p.ph))*p.wa*env;
+    const ee=f<1?f:1;a=(a*p.fa0*.6*CP.FLOW_A*1.4)*(1-ee)+a*ee;sz=sz*(p.fs0*CP.FLOW_SZ*(1-ee)+ee)}
+   if(e>.9){const m=sm((e-.9)/.45)*J;x+=Math.cos(t*(.8+.5*p.k)+p.ph)*m;y+=Math.sin(t*(.7+.4*p.k)+p.ph*1.7)*m}
+   if(p.kind===2&&e>.95){const bd=Math.exp(-Math.pow(p.tx*.75-(((t*.32)%5)-2),2)*5);a*=.72+.5*bd*fl}
    if(p.kind===1&&e>.95)a*=.85+.15*Math.sin(t*p.k+p.ph)}
   if(x<-20||x>W+20||y<-20||y>H+20)continue;
   E.putB(x,y,sz,a,p.g);
@@ -250,13 +292,13 @@ function draw(ctx,E,t){
   ga.addColorStop(0,'rgba(10,147,253,0)');ga.addColorStop(.42,`rgba(10,147,253,${.26*fp})`);ga.addColorStop(1,'rgba(2,84,240,0)');
   ctx.globalAlpha=1;ctx.fillStyle=ga;ctx.beginPath();ctx.arc(0,0,ra+M*.05,0,TAU);ctx.fill();
   ctx.strokeStyle=`rgba(120,190,255,${.4*fp})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,ra*.99,0,TAU);ctx.stroke();
-  if(fl>.01){const c1=M*.09,g1=ctx.createRadialGradient(-M*.085,-M*.095,0,-M*.085,-M*.095,c1);
+  if(CP.SPEC_A>0&&fl>.01){const c1=M*.09,g1=ctx.createRadialGradient(-M*.085,-M*.095,0,-M*.085,-M*.095,c1);
    g1.addColorStop(0,`rgba(240,248,255,${fl})`);g1.addColorStop(.4,`rgba(150,200,255,${.55*fl})`);g1.addColorStop(1,'rgba(10,147,253,0)');
    ctx.translate(-M*.085,-M*.095);ctx.fillStyle=g1;ctx.beginPath();ctx.arc(0,0,c1,0,TAU);ctx.fill()}
   ctx.restore()}
  E.flush();
 }
-return{init,step,draw,EYE_R_K:CP.EYE_R_K,PAR:CP.PAR,EYE_HW:CP.EYE_HW};
+return{init,step,draw,EYE_R_K:CP.EYE_R_K,PAR:CP.PAR,EYE_HW:CP.EYE_HW,ZOOM_G:CP.ZOOM_G,EYE_CLEAR:CP.EYE_CLEAR};
 })();
 /* ====== SAHNE BITIS ====== */
 
@@ -310,6 +352,16 @@ function geometry(){
  /* sag-orta agirlikli; mobilde basligin arkasinda (ust yarida) */
  E.cx=E.mobile?E.W*.5:E.W*.775;E.cy=E.mobile?MOB_CY:E.H*.45; /* [cila3 mad.3/5] masaustu cx .77->.775; mobil: goz basligin USTUNDE ortada (cila2: .66W/.22H basligin arkasinda) */
  E.R=(E.mobile?E.W*MOB_RK:Math.min(E.H*.4,E.W*.24)*.85)*((window.HERO_SCENE&&window.HERO_SCENE.EYE_R_K)||1); /* cila2: goz bir tik kucuk, EYE_R_K sahne CP'sinden (cila1: *1) */
+ /* [goz 08.10] masaustu: goz basligin altina girmesin (cerceve kalkinca iris yaricapi = R*zoom; h1 satir kutularina gore sag/kucult) */
+ const SC=window.HERO_SCENE,gap=(SC&&SC.EYE_CLEAR)||0,h1=hero.querySelector('h1');
+ if(!E.mobile&&gap>0&&h1){
+  const rg=document.createRange();rg.selectNodeContents(h1);const L=[];
+  for(const q of rg.getClientRects()){if(q.width>2)L.push([q.left-r.left,q.right-r.left,q.top-r.top,q.bottom-r.top])}
+  const Z=(1+((SC&&SC.ZOOM_G)||0))*1.034,R0=E.R;let best=R0,bcx=E.cx;
+  for(let s=1;s>=.5;s-=.03){const M=R0*s*Z;let need=E.cx;
+   for(const q of L){const dy=E.cy<q[2]?q[2]-E.cy:E.cy>q[3]?E.cy-q[3]:0;if(dy<M+gap){const hw=Math.sqrt(Math.max(0,(M+gap)*(M+gap)-dy*dy));need=Math.max(need,q[1]+hw)}}
+   best=R0*s;bcx=need;if(need+M<=E.W*.95)break} /* [goz 08.10] sag sinir .95W (maske .92W sonrasi solar); eski: yok */
+  E.R=best;E.cx=bcx}
 }
 function build(){
  E.mobile=innerWidth<768;
@@ -357,6 +409,7 @@ function loop(ts){
  if(++cnt===3){const av=acc/cnt;acc=cnt=0;
   if(av>32){halt();if(level<1&&av<70){level=1;build();run()}else{level=2;t=.001;scene.init(E);renderStill()}}}
 }
+window.__heroEye=function(){return[E.cx,E.cy,E.R]}; /* [goz 08.10] test/olcum: goz merkezi ve yaricapi */
 window.__heroSeek=function(tt){window.__heroSeekOn=1;halt();t=tt;render(.016,tt,true)};
 function run(){if(window.__heroSeekOn||reduce||raf||document.hidden||!inView)return;last=0;raf=requestAnimationFrame(loop)}
 function halt(){if(raf){cancelAnimationFrame(raf);raf=0}}

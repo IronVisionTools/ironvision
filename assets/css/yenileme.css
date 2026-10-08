@@ -36,7 +36,7 @@ body{overflow-x:hidden}
 
 /* ---------- hero ---------- */
 .hero{position:relative;padding:150px 0 84px;overflow:hidden}
-/* 04.09: ayni mavi parlama alt bolumlere de tasindi (Demir sesli emri) — kural
+/* 04.09: ayni mavi parlama alt bolumlere de tasindi (sesli emri) — kural
    KOPYALANMADI, secici listesi genisletildi. .hakkinda/#contact/footer icin
    position+overflow asagida tek satirda verildi. */
 .hero::before,.hakkinda::before,#contact::before,footer::before{content:"";position:absolute;width:900px;height:900px;right:-280px;top:-360px;border-radius:50%;
@@ -124,13 +124,6 @@ body{overflow-x:hidden}
 /* ---------- yakında / try-on ---------- */
 .yakinda{position:relative;padding:92px 0;border-top:1px solid var(--line);
   background:linear-gradient(135deg,rgba(122,32,72,.34) 0%,rgba(198,107,126,.18) 46%,rgba(10,10,11,0) 78%)}
-.yakinda .rozet{color:#ffd0dd;background:rgba(198,107,126,.16);border-color:rgba(255,208,221,.42)}
-.yakinda .rozet .nokta{background:#f9a8c8}
-.yakinda h3{color:#ffe6ee}
-.yakinda .liste li::before{background:#e58aa4}
-.yakinda .btn-2{border-color:rgba(255,208,221,.5);color:#ffe6ee}
-.yakinda .btn-2:hover{border-color:#ffd0dd}
-.yakinda .gorsel-kutu{border-color:rgba(255,208,221,.28)}
 
 /* ---------- yaptığımız işler ---------- */
 .is-izgara{display:grid;grid-template-columns:1fr;gap:18px}
@@ -211,7 +204,7 @@ body.hareketli .gir{opacity:0;transform:translateY(28px)}
 .sema-genis .sema{padding:26px 22px}
 .sema-alt{font-family:'Space Grotesk',Arial,sans-serif;font-size:13.5px;color:var(--dim2);margin:14px 0 0}
 
-/* ================= 03.09 duzeltmeleri (Demir sesli emri) ================= */
+/* ================= 03.09 duzeltmeleri (sesli emri) ================= */
 
 /* ---------- marka (ust cubuk + footer) ----------
    Logo 32 -> 52px (1.63x), marka yazisi 18 -> 25px (1.39x).
@@ -225,8 +218,17 @@ body.hareketli .gir{opacity:0;transform:translateY(28px)}
 .marka-yazi{display:flex;flex-direction:column;justify-content:center;gap:3px;min-width:0}
 .marka-ad{font-family:'Black Ops One','Playfair Display',Georgia,serif;font-size:25px;
   line-height:1;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap}
-.marka-ad .iron{color:var(--txt)}
-.marka-ad .vision{color:var(--acc-yazi)}
+.marka-ad .iron{color:#B4B7BF}
+.marka-ad .vision{color:#2450C8}
+/* 03.10 nav yazisi: IRON krom/celik, VISION koyu lacivert (goz iris tonu). Zemine (#0a0a0b) kontrast: krom 12.6/7.5/3.3, lacivert koyu uc 3:1 alti, okunurluk iris-mavisi glow ile (daha koyu lacivert) */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+.marka-ad .iron{color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.65) 49%,rgba(255,255,255,0) 60%),linear-gradient(180deg,#CDCED2 0%,#9C9FA8 52%,#5D636E 100%);
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
+.marka-ad .vision{color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(180deg,#2450C8 0%,#12308C 100%);
+  filter:drop-shadow(0 0 4px rgba(2,84,240,.45))}
+}
 .marka-tools{font-family:'Space Grotesk',Arial,sans-serif;font-weight:300;font-size:12.5px;
   line-height:1;letter-spacing:.34em;text-transform:lowercase;color:var(--dim2);white-space:nowrap}
 @media (max-width:767px){
@@ -294,7 +296,7 @@ footer .marka-tools{font-size:11px}
 img.buyu{cursor:zoom-in}
 img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
 
-/* ================= 04.09 urun bolumu renkleri (Demir sesli emri, ekran goruntusuyle A/B
+/* ================= 04.09 urun bolumu renkleri (sesli emri, ekran goruntusuyle A/B
    karsilastirildi, VARYANT A secildi) ================= */
 
 /* ---------- 1) WhatsApp Randevu Botu — WhatsApp koyu yesili ---------- */
@@ -325,7 +327,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
   border-top:none;
 }
 
-/* ---------- 11.09 blog sayfalari (Gemini metni, Demir onayli) ---------- */
+/* ---------- 11.09 blog sayfalari (Gemini metni, onayli) ---------- */
 .yazi-govde{max-width:760px}
 .yazi-govde h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;text-transform:uppercase;
   font-size:clamp(20px,3vw,28px);line-height:1.2;margin:38px 0 16px}
@@ -346,7 +348,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
   font-size:clamp(18px,2.6vw,22px);line-height:1.2;margin:0 0 10px}
 .blog-kart p{font-family:'Space Grotesk',Arial,sans-serif;font-size:14.5px;line-height:1.65;color:var(--dim);margin:0 0 14px}
 
-/* ---------- 3) Sesli Şef — kendi amberi (Demir: "bir tık kısılsın"), koyu metin ---------- */
+/* ---------- 3) Sesli Şef — kendi amberi ("bir tık kısılsın"), koyu metin ---------- */
 #sesli-sef{
   background:#E0A70A;
   border-top:none;
@@ -361,8 +363,75 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
 #sesli-sef .liste li{color:#332a05}
 #sesli-sef .liste li::before{background:#1a1a1a}
 #sesli-sef .gorsel-kutu{border-color:rgba(26,26,26,.28)}
-/* 11.09 Demir geri bildirimi: iki arayüz görseli küçük/sıkışık duruyordu —
+/* 11.09 geri bildirim: iki arayüz görseli küçük/sıkışık duruyordu —
    görsel sütununa biraz daha pay verildi (renk/arkaplan DEĞİŞMEDİ, yalnız oran). */
 @media (min-width:960px){
   #sesli-sef .serit-in{grid-template-columns:minmax(0,1.22fr) minmax(0,.88fr);gap:56px}
 }
+.hero-serit b a{color:inherit;display:block;padding:13px 16px;margin:-13px -16px}
+.hero-serit b:has(a){border-color:rgba(10,83,211,.5)}
+.hero-serit b a:hover{color:var(--txt)}
+
+/* ---------- 03.10 uzay hero: sonsuz goz sahnesi ---------- */
+/* katmanlar (arkadan one): .hero-nebula(0) < canvas.hero-galaksi(1) < .hero-golge(2) < .hero-in/.hero-serit(3+) */
+.hero{isolation:isolate}
+/* eski mavi radyal parlamalar yeni sahneyle cakisiyordu: hero'da kaldirildi (diger bolumlerde duruyor) */
+.hero::before,.hero::after{content:none}
+.hero-sahne{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-nebula{position:absolute;inset:-7%;background:url(../img/uzay/nebula-16x9-v1.webp) 60% 50%/cover no-repeat;
+  opacity:0;transition:opacity 1.6s ease;will-change:transform}
+.hero-sahne.hazir .hero-nebula{opacity:.5;animation:nebula-kay 90s ease-in-out infinite alternate}
+@keyframes nebula-kay{from{transform:translate3d(-1.8%,.8%,0) scale(1.04)}to{transform:translate3d(1.8%,-.8%,0) scale(1.14)}}
+.hero-galaksi{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.4s ease}
+.hero-sahne.hazir .hero-galaksi{opacity:1}
+/* masaustu: metin sutununda (sol ~%55) yalniz sonuk parcacik; iris/cerceve metne binmez */
+/* kenar maskesi: sol metin sutunu sonuk + alt/sag kenar yumusak (dalista hero kutusu siniri gorunmesin) */
+.hero-galaksi{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%)}
+@media (min-width:768px){.hero-galaksi{-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.16) 0,rgba(0,0,0,.16) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,rgba(0,0,0,.16) 0,rgba(0,0,0,.16) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%);mask-composite:intersect}}
+/* solda metnin altina karartma + alt kenarda sonraki bolume yumusak gecis */
+.hero-golge{position:absolute;inset:0;
+  background:
+    linear-gradient(0deg,var(--bg) 0,rgba(10,10,11,0) 150px),
+    linear-gradient(90deg,rgba(10,10,11,.9) 0,rgba(10,10,11,.66) 38%,rgba(10,10,11,0) 66%)}
+.hero-in{z-index:3}
+@media (max-width:767px){
+  .hero-nebula{background-image:url(../img/uzay/nebula-9x16-v1.webp);background-position:50% 40%}
+  .hero-sahne.hazir .hero-galaksi{opacity:.4}
+  .hero-golge{background:
+    linear-gradient(0deg,var(--bg) 0,rgba(10,10,11,0) 120px),
+    linear-gradient(180deg,rgba(10,10,11,.55) 0,rgba(10,10,11,.45) 55%,rgba(10,10,11,.2) 100%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-sahne.hazir .hero-nebula{animation:none}
+  .hero-nebula,.hero-galaksi{transition:none}
+}
+
+/* ---------- 03.10 urun ikonlari ---------- */
+.serit-metin h3.urun-bas{display:flex;align-items:center;gap:14px}
+.urun-ikon{flex:none;width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#000;display:block}
+@media (min-width:768px){.urun-ikon{width:56px;height:56px;border-radius:14px}}
+#sesli-sef .urun-ikon{border-color:rgba(0,0,0,.35)}
+
+/* ---------- 03.10 denetim duzeltmeleri ---------- */
+/* vurgu: yalniz renk (seridi kaldir), #6d9aff zemine ~7:1 */
+.hero h1 .vurgu{background:none;color:#6d9aff}
+/* soluk gri yazilar >=4.5:1 (zemin + goz parlamasi uzerinde) */
+.hero-not{color:#b4bac5}
+.hero-serit b{color:#c3c8d2;background:rgba(10,10,11,.6)}
+.hero-serit b:has(a){border-color:rgba(70,120,230,.6)}
+/* nav: panel 1200px, canvas sinirinin gorunmemesi icin arka plan tam genislik */
+nav.fixed{background:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:0}
+nav.fixed::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;
+  background:rgba(10,10,11,.8);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.18)}
+@media (max-width:767px){
+  .hero-sahne.hazir .hero-galaksi{opacity:.4}
+}
+
+/* ====== ana sayfa urun yapisi (08.10) ====== */
+.kurulum-slot:empty{display:none}
+.abonelik-yok{margin:0 0 22px}
+.abonelik-yok strong{font-weight:600;color:var(--txt)}
+.alt-dal{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:26px 24px}
+.alt-dal-etiket{display:block;font-family:'Space Grotesk',Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:10px}
+.alt-dal h4{font-family:'Space Grotesk',Arial,sans-serif;font-size:21px;font-weight:600;margin:0 0 12px;color:var(--txt)}
+.alt-dal p{font-family:'Space Grotesk',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:var(--dim);margin:0 0 18px}

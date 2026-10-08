@@ -5,8 +5,8 @@
 <style>
 .k{fill:#14161b;stroke:#2a3140;stroke-width:1.4;rx:14}
 .t{fill:#f2f4f6;font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;font-weight:600}
-.s{fill:#9aa3b2;font-family:'Space Grotesk',system-ui,sans-serif;font-size:12.5px}
-.l{fill:#6f7a8c;font-family:'Space Grotesk',system-ui,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.s{fill:#b9c2d1;font-family:'Space Grotesk',system-ui,sans-serif;font-size:14px}
+.l{fill:#a3aec2;font-family:'Space Grotesk',system-ui,sans-serif;font-size:13.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 .c{stroke:#3a4considered;}
 </style>
 </defs>

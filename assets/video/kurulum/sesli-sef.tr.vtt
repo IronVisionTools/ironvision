@@ -1,0 +1,93 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:07.596
+Sesli Şef erken erişimde. Talebinizden ilk
+sesli komutunuza kadar kurulumu birlikte
+böyle yapıyoruz.
+
+2
+00:00:08.396 --> 00:00:18.288
+Sesli Şef erken erişimde. Uygulamayı istemek
+için founder@ironvisiontools.com adresine
+yazın. Kurulum desteği dahil.
+
+3
+00:00:19.088 --> 00:00:33.392
+Sesli Şef birkaç parçadan oluşur:
+bilgisayarınızda mikrofon penceresi,
+kısayol, sunucunuzda köprü, konuşmadan
+yazıya çevirme, terminaldeki ajan oturumunuz
+ve sesli cevap. Hepsini sırayla göreceğiz.
+
+4
+00:00:34.192 --> 00:00:41.576
+Köprüyü birlikte, kendi sunucunuza kurarız.
+Mikrofondan sesinizi alır ve yazıya
+çevrilmiş halini terminaldeki ajanınıza
+iletir.
+
+5
+00:00:42.376 --> 00:00:51.472
+Köprü konuşmanızı yazıya çevirir. Yazıya
+çevirme kendi sunucunuzda çalışabilir.
+İsterseniz konuşmak yerine yazabilirsiniz
+de.
+
+6
+00:00:52.272 --> 00:01:01.606
+Windows bilgisayara küçük mikrofon
+uygulaması eklenir. Bu komutları birlikte
+yaparız: gereksinimler, ayar dosyası,
+başlatma.
+
+7
+00:01:02.406 --> 00:01:10.584
+Uygulama Windows sistem tepsisinde durur ve
+yuvarlak bir mikrofon penceresi gösterir.
+Sesinizi kaydedip köprüye gönderir ve cevabı
+size sesli çalar.
+
+8
+00:01:11.384 --> 00:01:19.419
+Ayar dosyasına sunucu adresinizi yazarsınız.
+Adresin çalıştığını birlikte kontrol ederiz;
+böylece konuşmadan önce uygulama köprünüze
+ulaşır.
+
+9
+00:01:20.219 --> 00:01:28.283
+Kısayol bas-konuş mantığıyla çalışır.
+Konuşurken sağ Ctrl ve sağ Shift tuşlarını
+basılı tutun. Bıraktığınızda sesiniz
+gönderilir.
+
+10
+00:01:29.083 --> 00:01:36.838
+Sonra bir kanal bağlarız. Kanal, ses
+uygulamasına bağlanan terminal ajan
+oturumlarınızdan biridir. Söyledikleriniz o
+oturuma düşer.
+
+11
+00:01:37.638 --> 00:01:44.702
+Her ajan oturumunun kendi kanalı olabilir.
+Sesiniz etkin olana gider; konuşmadan önce
+hedef seçmeniz gerekmez.
+
+12
+00:01:45.502 --> 00:01:53.164
+Kısayolu basılı tutup yüksek sesle bir soru
+sorun. Tuşu bırakın, ajan sesli cevap verir.
+Yazabilirsiniz de.
+
+13
+00:01:53.964 --> 00:02:01.348
+Sesli Şef'in amacı bu. Dikte aracı değil;
+ajan sesli cevap verir, böylece ekrana
+bakmadan çalışmaya devam edebilirsiniz.
+
+14
+00:02:02.148 --> 00:02:07.716
+Bitti. Yardım lazım mı?
+founder@ironvisiontools.com adresine yazın.

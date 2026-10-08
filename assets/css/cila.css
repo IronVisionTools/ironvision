@@ -1,0 +1,186 @@
+/* cila.css — 07.10.2026 uzay hero cila turu: derin uzay zemini, sis/nebula bolumleri, metal IRON, gok tasi ikonlari */
+:root{--card:rgba(8,12,24,.52);--card2:rgba(13,19,36,.58);--duman:none}
+html{background:#010208}
+body{background:transparent!important}
+#uzay-arka{position:fixed;left:0;top:0;width:100%;height:132vh;z-index:-1;pointer-events:none;will-change:transform;display:block}
+#uzay-kat{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%,rgba(6,16,44,.30),rgba(2,4,12,.18) 60%,rgba(1,2,8,.34) 100%)}
+/* hero: yildiz akisi tum alani kaplar (sol maske kalkti), yalniz alt kenar solar */
+.hero-galaksi,.hero-sahne.hazir .hero-galaksi{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 86%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 0,#000 86%,transparent 100%)!important;-webkit-mask-composite:source-over!important;mask-composite:add!important}
+.hero::before,.hero::after{display:none}
+/* duz renk bloklari gider: bolumler seffaf, renk sis/nebula olarak hissedilir */
+.yakinda,.hakkinda,#contact,footer,#isler,#nasil,#urunler{background:transparent!important}
+.serit{border-top-color:rgba(120,160,255,.08)}
+#urunler,.yakinda,#isler,#nasil,.hakkinda,#contact,footer{position:relative;isolation:auto}
+#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before,
+#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{
+ content:"";position:absolute;inset:-20% -12%;width:auto;height:auto;border-radius:0;right:auto;left:auto;top:auto;bottom:auto;z-index:-1;pointer-events:none;
+ -webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:820px 820px;mask-size:820px 820px;will-change:transform}
+#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before{
+ inset:-20% -12%;background:
+ radial-gradient(38% 52% at 18% 38%,rgba(var(--n1),.40),transparent 72%),
+ radial-gradient(34% 46% at 82% 64%,rgba(var(--n2),.32),transparent 72%);
+ animation:duman-a 70s ease-in-out infinite alternate}
+#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{
+ background:radial-gradient(30% 40% at 58% 18%,rgba(var(--n3),.30),transparent 72%),radial-gradient(26% 36% at 36% 82%,rgba(var(--n1),.2),transparent 72%);
+ -webkit-mask-position:310px 190px;mask-position:310px 190px;animation:duman-b 95s ease-in-out infinite alternate}
+@keyframes duman-a{from{transform:translate3d(-3%,0,0) scale(1)}to{transform:translate3d(4%,-3%,0) scale(1.08)}}
+@keyframes duman-b{from{transform:translate3d(3%,2%,0) scale(1.06)}to{transform:translate3d(-4%,-2%,0) scale(1)}}
+#urunler{--n1:10,83,211;--n2:2,150,199;--n3:40,70,190}
+.yakinda{--n1:16,150,140;--n2:10,83,211;--n3:90,130,210}
+#isler{--n1:30,64,200;--n2:70,120,215;--n3:10,147,253}
+#nasil{--n1:0,140,172;--n2:24,64,176;--n3:60,110,200}
+.hakkinda{--n1:84,104,176;--n2:10,83,211;--n3:30,120,190}
+#contact{--n1:10,83,211;--n2:2,150,199;--n3:50,80,190}
+footer{--n1:20,60,150;--n2:10,83,211;--n3:40,100,170}
+@media (prefers-reduced-motion:reduce){#urunler::before,.yakinda::before,#isler::before,#nasil::before,.hakkinda::before,#contact::before,footer::before,#urunler::after,.yakinda::after,#isler::after,#nasil::after,.hakkinda::after,#contact::after,footer::after{animation:none}}
+/* metal IRON: fircalanmis celik (ince yatay tel + gezen isik yansimasi), VISION mavisi aynen */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+.marka-ad .iron{background-image:linear-gradient(104deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 60%),repeating-linear-gradient(0deg,rgba(255,255,255,.16) 0,rgba(255,255,255,.16) 1px,rgba(0,0,0,.20) 1px,rgba(0,0,0,.20) 2px),linear-gradient(180deg,#E4E6EA 0%,#A9ADB6 38%,#6E747F 62%,#B9BDC6 100%);
+ background-size:260% 100%,100% 100%,100% 100%;background-repeat:no-repeat,repeat,no-repeat;background-position:160% 0,0 0,0 0;animation:iron-yansima 6.5s ease-in-out 1.2s infinite}}
+@keyframes iron-yansima{0%,18%{background-position:160% 0,0 0,0 0}62%,100%{background-position:-60% 0,0 0,0 0}}
+@media (prefers-reduced-motion:reduce){.marka-ad .iron{animation:none}}
+/* gok tasi ikonlari */
+.urun-ikon{width:72px!important;height:72px!important;border:0!important;border-radius:0!important;background:transparent!important;flex:none}
+@media (max-width:767px){.urun-ikon{width:60px!important;height:60px!important}}
+/* urun bloklari: duz renk gider, her urun kendi nebula tonuyla hissedilir */
+#urunler article.serit,#urunler article.serit.mm,#urunler article.serit.gorsel-genis,#sesli-sef{background:transparent!important;position:relative;border-top:0!important}
+#urunler article.serit::before,#urunler article.serit::after{content:"";position:absolute;inset:-14% -10%;z-index:-1;pointer-events:none;-webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:700px 700px;mask-size:700px 700px;will-change:transform}
+#urunler article.serit::before{background:radial-gradient(42% 56% at 24% 46%,rgba(var(--n1),.36),transparent 72%),radial-gradient(34% 46% at 80% 58%,rgba(var(--n2),.26),transparent 72%);animation:duman-a 80s ease-in-out infinite alternate}
+#urunler article.serit::after{background:radial-gradient(30% 40% at 60% 20%,rgba(var(--n2),.22),transparent 72%);-webkit-mask-position:260px 140px;mask-position:260px 140px;animation:duman-b 110s ease-in-out infinite alternate}
+#moymote{--n1:10,83,211;--n2:2,150,199}
+article.serit.gorsel-genis{--n1:18,150,110;--n2:10,100,190}
+article.serit.ters{--n1:40,70,200;--n2:10,147,253}
+#sesli-sef{--n1:200,140,40;--n2:10,83,211}
+#sosyal-medya{--n1:70,60,190;--n2:2,150,199}
+#sesli-sef .serit-metin h3{color:#fff}#sesli-sef .serit-metin p,#sesli-sef .serit-metin p[style]{color:#d4dcee!important}
+#sesli-sef .rozet{color:#ffe2a8;background:rgba(200,140,40,.16);border-color:rgba(255,226,168,.45)}
+#sesli-sef .rozet .nokta{background:#4ade80}#sesli-sef .liste li{color:#d4dcee}#sesli-sef .liste li::before{background:#ffc766}
+#sesli-sef .gorsel-kutu{border-color:rgba(255,226,168,.3)}
+/* hero alti serit: kucuk gok tasi cipleri */
+.hero-serit b{background:rgba(8,14,30,.5);border-color:rgba(150,190,255,.22)}
+.hero-serit b::before{content:"";display:inline-block;width:7px;height:6px;margin-right:9px;vertical-align:1px;background:#9fb4d6;clip-path:polygon(15% 8%,60% 0,100% 30%,88% 78%,48% 100%,6% 70%);box-shadow:0 0 6px rgba(130,170,255,.5)}
+/* dikis yok: hero sahnesi alta dogru sayfaya erir, MoyMote bloku sisi kirpmaz */
+.hero-sahne{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 74%,transparent 100%)}
+#urunler article.serit.mm{overflow:visible!important}
+.hero-serit b{white-space:nowrap}
+@media (max-width:767px){.hero-sahne.hazir .hero-galaksi{opacity:.8}}
+
+/* ====== CILA 2 (07.10.2026) — parametreler :root'ta; eski (cila 1) degerler yorumda ====== */
+:root{--sis-a1:.5;--sis-a2:.38;--sis-a3:.3; /* [cila3 mad.4] cila2: .38/.28/.22 */ --sis-mask:700px;--sis-hiz:80s;--rz:120,170,255;--toz-nokta:5px;--toz-saydamlik:.55}
+/* [mad.8] Vyron bolumundeki sis dili tum bolumlere: ayni maske boyutu, ayni hareket, ayni radial yapi (cila1: bolum basina .40/.32, 820px, 70/95s) */
+#isler::before,#nasil::before,.hakkinda::before,#contact::before,.yakinda::before,footer::before{
+ background:radial-gradient(42% 56% at 24% 46%,rgba(var(--n1),var(--sis-a1)),transparent 72%),radial-gradient(34% 46% at 80% 58%,rgba(var(--n2),var(--sis-a2)),transparent 72%);
+ -webkit-mask-size:var(--sis-mask) var(--sis-mask);mask-size:var(--sis-mask) var(--sis-mask);animation:duman-a var(--sis-hiz) ease-in-out infinite alternate}
+#isler::after,#nasil::after,.hakkinda::after,#contact::after,.yakinda::after,footer::after{
+ background:radial-gradient(30% 40% at 60% 20%,rgba(var(--n2),var(--sis-a3)),transparent 72%);
+ -webkit-mask-size:var(--sis-mask) var(--sis-mask);mask-size:var(--sis-mask) var(--sis-mask);animation:duman-b 110s ease-in-out infinite alternate}
+/* [mad.8] pembe bolum (Yakinda): duz pembe degil, ayni sis hareketiyle pembemsi bulut (cila1: turkuaz 16,150,140) */
+.yakinda{--n1:214,96,140;--n2:150,70,176;--n3:240,150,185;--sis-a1:.42;--sis-a2:.3}
+/* [mad.6] rozet/kutular: noktali + seffaf, dagilacakmis gibi ama sekli korunur; mavi (varsayilan), gumus-celik (Sesli Sef, kahve yerine), pembe (Yakinda), yesil (WhatsApp). Ton: --rz */
+.rozet,.hero-serit b{background:transparent!important;border:1.5px dotted rgba(var(--rz),.62)!important;position:relative;box-shadow:0 0 18px rgba(var(--rz),.10),inset 0 0 14px rgba(var(--rz),.06)}
+.rozet{color:rgb(var(--rz))}
+.rozet::after,.hero-serit b::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ background:radial-gradient(circle,rgba(var(--rz),var(--toz-saydamlik)) .7px,transparent 1.25px) 0 0/var(--toz-nokta) var(--toz-nokta);
+ -webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:130px 130px;mask-size:130px 130px;animation:toz-akis 14s linear infinite}
+@keyframes toz-akis{from{-webkit-mask-position:0 0;mask-position:0 0}to{-webkit-mask-position:130px 65px;mask-position:130px 65px}}
+/* dis kenardan sizan seyrek tozlar (rozet) */
+.rozet::before{content:"";position:absolute;inset:-6px;border-radius:inherit;pointer-events:none;opacity:.5;
+ background:radial-gradient(circle,rgba(var(--rz),.8) .6px,transparent 1.1px) 0 0/11px 11px;
+ -webkit-mask-image:var(--duman);mask-image:var(--duman);-webkit-mask-size:90px 90px;mask-size:90px 90px;animation:toz-akis 22s linear infinite reverse}
+.rozet .nokta{background:rgb(var(--rz))!important;box-shadow:0 0 8px rgba(var(--rz),.8)}
+#sesli-sef{--rz:196,210,232}
+#sesli-sef .rozet{color:#dfe8f7;background:transparent;border-color:rgba(196,210,232,.5)} /* cila1: kahverengi/amber #ffe2a8 + 200,140,40 */
+#sesli-sef .rozet .nokta{background:rgb(var(--rz))!important}
+#sesli-sef .liste li::before{background:#b9c8e2}  /* cila1: #ffc766 */
+article.serit.gorsel-genis{--rz:110,222,170}
+.hero-serit b{color:#aebfdc}
+.hero-serit b::before{z-index:1}
+@media (prefers-reduced-motion:reduce){.rozet::after,.rozet::before,.hero-serit b::after{animation:none}}
+
+/* ====== CILA 3 (07.10.2026) — parametreler :root'ta; eski (cila 2) degerler yorumda ====== */
+:root{--hero-fade:.45s;--hero-sol-a:.3;--mob-goz-ust:165px}
+/* [mad.2] canvas hizli belirir (cila2: 1.4s) -> ilk saniyede hero dolu */
+.hero-galaksi{transition:opacity var(--hero-fade) ease}
+/* [mad.2/6] akis hero'nun tamamini kaplasin: sol yari .16 -> .3 (cila2: .16) */
+@media (min-width:768px){.hero-galaksi{-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,var(--hero-sol-a)) 0,rgba(0,0,0,var(--hero-sol-a)) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%);mask-image:linear-gradient(90deg,rgba(0,0,0,var(--hero-sol-a)) 0,rgba(0,0,0,var(--hero-sol-a)) 52%,#000 70%,#000 92%,transparent 100%),linear-gradient(180deg,#000 0,#000 78%,transparent 100%)}}
+/* [mad.5] mobil: goz basligin USTUNDE (hero ust bosluk acilir), yazi ile cakismaz (cila2: gozbasligin arkasinda) */
+@media (max-width:767px){.hero{padding-top:calc(150px + var(--mob-goz-ust))}}
+/* [mad.4] pembe sis (Yakinda): Vyron yesilindeki yogunluga cekildi (cila2: --n1 214,96,140 / a1 .42 / a2 .3) */
+.yakinda{--n1:236,108,164;--n2:176,84,206;--n3:250,170,200;--sis-a1:.66;--sis-a2:.5;--sis-a3:.4}
+/* [mad.7 kusur 1] hero seridi Microsoft Store cipi: nokta ile yazi ayri satira dusuyordu (a{display:block}) -> tek satir, ortali */
+.hero-serit b:has(a){display:inline-flex;align-items:center}
+.hero-serit b:has(a)::before{flex:none}
+/* [mad.7 kusur 2] tipografi hizasi: hero metni 100px iceride basliyordu (max-width 1000 ortali), bolum basliklari/header ile ayni sol cizgiye (cila2: .hero-in max-width 1000) */
+.hero-in{max-width:var(--wrap)}.hero h1{max-width:952px}.hero-serit{max-width:none}
+/* [mad.7 kusur 3] buton hover: hero dugmeleri hafif yukselir + isik halesi (cila2: sadece renk) */
+.hero .btn{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease}
+.hero .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(10,100,255,.38)}
+.hero .btn-2:hover{box-shadow:0 8px 26px rgba(120,170,255,.22)}
+/* [mad.7 kusur 4] rozet kenarlari: nokta ile yazi arasi (9px) mobilde sikisiyordu */
+@media (max-width:767px){.hero-serit b{letter-spacing:.11em}}
+
+/* ====== [cila4 08.10] duzen/cila turu — eski degerler yorumda ====== */
+/* [cila4 mad.1] YATAY TASMA SIFIR: tasan dekor (sis katmanlari inset -14%, nebula, mm sahnesi) kendi kapsayicisinda x ekseninde kirpilir.
+   overflow-x:clip scroll kapsayici YARATMAZ (sticky bozulmaz), y ekseni gorunur kalir (sis dikeyde tasabilir). Eski: kirpma yok, body overflow-x:hidden yalniz gorunumu kesiyordu. */
+#urunler,#urunler article.serit,.yakinda,#isler,#nasil,.hakkinda,#contact,footer,[data-sis],.hero{overflow-x:clip}
+.hero-sahne{overflow:hidden}
+/* (mm-stage'e clip konmadi: masaustunde telefon gövdesi sahne disina tasar; tasma .serit overflow-x:clip ile kesiliyor) */
+@media (max-width:640px){
+ /* mm-cap: nowrap + translate(-50%) 360px'te solda kesiliyordu -> normal akis, ortali, satir kirar (eski: position:absolute;left:50%;translate:-50% 0;white-space:nowrap) */
+ .mm-cap{position:static;translate:none;white-space:normal;text-align:center;margin:18px auto 0;padding:0 8px;max-width:100%;font-size:14px;line-height:1.5}
+ .mm .serit-gorsel{padding-bottom:0}
+}
+
+/* [cila4 mad.2] AgentOS: gorsel sutunu (3 uzun ekran, ~1800px) metinden (~1150px) cok uzun. Eski: .serit-in align-items:center -> metin dikey ortalanip ust/altta ~330px bosluk.
+   Simdi metin ustten hizali + sticky (mobilde/<1024px sticky YOK). Metin pencereden uzun oldugu icin top = min(112px, 100svh - metin yuksekligi - 24px):
+   kisa pencerede top negatif olur -> once ustu okunur, alt kenar pencere altina oturunca sabitlenir; uzun pencerede nav altinda (112px) sabitlenir.
+   --mh metin sutununun olculen yuksekligi (1440/1280: 1153px, 1024: 1280px). Gorsel sutunu align-self:center kalir (kisa gorselli seritlerde eski gorunum aynen). */
+@media (min-width:1024px){
+ article.serit .serit-in{align-items:start}
+ article.serit .serit-gorsel{align-self:center}
+ #agentos{--mh:1300px}
+ #agentos .serit-metin{align-self:start;position:sticky;top:min(112px,calc(100svh - var(--mh) - 24px))}
+}
+@media (min-width:1200px){#agentos{--mh:1170px}}
+
+/* [cila4 mad.3] AKIS SEMALARI: SVG <img> kucuk sutunda %50 olceklenince 11px etiket ~6px oluyordu. SVG icindeki fontlar buyutuldu (agentos: 12.5->14 / 11->13.5; video: 17->19 / 11->14, viewBox 980x200 -> 686x140), kontrast artirildi.
+   Dar ekranda sayfa taşırmadan yatay kaydirilir; olcek ≥~.9 kalir. */
+@media (max-width:1100px){
+ .sema-genis .sema{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .sema-genis .sema img{min-width:900px;max-width:none}
+}
+@media (max-width:600px){
+ #video-otomasyonu .gorsel-kutu{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ #video-otomasyonu .gorsel-kutu img{min-width:620px;max-width:none}
+ #video-otomasyonu .gorsel-kutu .gorsel-alt{position:sticky;left:0;width:calc(100vw - 112px);max-width:100%}
+}
+/* [cila4 mad.3b] grid ogeleri icerik genisligine (min-content) gore sismesin: kaydirilan sema kutusu sutunu tasirmasin */
+.serit-in>*{min-width:0}
+
+/* [cila4 mad.4] HERO ALT KENARI: sahne/kanvas/nebula alta dogru sayfaya dikissiz erisin.
+   Eski: .hero-sahne mask ...#000 74%,transparent 100% (cila.css, ~satir 60); .hero-golge alt gradyani opak var(--bg) #0a0a0b (uzay zemini #010208'den acik -> alt kenarda ton farki/duz cizgi).
+   Yeni: maske daha erken (%52) ve daha uzun solar, golgedeki opak alt gradyan kalkti (solda metin karartmasi aynen). */
+.hero-sahne{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 52%,rgba(0,0,0,.55) 78%,transparent 99%);mask-image:linear-gradient(180deg,#000 0,#000 52%,rgba(0,0,0,.55) 78%,transparent 99%)}
+.hero-golge{background:linear-gradient(90deg,rgba(10,10,11,.9) 0,rgba(10,10,11,.66) 38%,rgba(10,10,11,0) 66%)}
+@media (max-width:767px){
+ .hero-golge{background:linear-gradient(180deg,rgba(10,10,11,.55) 0,rgba(10,10,11,.45) 55%,rgba(10,10,11,.2) 100%)}
+}
+
+/* [cila4 kusur 1] hakkinda/blog ust cubuk telefonda: "IRON VISION" yazisi EN dugmesine biniyor, "DEMO ISTE" iki satira kiriliyordu (nav yuksekligi 80px).
+   Eski: tailwind px-6 py-2 (24px yan bosluk), nav px-gutter. Ana sayfada bu dugme md alti gizli oldugundan etkilenmez. */
+@media (max-width:767px){
+ nav.fixed{padding-left:16px;padding-right:16px;gap:8px}
+ nav.fixed a.inline-flex{padding:8px 13px;font-size:11px;line-height:1.2;white-space:nowrap}
+ nav.fixed .flex.items-center.gap-3{gap:8px}
+}
+/* [cila4 kusur 2] ic sayfa baslik bandi (sahnesiz .hero): cila3 mobil kurali (150px + 165px goz payi) goz olmayan sayfada ~315px bos bant birakiyordu. Eski: .hero{padding-top:calc(150px + var(--mob-goz-ust))} */
+@media (max-width:767px){.hero:not(:has(.hero-sahne)){padding-top:124px}}
+/* [cila4 kusur 3] hakkinda sag kutucuk sutunu: uzun metin sutunuyla yan yana kaydirirken sabit kalir (eski: ilk ekrandan sonra sag yarim bos). Yalniz >=900px */
+@media (min-width:900px){.hakkinda-in>div:last-child{align-self:start;position:sticky;top:112px}}
+/* [cila4 kusur 4] urun seritleri telefonda 78px+78px dikey bosluk birakiyordu (iki urun arasi ~160px bos, ekran yarisi); 52px'e cekildi. Eski: .serit{padding:78px 0} */
+@media (max-width:767px){.serit{padding:52px 0}}
+
+/* [cila4 kusur 5] EN akis semalari: en/index.html dogrudan assets/img/(ad)-en.svg kullanir (CSS yedegi kaldirildi). */
+
+/* [perf 08.10] telefon: rozet/serit tozunun mask-position animasyonu her karede yeniden boyar (ana is parcacigi); telefonda toz statik, gorunum ayni */
+@media (max-width:767px){.rozet::before,.rozet::after,.hero-serit b::after{animation:none!important}}

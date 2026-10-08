@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://ironvisiontools.com/</loc>
-        <lastmod>2026-08-01</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://ironvisiontools.com/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/"/>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/en/</loc>
+        <lastmod>2026-10-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://ironvisiontools.com/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/"/>
     </url>
     <url>
         <loc>https://ironvisiontools.com/hakkinda.html</loc>
-        <lastmod>2026-07-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://ironvisiontools.com/hakkinda.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/hakkinda.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/hakkinda.html"/>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/en/hakkinda.html</loc>
+        <lastmod>2026-10-08</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://ironvisiontools.com/hakkinda.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/hakkinda.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/hakkinda.html"/>
     </url>
     <url>
         <loc>https://ironvisiontools.com/gizlilik.html</loc>
@@ -26,31 +50,31 @@
     </url>
     <url>
         <loc>https://ironvisiontools.com/blog/index.html</loc>
-        <lastmod>2026-09-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://ironvisiontools.com/blog/yapay-zeka-ajani-isletmede-ne-yapar.html</loc>
-        <lastmod>2026-09-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://ironvisiontools.com/blog/sesle-calisan-asistan-sesli-sef.html</loc>
-        <lastmod>2026-09-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://ironvisiontools.com/blog/kucuk-isletme-web-sitesi-cozumu.html</loc>
-        <lastmod>2026-09-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://ironvisiontools.com/blog/icerik-otomasyonu-nasil-calisir.html</loc>
-        <lastmod>2026-09-12</lastmod>
+        <lastmod>2026-10-08</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>

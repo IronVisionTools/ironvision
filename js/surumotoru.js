@@ -49,7 +49,7 @@ window.SahneMotoru = (function () {
   const PERCEPT2 = GCELL * GCELL;
   const SEPR = 18, SEPR2 = SEPR * SEPR; // ayrışma yarıçapı (MURMUR ~16/46 ≈ 18/52 oranı)
   const MAXN = 5;                       // topolojik komşu sayısı (3-5'li gruplar hissi)
-  let CRUISE = 0.95;                    // seyir hızı — masaüstü; mobilde buildBats düşürür (Demir 28.07: telefonda fazla hızlı)
+  let CRUISE = 0.95;                    // seyir hızı — masaüstü; mobilde buildBats düşürür (28.07: telefonda fazla hızlı)
   // MURMUR reçetesi (rehber): ayrışma 1.8 : hizalanma 0.7 : yaklaşma 0.55.
   // İvme şemamıza 0.1 ölçek → ayrışma AÇIK ARA baskın; kütle yapışmaz, aralıklı
   // akan dereler gibi süzülür (eski değerlerde hizalanma baskındı → tek tip bulut).
@@ -247,7 +247,7 @@ window.SahneMotoru = (function () {
   }
   // Mobilde scroll sırasında adres çubuğu gizlenip çıkınca innerHeight değişir.
   // Bu "sahte" resize'da sürüyü SIFIRLAMAK her kaydırışta nokta patlamasına yol
-  // açıyordu (Demir 28.07). Yükseklik-ağırlıklı küçük değişimde kuşlara dokunma:
+  // açıyordu (28.07). Yükseklik-ağırlıklı küçük değişimde kuşlara dokunma:
   // sadece tuvali ve hedef bulutunu yeni boya uydur, sürü kaldığı yerden süzülsün.
   function softResize(nh) {
     const dy = (nh - H) * formYFrac;   // harf bloğu sadece dikeyde kayar
@@ -293,7 +293,7 @@ window.SahneMotoru = (function () {
 
   function kick() {
     // Eski itme (2-4) harfleri BOMBA gibi patlatıyordu; şimdi hafif dışa akış +
-    // ufak rastgelelik: yazı erir gibi dağılır (Demir 28.07: "hafiften dağılsın").
+    // ufak rastgelelik: yazı erir gibi dağılır (28.07: "hafiften dağılsın").
     const cx = W / 2, cy = H / 2;
     for (let i = 0; i < bats.length; i++) {
       const b = bats[i]; b.mode = "free";

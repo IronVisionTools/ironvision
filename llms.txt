@@ -1,13 +1,13 @@
 # IRON VISION tools
 
-> IRON VISION tools is a small team based in Edirne, Türkiye (since April 2026) that builds AI tools for businesses, from small shops to larger companies, and sets them up for the customer. Customer data stays with the customer. The site is in Turkish (https://ironvisiontools.com/) and English (https://ironvisiontools.com/en/).
+> IRON VISION tools is a small team based in Türkiye (since April 2026) that builds AI tools for businesses, from small shops to larger companies, and sets them up for the customer. Customer data stays with the customer. The site is in Turkish (https://ironvisiontools.com/) and English (https://ironvisiontools.com/en/).
 
 ## Products (as described on the site)
-- WhatsApp appointment bot: customers book through WhatsApp, see open slots and get an appointment; no app download or site sign-up. Overnight requests are summarized in one morning message; the owner blocks hours and sets rules from a panel and can step into the chat at any time. First 10 days free; pilot region is Edirne.
-- VYRON AgentOS: automation system that takes over repetitive work (inbox scanning, daily summary, backups and verification, cost tracking, watchdogs, scheduled jobs, Telegram commands, browser automation). Installed per business, set-up takes 2-4 weeks.
-- Sesli Şef: voice interface for the system.
-- MoyMote: Windows app to control an external monitor's brightness, blue light and HDR from a phone (https://moymote.com, Microsoft Store). 7-day free trial.
-- Try-On: listed on the site as a product (see the site for status).
+- AgentOS: automation system that takes over repetitive work (inbox scanning, daily summary, backups and verification, cost tracking, watchdogs, scheduled jobs, Telegram commands, browser automation). Installed per business, set-up takes 2-4 weeks.
+- Sesli Şef (Voice Chief): two-way spoken conversation in Turkish with a terminal-based AI agent (Claude Code, ChatGPT, Codex); you speak, the agent answers out loud. Speech-to-text runs locally. Early access by e-mail.
+- MoyMote: Windows app to control an external monitor's brightness, blue light and HDR from a phone (https://moymote.com, Microsoft Store). 7-day free trial; no subscription.
+- Social media automation: prepares post copy, sets up a publishing calendar and publishes to several platforms (TikTok, Instagram, YouTube). Sub-branch, video automation: from a topic to script, voiceover, edited video and publishing. Set up on request.
+- Try-On (coming soon): a "try it on" button for boutiques and small e-commerce sites; in development, no live deployment on a client site yet.
 
 ## Pages
 - [Home (Türkçe)](https://ironvisiontools.com/)

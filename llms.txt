@@ -16,3 +16,5 @@
 - [Blog](https://ironvisiontools.com/blog/index.html)
 - [Contact / request a demo](https://ironvisiontools.com/en/contact/)
 - [Privacy](https://ironvisiontools.com/en/privacy/)
+- [Terms of Use](https://ironvisiontools.com/en/terms/)
+- [Blog (EN index, articles in Turkish)](https://ironvisiontools.com/en/blog/)

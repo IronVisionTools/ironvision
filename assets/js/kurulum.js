@@ -3,7 +3,7 @@
 (function(){
 var L=(document.documentElement.lang||"tr").slice(0,2)==="en"?"en":"tr",
 B="/assets/video/kurulum/",
-N={agentos:["AgentOS","AgentOS"],"sesli-sef":["Sesli Şef","Sesli Şef (Voice Chief)"],moymote:["MoyMote","MoyMote"],"sosyal-medya":["Sosyal medya otomasyonu","Social media automation"],"video-otomasyonu":["Video otomasyonu","Video automation"]},
+N={agentos:["VyroN Agents OS","VyroN Agents OS"],"sesli-sef":["Sesli Şef","Sesli Şef (Voice Chief)"],moymote:["MoyMote","MoyMote"],"sosyal-medya":["Sosyal medya otomasyonu","Social media automation"],"video-otomasyonu":["Video otomasyonu","Video automation"]},
 T={tr:{h:"Kurulum videosu",s:"Kurulum videosu yakında",p:function(n){return n+" kurulum videosunu oynat"}},en:{h:"Setup video",s:"Setup video coming",p:function(n){return"Play "+n+" setup video"}}}[L],
 P='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l13-7.5z"/></svg>';
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}

@@ -27,7 +27,7 @@ site; the `CNAME` file holds the custom domain.
 
 - **AIrandevu** — WhatsApp appointment bot for barbers and hair salons (pilot)
 - **Website showcase** — static business sites produced from a shared template set
-- **VYRON AgentOS** — automation system (task board, watchdogs, scheduled jobs)
+- **VyroN Agents OS** — automation system (task board, watchdogs, scheduled jobs)
 - **Sesli Şef** — voice interface for terminal-based AI agents
 
 ## Contact

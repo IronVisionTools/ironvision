@@ -2,7 +2,7 @@ WEBVTT
 
 1
 00:00:00.300 --> 00:00:05.362
-This is how AgentOS goes onto your own Linux
+This is how VyroN Agents OS goes onto your own Linux
 server, from the first call to your first
 report.
 
@@ -81,7 +81,7 @@ a day.
 Leads can come in three ways: a JSON file
 you fill in, an email inbox that is only
 read, or a webhook when you run the full
-AgentOS setup.
+VyroN Agents OS setup.
 
 13
 00:01:50.591 --> 00:02:00.761

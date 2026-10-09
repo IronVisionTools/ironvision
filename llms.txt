@@ -1,6 +1,6 @@
 # IRON VISION tools
 
-> IRON VISION tools is a solo-founder startup (Demir, founder) based in Türkiye (since April 2026) that builds AI tools for businesses, from small shops to larger companies, and sets them up for the customer. Customer data stays with the customer. The site is in Turkish (https://ironvisiontools.com/) and English (https://ironvisiontools.com/en/).
+> IRON VISION tools is a solo-founder startup (Founder: Erdemir İğiz) based in Türkiye (since April 2026) that builds AI tools for businesses, from small shops to larger companies, and sets them up for the customer. Customer data stays with the customer. The site is in Turkish (https://ironvisiontools.com/) and English (https://ironvisiontools.com/en/).
 
 ## Products (as described on the site)
 - VyroN Agents OS: automation system that takes over repetitive work (inbox scanning, daily summary, backups and verification, cost tracking, watchdogs, scheduled jobs, Telegram commands, browser automation). Installed per business, set-up takes 2-4 weeks. Live demo (guest sign-in, synthetic data): https://agentos-demo-demir-s-projects1.vercel.app

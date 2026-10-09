@@ -6,9 +6,12 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>İletişim — IronVision Tools</title>
-    <meta name="description" content="IronVision Tools ile iletişime geçin. Geri bildirim, hata bildirimi ve araç önerileriniz için e-posta ile bize ulaşın.">
+    <meta name="description" content="IronVision Tools ile iletişim: demo talebi, kurulum ve iş birliği için founder@ironvisiontools.com.">
     <meta name="theme-color" content="#0b0f14">
     <link rel="canonical" href="https://ironvisiontools.com/iletisim.html">
+    <link rel="alternate" hreflang="tr" href="https://ironvisiontools.com/iletisim.html"/>
+    <link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/contact/"/>
+    <link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/contact/"/>
     <link rel="icon" type="image/png" href="/assets/goz-logo.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="İletişim — IronVision Tools">
@@ -53,114 +56,58 @@
       .lang-select{ min-height:44px; padding:0 12px; background:var(--panel-2); color:var(--text);
         border:1px solid var(--border-strong); border-radius:999px; font-weight:700; font-size:14px; cursor:pointer; }
       .marka:focus-visible,.tool-link:focus-visible,.lang-select:focus-visible,a:focus-visible,select:focus-visible{ outline:none; box-shadow:var(--focus); }
-      main{ max-width:720px; margin:0 auto; padding:clamp(20px,4vw,44px) clamp(14px,3vw,28px) 64px; }
+      main{ max-width:820px; margin:0 auto; padding:clamp(20px,4vw,44px) clamp(14px,3vw,28px) 64px; }
       .hero{ margin-bottom:26px; }
       .hero h1{ margin:0 0 10px; font-size:clamp(26px,4.6vw,40px); font-weight:800; letter-spacing:-0.02em; }
-      .hero p{ margin:0; color:var(--muted); font-size:clamp(15px,2.2vw,18px); }
+      .hero p{ margin:0; color:var(--muted); font-size:clamp(14px,2.2vw,16px); }
       .card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
         backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:clamp(20px,3.4vw,32px); margin-bottom:22px; }
+      .card h2{ margin:0 0 12px; font-size:20px; font-weight:800; }
       .card p{ margin:0 0 14px; color:var(--muted); font-size:15px; line-height:1.75; }
       .card p:last-child{ margin-bottom:0; }
-      .mail{ display:inline-flex; align-items:center; gap:10px; margin-top:6px;
-        background:rgba(0,255,102,0.10); border:1px solid rgba(0,255,102,0.3); color:var(--accent-soft);
-        border-radius:var(--radius-sm); padding:14px 18px; font-weight:800; font-size:16px; text-decoration:none; }
-      .mail:hover{ background:rgba(0,255,102,0.16); }
+      .card ul{ margin:0 0 6px; padding-left:20px; color:var(--muted); font-size:15px; line-height:1.75; }
+      .card li{ margin-bottom:8px; }
+      .card a{ color:var(--accent-soft); font-weight:700; }
+      .note{ background:rgba(0,255,102,0.07); border:1px solid rgba(0,255,102,0.25); border-radius:var(--radius-sm);
+        padding:14px 16px; color:var(--accent-soft); font-size:14px; line-height:1.7; }
       footer{ border-top:1px solid var(--border); margin-top:40px; padding:26px clamp(14px,3vw,28px);
         text-align:center; color:var(--muted); font-size:13px; }
       footer .links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
       footer a{ color:var(--accent-soft); font-weight:700; display:inline-block; min-height:44px; line-height:44px; padding:0 4px; }
       .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
       @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; } }
+          .card h2{margin-top:0} .card ul{margin:0 0 6px}
     </style>
 </head>
 <body>
     <header class="topbar">
-        <a class="marka" href="index.html" aria-label="IRON VISION tools — ana sayfa">
-            <img alt="IRON VISION — çelik göz logosu" class="marka-logo" src="assets/goz-logo.png" width="52" height="52">
+        <a class="marka" href="/" aria-label="IRON VISION tools — ana sayfa">
+            <img alt="IRON VISION" class="marka-logo" src="/assets/goz-logo.png" width="52" height="52">
             <span class="marka-yazi">
             <span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span>
             <span class="marka-tools">tools</span>
             </span>
         </a>
-        <nav class="tools-nav" aria-label="Araçlar">
-            <a class="tool-link" href="index.html" data-i18n="navHome">Ana Sayfa</a>
-            <label class="visually-hidden" for="langSelector" data-i18n="langLabel">Dil</label>
-            <select id="langSelector" class="lang-select" onchange="changeLanguage(this.value)">
-                <option value="tr">🇹🇷 TR</option>
-                <option value="en">🇬🇧 EN</option>
-            </select>
+        <nav class="tools-nav" aria-label="Nav">
+            <a class="tool-link" href="/">Ana Sayfa</a>
+            <a class="tool-link" href="/en/contact/" hreflang="en">EN</a>
         </nav>
     </header>
-
     <main>
         <section class="hero">
-            <h1 data-i18n="title">İletişim</h1>
-            <p data-i18n="lead">Geri bildirim ve araç önerilerinizi bekliyoruz.</p>
+            <h1>İletişim</h1>
+            <p>Demo, kurulum ve iş birliği için yazın.</p>
         </section>
-
-        <section class="card">
-            <p data-i18n="p1">IronVision Tools'u geliştirmenin en iyi yolu sizden gelen geri bildirimler. Bir hesaplayıcıda hata fark ettiyseniz, bir şeyin daha iyi çalışabileceğini düşünüyorsanız ya da eklenmesini istediğiniz yeni bir araç aklınıza geldiyse bize yazın. Her mesajı okuyoruz.</p>
-            <p data-i18n="p2">Bize e-posta ile ulaşabilirsiniz:</p>
-            <p><a class="mail" href="mailto:founder@ironvisiontools.com">✉ founder@ironvisiontools.com</a></p>
-            <p data-i18n="p3">Yazarken hangi araçtan bahsettiğinizi ve mümkünse adım adım ne yaptığınızı belirtirseniz size daha hızlı yardımcı olabiliriz. Gizlilikle ilgili konular için <a href="gizlilik.html">Gizlilik sayfamıza</a> göz atabilirsiniz.</p>
-        </section>
+<section class="card"><h2>Bize ulaşın</h2><p>IronVision Tools; VyroN Agents OS, Sesli Şef, MoyMote ve sosyal medya/video otomasyonu gibi yapay zekâ ürünleri geliştiren, Türkiye merkezli, tek kurucuya sahip bir girişimdir (Nisan 2026'dan beri).</p><p><a class="mail" href="mailto:founder@ironvisiontools.com">✉ founder@ironvisiontools.com</a></p><p>GitHub: <a href="https://github.com/IronVisionTools" rel="noopener">github.com/IronVisionTools</a></p><p>Canlı demoyu ana sayfadaki "Canlı demoyu dene" düğmesinden açabilirsiniz. Yazarken hangi üründen bahsettiğinizi belirtirseniz daha hızlı yanıt veririz. Veri işleme için <a href="/gizlilik.html">Gizlilik sayfasına</a> bakın.</p></section>
     </main>
-
     <footer>
         <div class="links">
-            <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
-            <a href="hakkinda.html" data-i18n="footAbout">Hakkında</a>
-            <a href="gizlilik.html" data-i18n="footPrivacy">Gizlilik</a>
-            <a href="iletisim.html" data-i18n="footContact">İletişim</a>
+            <a href="/">Ana Sayfa</a>
+            <a href="/hakkinda.html">Hakkında</a>
+            <a href="/gizlilik.html">Gizlilik</a>
+            <a href="/iletisim.html">İletişim</a>
         </div>
-        <p>© <span id="year"></span> IronVision Tools · ironvisiontools.com</p>
+        <p>© 2026 IronVision Tools · ironvisiontools.com</p>
     </footer>
-
-    <script>
-    (function(){
-      "use strict";
-      const $ = (id)=>document.getElementById(id);
-      let activeLang = localStorage.getItem("ivt_lang") || "tr";
-      const copy = {
-        tr:{
-          navHome:"Ana Sayfa", navTax:"Vergi / Net Maaş", navToken:"Token Maliyet", langLabel:"Dil",
-          footAbout:"Hakkında", footPrivacy:"Gizlilik", footContact:"İletişim",
-          title:"İletişim",
-          lead:"Geri bildirim ve araç önerilerinizi bekliyoruz.",
-          p1:"IronVision Tools'u geliştirmenin en iyi yolu sizden gelen geri bildirimler. Bir hesaplayıcıda hata fark ettiyseniz, bir şeyin daha iyi çalışabileceğini düşünüyorsanız ya da eklenmesini istediğiniz yeni bir araç aklınıza geldiyse bize yazın. Her mesajı okuyoruz.",
-          p2:"Bize e-posta ile ulaşabilirsiniz:",
-          p3html:"Yazarken hangi araçtan bahsettiğinizi ve mümkünse adım adım ne yaptığınızı belirtirseniz size daha hızlı yardımcı olabiliriz. Gizlilikle ilgili konular için ",
-          privacyLinkText:"Gizlilik sayfamıza",
-          p3tail:" göz atabilirsiniz."
-        },
-        en:{
-          navHome:"Home", navTax:"Tax / Net Pay", navToken:"LLM Token Cost", langLabel:"Language",
-          footAbout:"About", footPrivacy:"Privacy", footContact:"Contact",
-          title:"Contact",
-          lead:"We'd love your feedback and tool suggestions.",
-          p1:"The best way to improve IronVision Tools is feedback from you. If you've found a bug in a calculator, think something could work better, or have a new tool in mind you'd like us to add, write to us. We read every message.",
-          p2:"You can reach us by email:",
-          p3html:"When you write, telling us which tool you mean and, if possible, step by step what you did helps us help you faster. For privacy matters, see our ",
-          privacyLinkText:"Privacy page",
-          p3tail:"."
-        }
-      };
-      function applyLang(){
-        const c = copy[activeLang] || copy.tr;
-        document.documentElement.lang = activeLang;
-        document.querySelectorAll("[data-i18n]").forEach(el=>{
-          const k = el.getAttribute("data-i18n");
-          if(c[k] != null) el.textContent = c[k];
-        });
-        const p3 = document.querySelector('[data-i18n="p3"]');
-        if(p3) p3.innerHTML = (c.p3html||"") + '<a href="gizlilik.html">' + (c.privacyLinkText||"") + '</a>' + (c.p3tail||"");
-        const ls = $("langSelector"); if(ls) ls.value = activeLang;
-      }
-      window.changeLanguage = function(v){ activeLang = copy[v] ? v : "tr"; localStorage.setItem("ivt_lang", activeLang); applyLang(); };
-      $("year").textContent = new Date().getFullYear();
-      if(!copy[activeLang]){ const b=(navigator.language||"tr").toLowerCase(); activeLang = b.startsWith("en")?"en":"tr"; }
-      applyLang();
-    })();
-    </script>
 </body>
 </html>

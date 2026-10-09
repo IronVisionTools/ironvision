@@ -2,7 +2,7 @@ WEBVTT
 
 1
 00:00:00.300 --> 00:00:05.362
-AgentOS kendi Linux sunucunuza böyle
+VyroN Agents OS kendi Linux sunucunuza böyle
 kurulur: ilk görüşmeden ilk rapora.
 
 2
@@ -74,7 +74,7 @@ söyler.
 00:01:39.663 --> 00:01:49.791
 Adaylar üç yoldan gelebilir: doldurduğunuz
 bir JSON dosyası, yalnız okunan bir e-posta
-kutusu veya tam AgentOS kurulumunda bir
+kutusu veya tam VyroN Agents OS kurulumunda bir
 webhook.
 
 13

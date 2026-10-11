@@ -64,10 +64,11 @@ article.serit.mm .liste li::before{background:#f7941e}
 .mm-bat{position:relative;width:6.6cqw;height:3.1cqw;border-radius:.9cqw;border:.45cqw solid rgba(242,244,247,.55);
   background:linear-gradient(90deg,#f2f4f7 0 72%,transparent 72%) content-box;padding:.35cqw}
 .mm-bat::after{content:"";position:absolute;right:-1.2cqw;top:50%;translate:0 -50%;width:.7cqw;height:1.3cqw;border-radius:0 .5cqw .5cqw 0;background:rgba(242,244,247,.55)}
-.mm-cap{position:absolute;right:2%;bottom:-34px;white-space:nowrap;margin:0;
+/* yazi telefonun disinda (sahnede): telefon egik, yazi duz kalir (Demir 11.10) */
+.mm-cap{position:absolute;right:-2.5%;bottom:calc(-5% - 34px);z-index:4;white-space:nowrap;margin:0;
   font-family:'Space Grotesk',Arial,sans-serif;font-size:15px;color:var(--dim)}
 .mm-cap b{font-weight:600}
-.mm-range:focus-visible~.mm-cap{color:var(--txt)}
+.mm-stage:has(.mm-range:focus-visible) .mm-cap{color:var(--txt)}
 
 @media (max-width:640px){
   .mm-scene{width:150%;margin-left:-25%}

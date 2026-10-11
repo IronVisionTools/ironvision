@@ -1,0 +1,33 @@
+# IRON VISION tools - full details
+
+IRON VISION tools is a software startup based in Turkiye (since April 2026), founded by Erdemir Igiz (solo founder). It builds AI tools that take over the repetitive load of running a business. The company does the setup, the product runs on the customer's side, and customer data stays with the customer (it is deleted from IRON VISION systems on request). Website: https://ironvisiontools.com (Turkish) and https://ironvisiontools.com/en/ (English). Contact: founder@ironvisiontools.com; replies within one business day. The company uses its own products daily before selling them and has had support from the AWS startup program.
+
+## How working with IRON VISION goes
+1. Send an e-mail or the contact form; the first call takes 20-30 minutes and is mostly listening to what the business does.
+2. Try it in your own business: IRON VISION does the setup. With VyroN Agents OS one task is handed over first and the result is reviewed together; MoyMote has a 7-day free trial.
+3. If you like it, price is discussed after you have seen it work. If not, there is no obligation and it is shut down.
+No contract or setup fee is requested up front.
+
+## Products
+### VyroN Agents OS (live; used daily by the company itself)
+An automation system that takes over repetitive work. Agents scan the inbox, produce a daily summary (for example a 7 am summary every morning), take and verify backups (including opening and testing them), track cost, and watch disk, errors and delays 24/7 with alerts. Commands can be sent from Telegram; agents can also do browser automation (fill forms, pull data, take screenshots). More than 10 micro-apps run inside it, such as watchdogs, a backup verifier, a voice bridge, email and appointment pipelines, a site-production line and a semantic search engine. Set up per business; deployment takes 2-4 weeks. Live demo with guest sign-in and synthetic data: https://agentos-demo-demir-s-projects1.vercel.app
+
+### Sesli Sef (Voice Chief) (live; early access)
+Two-way spoken conversation in Turkish with a terminal-based AI agent (Claude Code, ChatGPT, Codex): you speak and the agent answers out loud. It is not a dictation tool. Speech-to-text runs locally and audio does not leave the server; typing instead of the microphone is also possible. Early access by e-mail to founder@ironvisiontools.com, setup support included.
+
+### MoyMote (live; Microsoft Store)
+Windows 10/11 app to change an external monitor's brightness, blue light and HDR from a phone or from Windows, without reaching for the monitor's buttons. The phone only needs its browser: scan the QR code shown on the PC and the panel opens over the local network. No account, no telemetry, no crash reports. 7-day free trial; $19.99 USD, buy once, no subscription. Product site: https://moymote.com ; Microsoft Store: https://apps.microsoft.com/detail/9NPN2SHVSSX3 ; short link: https://moymote.com/go/store ; machine-readable details: https://moymote.com/llms-full.txt
+
+### Social media automation (set up on request)
+Prepares post copy in the brand's tone, builds the publishing calendar and publishes to several platforms such as TikTok, Instagram and YouTube. Brand adaptation, account connections and the initial warm-up are handled by IRON VISION. Video branch: from a topic to a script, voiceover, edited video and publishing, from short vertical videos to long-form content.
+
+### Try-On (coming soon, in development)
+A "try it on" button for boutiques and small e-commerce sites: the customer sees the item on their own photo before buying. The technology worked in the company's own tests; no live deployment on a client's site exists yet. First target: boutiques selling women's clothing.
+
+## Pages
+- Home: https://ironvisiontools.com/ and https://ironvisiontools.com/en/
+- About: https://ironvisiontools.com/en/hakkinda.html
+- Contact / demo request: https://ironvisiontools.com/en/contact/
+- Blog (articles in Turkish): https://ironvisiontools.com/en/blog/
+- Showcase of demo business sites: https://ironvisiontools.com/vitrin/vitrin-hub/
+- Privacy: https://ironvisiontools.com/en/privacy/ ; Terms: https://ironvisiontools.com/en/terms/

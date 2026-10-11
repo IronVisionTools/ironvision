@@ -129,4 +129,34 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://ironvisiontools.com/en/blog/"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://ironvisiontools.com/en/blog/"/>
     </url>
+    <url>
+        <loc>https://ironvisiontools.com/llms.txt</loc>
+        <lastmod>2026-10-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/llms-full.txt</loc>
+        <lastmod>2026-10-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/vitrin/vitrin-hub/</loc>
+        <lastmod>2026-10-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/gizlilik-politikasi-lav.html</loc>
+        <lastmod>2026-10-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    <url>
+        <loc>https://ironvisiontools.com/hesap-silme-lav.html</loc>
+        <lastmod>2026-10-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.2</priority>
+    </url>
 </urlset>

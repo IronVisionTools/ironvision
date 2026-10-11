@@ -5,7 +5,7 @@
 ## Products (as described on the site)
 - VyroN Agents OS: automation system that takes over repetitive work (inbox scanning, daily summary, backups and verification, cost tracking, watchdogs, scheduled jobs, Telegram commands, browser automation). Installed per business, set-up takes 2-4 weeks. Live demo (guest sign-in, synthetic data): https://agentos-demo-demir-s-projects1.vercel.app
 - Sesli Şef (Voice Chief): two-way spoken conversation in Turkish with a terminal-based AI agent (Claude Code, ChatGPT, Codex); you speak, the agent answers out loud. Speech-to-text runs locally. Early access by e-mail.
-- MoyMote: Windows app to control an external monitor's brightness, blue light and HDR from a phone (https://moymote.com, Microsoft Store). 7-day free trial; no subscription.
+- MoyMote: Windows app to control an external monitor's brightness, blue light and HDR from a phone (https://moymote.com, Microsoft Store). 7-day free trial; $19.99 USD, buy once, no subscription (details: https://moymote.com/llms-full.txt). Store short link: https://moymote.com/go/store.
 - Social media automation: prepares post copy, sets up a publishing calendar and publishes to several platforms (TikTok, Instagram, YouTube). Sub-branch, video automation: from a topic to script, voiceover, edited video and publishing. Set up on request.
 - Try-On (coming soon): a "try it on" button for boutiques and small e-commerce sites; in development, no live deployment on a client site yet.
 
@@ -18,3 +18,8 @@
 - [Privacy](https://ironvisiontools.com/en/privacy/)
 - [Terms of Use](https://ironvisiontools.com/en/terms/)
 - [Blog (EN index, articles in Turkish)](https://ironvisiontools.com/en/blog/)
+- [Showcase of demo business sites](https://ironvisiontools.com/vitrin/vitrin-hub/)
+- Contact e-mail: founder@ironvisiontools.com
+
+## Optional
+- [Full details for AI assistants](https://ironvisiontools.com/llms-full.txt)

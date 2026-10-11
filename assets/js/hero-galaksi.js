@@ -19,7 +19,7 @@ const CP={
  LID_TO_IRIS:.55,  /* [goz 08.10] eski: yok -- kapak payindan irise giden pay (N carpani) */
  LID_TO_AMB:.4,    /* [goz 08.10] eski: yok -- kapak payindan ambiyans/yildiz akisina giden pay (N carpani); toplam yogunluk korunur (.55+.4=.95) */
  SPEC_A:0,         /* [goz 08.10] eski: 1 (gozbebegi ustunde metal parlama beyaz noktasi) */
- RING_A:.5,RING_W:.032, /* [goz 08.10] iris dis halkasi (logodaki parlak elektrik mavisi halka): opaklik, kalinlik (M carpani); eski: yok */
+ RING_A:.17,RING_W:.014, /* [goz 08.10] iris dis halkasi (logodaki parlak elektrik mavisi halka): opaklik, kalinlik (M carpani); eski: yok */
  MV_ZETA:.75,      /* [goz 08.10] toplanma yayi sonumleme orani: asma ~%2.8 (eski: eo() easeOutCubic, asma yok) */
  MV_X:5.6,         /* [goz 08.10] yayin yerlesme olcegi (buyuk = daha cabuk oturur) */
  MV_SM:.8,         /* [goz 08.10] yumusak baslangic: e -> mix(e,smoothstep(e),MV_SM) (0 = dogrusal) */
@@ -242,8 +242,10 @@ function draw(ctx,E,t){
   const ig=ctx.createRadialGradient(0,0,M*RP*.9,0,0,M*1.05);
   ig.addColorStop(0,`rgba(1,56,186,${.42*fi})`);ig.addColorStop(.4,`rgba(2,84,240,${.28*fi})`);ig.addColorStop(.8,`rgba(10,147,253,${.16*fi})`);ig.addColorStop(.93,`rgba(10,147,253,${.3*fi})`);ig.addColorStop(1,'rgba(10,147,253,0)');
   ctx.globalAlpha=1;ctx.fillStyle=ig;ctx.beginPath();ctx.arc(0,0,M*1.05,0,TAU);ctx.fill();
-  if(CP.RING_A>0){ctx.lineWidth=Math.max(1.5,M*CP.RING_W);ctx.strokeStyle=`rgba(10,147,253,${Math.min(1,CP.RING_A*(E.mobile?1.7:1))*fi})`;ctx.beginPath();ctx.arc(0,0,M*.985,0,TAU);ctx.stroke();
-   ctx.lineWidth=1;ctx.strokeStyle=`rgba(170,215,255,${.45*fi})`;ctx.beginPath();ctx.arc(0,0,M*.99,0,TAU);ctx.stroke()} /* [goz 08.10] parlak elektrik mavisi iris halkasi */
+  if(CP.RING_A>0){const rw=Math.max(1,M*CP.RING_W),ra=Math.min(1,CP.RING_A*(E.mobile?1.7:1))*fi,NS=96; /* [goz 11.10] dis halka belli belirsiz: acisal alfa, yer yer kaybolur, kenar yumusak; eski: tam daire, RING_A .5/RING_W .032 + 1px acik halka */
+   for(let k=0;k<NS;k++){const a0=k/NS*TAU,a1=(k+1.15)/NS*TAU,am=(a0+a1)/2,m=Math.max(0,Math.min(1,.5+.9*Math.sin(2*am+.7)+.6*Math.sin(5*am+2.1)+.3*Math.sin(11*am+.4)));if(m<.02)continue;
+    ctx.lineWidth=rw*3;ctx.strokeStyle=`rgba(10,147,253,${.25*ra*m*m})`;ctx.beginPath();ctx.arc(0,0,M*.985,a0,a1);ctx.stroke();
+    ctx.lineWidth=rw;ctx.strokeStyle=`rgba(10,147,253,${ra*m*m})`;ctx.beginPath();ctx.arc(0,0,M*.985,a0,a1);ctx.stroke()}} /* parlak elektrik mavisi iris halkasi */
   ctx.restore()}
  const J=CP.SHIMMER,wob=CP.MV_WOB*Math.max(.6,R/246); /* [goz 08.10] eyeMetal kaldirildi */
  for(const p of P){

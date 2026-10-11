@@ -409,7 +409,7 @@ function loop(ts){
  const ms=performance.now()-c0;window.__heroMs=(window.__heroMs||ms)*.92+ms*.08;if(FORCE)return;
  acc+=Math.max(ms,E.mobile&&raw<.07?0:Math.min(raw,.3)*1000*.7); /* [perf 08.10] telefonda 30 fps siniri kasitli: 70 ms alti kare araligi yavaslik sayilmaz (yalniz cizim suresi sayilir) */
  if(++cnt===3){const av=acc/cnt;acc=cnt=0;
-  if(av>32){halt();if(level<1&&av<70){level=1;build();run()}else{level=2;t=.001;scene.init(E);renderStill()}}}
+  if(av>32&&level<2){halt();level++;build();run()}} /* [goz 11.10] yavas cihazda sabit goz karesine ATLAMA (goz tek karede beliriyordu): kademe dusur (level 1, sonra 2), dongu surer, goz yildizlarla yavas olusur; sabit kare yalniz reduced-motion */
 }
 window.__heroEye=function(){return[E.cx,E.cy,E.R]}; /* [goz 08.10] test/olcum: goz merkezi ve yaricapi */
 window.__heroSeek=function(tt){window.__heroSeekOn=1;halt();t=tt;render(.016,tt,true)};
@@ -449,11 +449,11 @@ function start(){
   const pc=performance.now()-p0;
   if(FORCE){}
   else if(pc>25&&pc<=60){level=1;build();renderStill()}
-  else if(pc>60){level=2}
+  else if(pc>60){level=2;build()} /* [goz 11.10] level 2 de artik animasyonlu (sabit kareye atlama yok): asagidaki run() calisir */
   nextShoot=rng(3,6);
   document.addEventListener('visibilitychange',()=>{document.hidden?halt():run()});
   if('IntersectionObserver' in window)new IntersectionObserver(es=>{inView=es[0].isIntersecting;inView?run():halt()},{threshold:0}).observe(hero);
-  if(level<2){render(0,0,true);run()}} /* [cila3 mad.2] ilk gorunen kare t=0 akisi (cila2: sabit goz karesi) */
+  render(0,0,true);run()} /* [cila3 mad.2] ilk gorunen kare t=0 akisi (cila2: sabit goz karesi) */
  requestAnimationFrame(()=>box.classList.add('hazir'));
  let rt=0,pw=innerWidth;
  addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{

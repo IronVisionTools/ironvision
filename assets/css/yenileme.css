@@ -435,3 +435,14 @@ nav.fixed::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50
 .alt-dal-etiket{display:block;font-family:'Space Grotesk',Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);margin-bottom:10px}
 .alt-dal h4{font-family:'Space Grotesk',Arial,sans-serif;font-size:21px;font-weight:600;margin:0 0 12px;color:var(--txt)}
 .alt-dal p{font-family:'Space Grotesk',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:var(--dim);margin:0 0 18px}
+
+/* ---------- 13.10 taslak: dokunma hedefi >=44px ve mobilde etiket >=12px (O7/O8) ---------- */
+@media (max-width:767px){
+  body .marka{min-height:44px}
+  body .marka-tools{font-size:12px}
+  body .hero-serit a{display:inline-flex;align-items:center;min-height:44px;font-size:12px}
+  body .is-govde .git{min-height:44px;font-size:12px}
+  body a[href^="mailto:"],body .yasal-kart a[href*="github.com"]{display:inline-flex;align-items:center;min-height:44px}
+  body footer .gap-6 a{display:inline-block;padding:16px 0}
+  body .etiket,body .video-etiket,body .rozet,body .sema-bas,body .alt-dal-etiket,body .kutucuk dt,body .is-govde .is-etiket,body .etiket-rozet,body .form-kutu label{font-size:12px}
+}

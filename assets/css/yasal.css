@@ -1,0 +1,11 @@
+/* Yasal sayfalar (gizlilik, sartlar, iletisim): ana site kabugunda metin kartlari. Renk/font degiskenleri yenileme.css'ten. */
+.yasal{max-width:820px;margin:0 auto;padding:0 var(--gut) 56px}
+.yasal-kart{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:clamp(20px,3.4vw,30px);margin-bottom:16px}
+.yasal-kart h2{font-family:'Playfair Display',Georgia,serif;font-weight:700;text-transform:uppercase;font-size:clamp(18px,2.4vw,22px);margin:0 0 12px;color:var(--txt)}
+.yasal-kart p,.yasal-kart li{font-family:'Space Grotesk',Arial,sans-serif;font-size:15.5px;line-height:1.75;color:var(--dim)}
+.yasal-kart p{margin:0 0 14px}
+.yasal-kart p:last-child{margin-bottom:0}
+.yasal-kart ul{margin:0 0 6px;padding-left:20px;list-style:disc}
+.yasal-kart li{margin-bottom:8px}
+.yasal-kart a{color:#8fb4ff;font-weight:600}
+.yasal-kart p.note{background:var(--acc-soft);border:1px solid rgba(57,125,246,.35);border-radius:12px;padding:14px 16px;color:var(--txt)}

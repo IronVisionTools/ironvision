@@ -10,5 +10,6 @@
     b.setAttribute('aria-label', acik ? (tr ? 'Menüyü kapat' : 'Close menu') : (tr ? 'Menüyü aç' : 'Open menu'));
   });
   m.addEventListener('click', function (e) { if (e.target.tagName === 'A') kapat(); });
+  document.addEventListener('click', function (e) { if (m.classList.contains('acik') && !m.contains(e.target) && !b.contains(e.target)) kapat(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.classList.contains('acik')) kapat(); });
 })();

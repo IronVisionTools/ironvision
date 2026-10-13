@@ -366,7 +366,7 @@ function geometry(){
 }
 function build(gen){
  E.mobile=innerWidth<768;E.spr=E.mobile?3.4:2.4; /* [perf 08.10] telefon: parlak sprite esigi (drawImage pahali) */
- E.N=(E.mobile?1200:5600)>>level; /* [perf 08.10] telefon 2800 -> 1200: Lighthouse 4x CPU'da kare basi gorev <=~12 ms icin olculdu (1800'de TBT ~600, 1200'de ~400) */ /* mobilde parcacik yarisi; yavas cihazda bir kademe daha */
+ E.N=(E.mobile?(innerWidth<=600?800:1200):5600)>>level; /* [perf 13.10 taslak] dar telefon (<=600px): parcacik 1200 -> 800; gorunmezken/ekran disinda durma (visibilitychange+IntersectionObserver) ve reduced-motion zaten vardi */ /* [perf 08.10] telefon 2800 -> 1200: Lighthouse 4x CPU'da kare basi gorev <=~12 ms icin olculdu (1800'de TBT ~600, 1200'de ~400) */ /* mobilde parcacik yarisi; yavas cihazda bir kademe daha */
  stars=[];const n=[0,0];
  for(let l=0;l<2;l++)for(let i=0;i<n[l];i++)stars.push({l,x:Math.random(),y:Math.random(),s:l?rng(1,1.5):rng(.6,.9),a:l?rng(.35,.7):rng(.2,.45),g:[0,0,1,5,2][Math.floor(Math.random()*5)],p:rng(0,6.28),f:rng(.2,.6)});
  geometry();scene=window.HERO_SCENE;

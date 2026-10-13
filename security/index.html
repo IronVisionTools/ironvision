@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr" data-l="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Güvenlik / Security — IronVision Tools</title>
+    <meta name="description" content="IronVision Tools güvenlik sayfası: yalnızca doğrulanmış şeyler. / Security page: only verified facts.">
+    <meta name="theme-color" content="#0b0f14">
+    <link rel="canonical" href="https://ironvisiontools.com/security/">
+    <link rel="icon" type="image/png" href="/assets/goz-logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Güvenlik / Security — IronVision Tools">
+    <meta property="og:url" content="https://ironvisiontools.com/security/">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+      :root{
+        --bg:#0b0f14; --panel:rgba(20,27,34,0.85); --panel-2:rgba(27,35,44,0.9);
+        --border:rgba(255,255,255,0.09); --border-strong:rgba(255,255,255,0.16);
+        --text:#e6edf3; --muted:#9aa7b4; --accent:#00ff66; --accent-ink:#04130c; --accent-soft:#57ff9e;
+        --radius:18px; --radius-sm:12px; --focus:0 0 0 3px rgba(0,255,102,0.45); --shadow:0 18px 50px rgba(0,0,0,0.45);
+      }
+      *{ box-sizing:border-box; }
+      html{ -webkit-text-size-adjust:100%; }
+      body{ margin:0; min-height:100vh;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(820px 380px at 12% -5%, rgba(0,255,102,0.12), transparent 60%),
+          radial-gradient(760px 360px at 100% 0%, rgba(124,176,255,0.08), transparent 60%), var(--bg);
+        line-height:1.5; }
+      a{ color:inherit; }
+      h1,h2,h3{ line-height:1.2; }
+      .topbar{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+        gap:14px; flex-wrap:wrap; padding:12px clamp(14px,3vw,28px);
+        background:rgba(11,15,20,0.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+        border-bottom:1px solid var(--border); }
+      .marka{ display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+        color:var(--text); min-height:44px; padding:2px 4px; min-width:0; }
+      .marka-logo{ width:40px; height:40px; border-radius:50%; object-fit:cover;
+        border:1px solid var(--border-strong); flex:0 0 auto; display:block; }
+      .marka-yazi{ display:flex; flex-direction:column; justify-content:center; gap:2px; min-width:0; }
+      .marka-ad{ font-weight:800; letter-spacing:0.08em; font-size:15px; line-height:1; white-space:nowrap; }
+      .marka-ad .iron{ color:var(--text); }
+      .marka-ad .vision{ color:var(--accent); }
+      .marka-tools{ font-weight:400; font-size:10px; line-height:1; letter-spacing:.3em;
+        text-transform:lowercase; color:var(--muted); white-space:nowrap; }
+      .tools-nav{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+      .tool-link{ display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 14px;
+        border-radius:999px; text-decoration:none; font-weight:700; font-size:14px; color:var(--muted); border:1px solid transparent; }
+      .tool-link:hover{ color:var(--text); background:rgba(255,255,255,0.05); }
+      .lang-select{ min-height:44px; padding:0 12px; background:var(--panel-2); color:var(--text);
+        border:1px solid var(--border-strong); border-radius:999px; font-weight:700; font-size:14px; cursor:pointer; }
+      .marka:focus-visible,.tool-link:focus-visible,.lang-select:focus-visible,a:focus-visible,select:focus-visible{ outline:none; box-shadow:var(--focus); }
+      main{ max-width:820px; margin:0 auto; padding:clamp(20px,4vw,44px) clamp(14px,3vw,28px) 64px; }
+      .hero{ margin-bottom:26px; }
+      .hero h1{ margin:0 0 10px; font-size:clamp(26px,4.6vw,40px); font-weight:800; letter-spacing:-0.02em; }
+      .hero p{ margin:0; color:var(--muted); font-size:clamp(14px,2.2vw,16px); }
+      .card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
+        backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:clamp(20px,3.4vw,32px); margin-bottom:22px; }
+      .card h2{ margin:0 0 12px; font-size:20px; font-weight:800; }
+      .card p{ margin:0 0 14px; color:var(--muted); font-size:15px; line-height:1.75; }
+      .card p:last-child{ margin-bottom:0; }
+      .card ul{ margin:0 0 6px; padding-left:20px; color:var(--muted); font-size:15px; line-height:1.75; }
+      .card li{ margin-bottom:8px; }
+      .card a{ color:var(--accent-soft); font-weight:700; }
+      .note{ background:rgba(0,255,102,0.07); border:1px solid rgba(0,255,102,0.25); border-radius:var(--radius-sm);
+        padding:14px 16px; color:var(--accent-soft); font-size:14px; line-height:1.7; }
+      footer{ border-top:1px solid var(--border); margin-top:40px; padding:26px clamp(14px,3vw,28px);
+        text-align:center; color:var(--muted); font-size:13px; }
+      footer .links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+      footer a{ color:var(--accent-soft); font-weight:700; display:inline-block; min-height:44px; line-height:44px; padding:0 4px; }
+      .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+      @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; } }
+          .lang-en{display:none} html[data-l="en"] .lang-en{display:block} html[data-l="en"] .lang-tr{display:none}
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="marka" href="/" aria-label="IRON VISION tools">
+            <img alt="IRON VISION" class="marka-logo" src="/assets/goz-logo.png" width="52" height="52">
+            <span class="marka-yazi"><span class="marka-ad"><span class="iron">IRON</span> <span class="vision">VISION</span></span><span class="marka-tools">tools</span></span>
+        </a>
+        <nav class="tools-nav"><select id="l" class="lang-select" aria-label="Dil / Language"><option value="tr">TR</option><option value="en">EN</option></select></nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1><span class="lang-tr">Güvenlik</span><span class="lang-en">Security</span></h1>
+            <p><span class="lang-tr">Yalnızca doğruladığımız şeyler. Son gözden geçirme: 13.10.2026.</span><span class="lang-en">Only what we have verified. Last reviewed: 13 Oct 2026.</span></p>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">Web siteleri</span><span class="lang-en">Our websites</span></h2>
+            <ul class="lang-tr"><li>ironvisiontools.com ve moymote.com yalnızca HTTPS ile açılır; HTTP istekleri HTTPS'e yönlendirilir (13.10.2026 dış kontrol).</li><li>Yaygın gizli yollar (.env, .git, admin, yedek dosyaları) iki sitede de 404 döner; dizin listeleme yoktur.</li><li>Sahipsiz (askıda) alt alan adı bulunmadı.</li><li>moymote.com HSTS, X-Frame-Options: DENY, X-Content-Type-Options: nosniff ve Referrer-Policy başlıklarını gönderir. ironvisiontools.com GitHub Pages üzerinde çalışır ve bu ek başlıkları göndermez; bunu bildiğimiz için burada iddia etmiyoruz.</li></ul>
+            <ul class="lang-en"><li>ironvisiontools.com and moymote.com are served over HTTPS only; HTTP requests are redirected to HTTPS (external check, 13 Oct 2026).</li><li>Common hidden paths (.env, .git, admin, backup files) return 404 on both sites; directory listing is off.</li><li>No dangling (orphaned) subdomains were found.</li><li>moymote.com sends HSTS, X-Frame-Options: DENY, X-Content-Type-Options: nosniff and Referrer-Policy headers. ironvisiontools.com runs on GitHub Pages and does not send these extra headers; we say so rather than claim otherwise.</li></ul>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">Kod ve sırlar</span><span class="lang-en">Code and secrets</span></h2>
+            <ul class="lang-tr"><li>38 kod deposunun tüm git geçmişi gitleaks 8.30.1 ile tarandı (13.10.2026): geçerli bir sır (anahtar, token, parola) bulunmadı; çıkan 4 eşleşmenin hepsi yanlış pozitifti.</li><li>Herkese açık depolarımızda şirket içi adres veya yerel yol sızıntısı bulunmadı.</li></ul>
+            <ul class="lang-en"><li>The full git history of 38 code repositories was scanned with gitleaks 8.30.1 (13 Oct 2026): no valid secret (key, token, password) was found; all 4 matches were false positives.</li><li>No internal addresses or local paths were found in our public repositories.</li></ul>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">Altyapı</span><span class="lang-en">Infrastructure</span></h2>
+            <ul class="lang-tr"><li>Sunucumuza SSH yalnızca anahtarla girilir; parola ile giriş kapalıdır ve internetten SSH erişimi yoktur.</li><li>Bulut depolama kovalarımızda herkese açık erişim engelli ve şifreleme açıktır; kök hesapta çok adımlı doğrulama açıktır ve kök erişim anahtarı yoktur.</li></ul>
+            <ul class="lang-en"><li>SSH to our server is key-only; password login is disabled and SSH is not reachable from the internet.</li><li>Our cloud storage buckets block public access and are encrypted; the root account has multi-factor authentication on and has no root access key.</li></ul>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">MoyMote (Windows uygulaması)</span><span class="lang-en">MoyMote (Windows app)</span></h2>
+            <ul class="lang-tr"><li>Kod incelemesiyle (13.09.2026) doğrulandı: uygulama analitik toplamaz, güncelleme kontrolü yapmaz, dış sunuculara istek atmaz.</li><li>Telefon için açtığı yerel sunucu tüm ağ arayüzlerine birden değil, yalnızca belirli yerel ağ (ve varsa Tailscale) adreslerine bağlanır; güvenlik duvarı kuralı yalnızca özel ağ profilinde TCP 8765'i açar.</li><li>Bağlantı anahtarı bilgisayarında rastgele üretilir ve orada saklanır; bize gönderilmez. Tek kullanımlık değildir: dosyayı silip uygulamayı yeniden başlatarak yenilenir.</li><li>Teknik günlük dosyası yalnızca bilgisayarında durur ve 2 MB'ı geçince döndürülür.</li><li>Bilinen sınır: yerel ağdaki telefon bağlantısı şifrelenmemiş HTTP kullanır. Bu yüzden yalnızca güvendiğin bir ağda kullan. Şifrelemeyi henüz eklemedik.</li></ul>
+            <ul class="lang-en"><li>Verified by code review (13 Sep 2026): the app collects no analytics, does no update check and makes no requests to external servers.</li><li>The local server it opens for your phone does not bind to all network interfaces at once, only to specific local-network (and, if installed, Tailscale) addresses; the firewall rule opens TCP 8765 on the private network profile only.</li><li>The connection key is generated randomly on your computer and stored there; it is never sent to us. It is not single-use: delete the file and restart the app to renew it.</li><li>The technical log file stays on your computer and rolls over at 2 MB.</li><li>Known limit: the phone connection on your local network uses unencrypted HTTP, so use it only on a network you trust. We have not added encryption yet.</li></ul>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">Hâlâ üzerinde çalıştıklarımız</span><span class="lang-en">What we are still working on</span></h2>
+            <ul class="lang-tr"><li>13.10.2026 tarihli iç güvenlik taramamız, henüz kapatmadığımız bulgular listeledi. Düzeltilmeden ayrıntılarını yayımlamıyoruz; kapandıkça bu sayfayı güncelleyeceğiz.</li><li>Bu sayfa güvenliğin tamam olduğunu değil, doğruladığımız somut şeyleri anlatır. Yazılmayan hiçbir şey için güvence vermiyoruz.</li></ul>
+            <ul class="lang-en"><li>Our internal security review dated 13 Oct 2026 listed findings we have not closed yet. We do not publish details before they are fixed; we will update this page as they close.</li><li>This page does not say security is complete; it lists the concrete things we verified. We give no assurance about anything not written here.</li></ul>
+        </section>
+        <section class="card">
+            <h2><span class="lang-tr">Bildirim</span><span class="lang-en">Reporting</span></h2>
+            <ul class="lang-tr"><li>Güvenlik sorunu bildirmek için: <a href="mailto:founder@ironvisiontools.com">founder@ironvisiontools.com</a></li></ul>
+            <ul class="lang-en"><li>To report a security problem: <a href="mailto:founder@ironvisiontools.com">founder@ironvisiontools.com</a></li></ul>
+        </section>
+    </main>
+    <footer><div class="links"><a href="/">Ana Sayfa / Home</a><a href="/gizlilik.html">Gizlilik / Privacy</a><a href="/iletisim.html">İletişim / Contact</a></div><p>© IronVision Tools · ironvisiontools.com</p></footer>
+    <script>
+    (function(){try{var s=localStorage.getItem("ivt_lang");if(s==="en"||s==="tr")document.documentElement.dataset.l=s;}catch(e){}
+    var sel=document.getElementById("l");sel.value=document.documentElement.dataset.l;
+    sel.addEventListener("change",function(){document.documentElement.dataset.l=sel.value;document.documentElement.lang=sel.value;try{localStorage.setItem("ivt_lang",sel.value);}catch(e){}});})();
+    </script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://ironvisiontools.com/">
+<meta name="theme-color" content="#02040a">
+<title>IRON VISION tools — Gözlemevi</title>
+<meta name="description" content="Yapay zekâ ajanları, sesli yönetim ve otomasyon: VyroN Agents OS, Sesli Şef, MoyMote, sosyal medya otomasyonu.">
+<link rel="icon" href="img/goz-logo-104.webp" type="image/webp">
+<link rel="apple-touch-icon" href="img/goz-logo.png">
+<link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="booting">
+
+<a class="skip" href="#icerik" data-i18n="skip">İçeriğe geç</a>
+
+<!-- sahne: tek tam ekran shader -->
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="static-sky" aria-hidden="true"><i id="sky-a"></i><i id="sky-b"></i></div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+
+<!-- açılış: optik kalibrasyon -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot-in">
+    <div class="boot-line" id="boot-l1">IRON VISION · OBSERVATORY</div>
+    <div class="boot-line dim" id="boot-l2">OPTICS CALIBRATING</div>
+    <div class="boot-bar"><i id="boot-bar"></i></div>
+    <div class="boot-num"><span id="boot-n">000</span>%</div>
+  </div>
+</div>
+
+<!-- reticle (teleskop artı işareti) + kilitlenme çerçevesi -->
+<div class="lock" id="lock" aria-hidden="true"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><span class="lock-tag" id="lock-tag">LOCK</span></div>
+<div class="reticle" id="reticle" aria-hidden="true">
+  <svg viewBox="-60 -60 120 120" width="120" height="120">
+    <g class="ret-ring"><circle r="34" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5"/><circle r="46" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width=".8"/></g>
+    <g stroke="currentColor" stroke-width="1.2" fill="none"><path d="M-30 0H-9M9 0H30M0 -30V-9M0 9V30"/><path d="M-46 0h-8M46 0h8M0 -46v-8M0 46v8" stroke-opacity=".7"/></g>
+    <circle r="1.6" fill="currentColor"/>
+  </svg>
+  <span class="ret-read" id="ret-read">RA 00.00h · DEC +00.0°</span>
+</div>
+
+<!-- sol: derinlik göstergesi -->
+<div class="gauge" aria-hidden="true"><span class="gauge-t">Z</span><div class="gauge-bar"><i id="gauge-fill"></i></div><span class="gauge-n" id="gauge-n">0.00</span></div>
+
+<header class="top" id="top">
+  <a class="brand" href="#top" aria-label="IRON VISION tools"><img src="img/goz-logo-104.webp" width="34" height="34" alt=""><span class="brand-t">IRON VISION <small>tools</small></span></a>
+  <nav class="nav" aria-label="Ana gezinme">
+    <a href="#urunler" data-lock="LINK" data-i18n="nav.products">Ürünler</a>
+    <a href="#tryon" data-go-card="5" data-lock="LINK" data-i18n="nav.tryon">Try-On</a>
+    <a href="https://ironvisiontools.com/blog/index.html" data-lock="LINK" data-i18n="nav.blog">Blog</a>
+    <a href="#hakkinda" data-lock="LINK" data-i18n="nav.about">Hakkında</a>
+  </nav>
+  <div class="tools">
+    <button class="tbtn" id="snd" type="button" aria-pressed="false" data-lock="SES / SOUND"><span class="dot"></span><span id="snd-t" data-i18n="snd.off">SES KAPALI</span></button>
+    <button class="tbtn" id="lang" type="button" data-lock="TR / EN" aria-label="Switch language"><span id="lang-t">EN</span></button>
+    <a class="tbtn cta-s" href="/#contact" data-demo data-lock="DEMO" data-i18n="cta.demo">Demo İste</a>
+  </div>
+</header>
+
+<main id="icerik">
+
+<!-- 01 AÇILIŞ -->
+<section class="hero" id="hero">
+  <div class="hero-in">
+    <p class="kicker"><span class="k-dot"></span><span data-i18n="hero.kicker">GÖZLEMEVİ · IRON VISION tools</span></p>
+    <h1 class="big" data-decode data-i18n="hero.h1">Yapay zekâ üzerine kurulu araçlar.</h1>
+    <p class="lead" data-i18n="hero.sub">Ajanlar, sesli yönetim ve otomasyon: işinize yerleşen yapay zekâ, kurulu ve çalışır hâlde.</p>
+    <div class="btns">
+      <a class="btn primary" href="/#contact" data-demo data-lock="DEMO" data-i18n="cta.demo">Demo İste</a>
+      <a class="btn" href="#urunler" data-lock="LINK" data-i18n="hero.see">Ürünleri gör</a>
+    </div>
+    <p class="meta" data-i18n="hero.meta">Türkiye merkezli · Nisan 2026'dan beri · verileriniz sizde kalır</p>
+  </div>
+  <ul class="targets" aria-label="Ürünler">
+    <li><a href="#agentos" data-go-card="0" data-lock="HEDEF 01 · AGENTS OS"><b>01</b> VyroN Agents OS</a></li>
+    <li><a href="#sesli-sef" data-go-card="2" data-lock="HEDEF 02 · SESLİ ŞEF"><b>02</b> <span data-i18n="t.sef">Sesli Şef</span></a></li>
+    <li><a href="#moymote" data-go-card="3" data-lock="HEDEF 03 · MOYMOTE"><b>03</b> MoyMote</a></li>
+    <li><a href="#sosyal-medya" data-go-card="4" data-lock="HEDEF 04 · SOSYAL"><b>04</b> <span data-i18n="t.social">Sosyal medya otomasyonu</span></a></li>
+    <li><a href="#tryon" data-go-card="5" data-lock="HEDEF 05 · TRY-ON"><b>05</b> Try-On</a></li>
+  </ul>
+  <div class="scrollhint" aria-hidden="true"><span data-i18n="hero.scroll">KAYDIR · DERİNLEŞ</span><i></i></div>
+</section>
+
+<!-- 02 ÜRÜNLER: sabitlenmiş yatay görev şeridi -->
+<section class="strip" id="urunler" aria-labelledby="urunler-h">
+  <div class="strip-pin" id="strip-pin">
+    <div class="strip-head">
+      <p class="label" data-i18n="p.label">GÖZLEM KAYITLARI</p>
+      <h2 id="urunler-h" data-decode data-i18n="p.h2">Öne çıkan ürünler</h2>
+      <p class="note" data-i18n="p.note">Ekranlar ürünlerin gerçek arayüzleridir; içerikler temsili örnek veridir.</p>
+    </div>
+    <div class="strip-track" id="strip-track" tabindex="-1">
+
+      <!-- görev 01: Agents OS -->
+      <article class="card" id="agentos" data-lock="GÖREV 01 · AGENTS OS">
+        <figure class="fig tall land"><img src="img/agentos-gorev-700.webp" width="700" height="486" loading="lazy" decoding="async" data-i18n-alt="a.alt1" alt="VyroN Agents OS görev paneli: sizi bekleyen işler ve ajanların bitirdiği işler listesi, durum etiketleriyle"><figcaption data-i18n="a.cap1">Görev paneli — sizi bekleyenler ve ajanların bitirdiği işler</figcaption></figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n1">GÖREV 01</span><span class="tag live" data-i18n="tag.live">Canlı — her gün kendimiz kullanıyoruz</span></p>
+          <h3 data-decode>VyroN Agents OS</h3>
+          <p data-i18n="a.p">Tekrar eden işleri devralan otomasyon sistemi. Ajanlar mail kutusunu tarar, günlük özet çıkarır, yedek alır ve doğrular, maliyeti izler. Siz tek panelden bakarsınız; komutu Telegram'dan da verebilirsiniz.</p>
+          <ul class="list">
+            <li data-i18n="a.l1"><strong>Bekçiler:</strong> disk, hata, gecikme — bir şey ters giderse haber verir.</li>
+            <li data-i18n="a.l2"><strong>Zamanlanmış işler:</strong> her sabah 07:00 özeti, gece yedeği, aylık rapor.</li>
+            <li data-i18n="a.l3"><strong>Telegram:</strong> "bugünün özetini çıkar" yazarsınız, iş panelde görünür.</li>
+            <li data-i18n="a.l4"><strong>Tarayıcı otomasyonu:</strong> form doldurur, veri çeker, ekran görüntüsü alır.</li>
+            <li data-i18n="a.l5">İşletmenize özel kurulur, kurulum 2-4 hafta, veriniz sizde kalır.</li>
+          </ul>
+          <div class="btns">
+            <a class="btn primary" href="https://agentos-demo-demir-s-projects1.vercel.app" target="_blank" rel="noopener" data-lock="LINK" data-i18n="a.demo">Canlı demoyu dene</a>
+            <a class="btn" href="mailto:founder@ironvisiontools.com?subject=VyroN%20Agents%20OS%20tan%C4%B1t%C4%B1m%20g%C3%B6r%C3%BC%C5%9Fmesi" data-lock="LINK" data-i18n="a.intro">Tanıtım görüşmesi</a>
+          </div>
+          <p class="fine" data-i18n="a.demonote">Misafir girişiyle açılır, kurulum gerekmez</p>
+        </div>
+      </article>
+
+      <!-- görev 01b: Agents OS içindeki hatlar -->
+      <article class="card" id="agentos-hatlar" data-lock="GÖREV 01 · HATLAR">
+        <figure class="fig tall port"><img src="img/agentos-ana-700.webp" width="700" height="960" loading="lazy" decoding="async" data-i18n-alt="a.alt2" alt="VyroN Agents OS ana sayfası baştan sona: derin uzay açılış ekranı, proje kartları, kullanım sayaçları, günlük ve gece analizi"><figcaption data-i18n="a.cap2">VyroN Agents OS ana sayfası — baştan aşağı kendi sistemimizin ekranı, kayıtlar temsilî veriyle</figcaption></figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n1b">GÖREV 01 · HATLAR</span><span class="tag live" data-i18n="tag.live">Canlı — her gün kendimiz kullanıyoruz</span></p>
+          <h3 data-decode data-i18n="a.h2">Agents OS'un içindeki hatlar</h3>
+          <ul class="list">
+            <li data-i18n="a.m1"><strong>Otomatik Arşivleme:</strong> YouTube kanallarını ve web sitelerini transkript ve görselleriyle indirir, doğal dille aranabilir hale getirir.</li>
+            <li data-i18n="a.m2"><strong>Hukuk Botu:</strong> Her sabah Resmî Gazete'yi tarar, sektörünüzü ilgilendiren değişiklikleri özetler.</li>
+            <li data-i18n="a.m3"><strong>Nöbetçi Bekçiler:</strong> Site, sunucu ve formları 7/24 izler, çökme anında haber verir ve ilk müdahaleyi yapar.</li>
+            <li data-i18n="a.m4"><strong>Randevu ve E-Posta Hatları:</strong> Gelen mesajları okur, takvimle eşleştirir, sizin adınıza yanıtlar.</li>
+            <li data-i18n="a.m5"><strong>Yedek Doğrulama:</strong> Alınan yedekleri otomatik açıp test eder, bozuk olmadığından emin olur.</li>
+          </ul>
+          <p class="fine"><a class="tl" href="#akis" data-lock="LINK" data-i18n="a.toflow">Bir işin baştan sona yolu ↓</a></p>
+        </div>
+      </article>
+
+      <!-- görev 02: Sesli Şef -->
+      <article class="card" id="sesli-sef" data-lock="GÖREV 02 · SESLİ ŞEF">
+        <figure class="fig phone"><img src="img/sesli-sef-dinliyor-600.webp" width="600" height="1229" loading="lazy" decoding="async" data-i18n-alt="s.alt1" alt="Sesli Şef arayüzü tasarım maketi: mikrofon açık, 'Dinliyor…' durumu, örnek sohbet akışı"><figcaption data-i18n="s.cap">Tasarım maketi — gerçek uygulama arayüzü, tamamen uydurma içerik; gerçek kayıt değildir</figcaption></figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n2">GÖREV 02</span><span class="tag live" data-i18n="tag.live">Canlı — her gün kendimiz kullanıyoruz</span></p>
+          <h3 data-decode data-i18n="s.h">Sesli Şef</h3>
+          <p data-i18n="s.p">Ses→yazı dikte aracı değildir: terminaldeki yapay zekâ ajanınızla (Claude Code, ChatGPT, Codex) karşılıklı ve Türkçe konuşursunuz — siz sesle söylersiniz, ajan sesli cevap verir. Bir süre sonra ekrana hiç bakmadan, dinleyip konuşarak çalışmaya devam edersiniz.</p>
+          <ul class="list">
+            <li data-i18n="s.l1">Çoğu araç yalnız dikteyi çözer; burada cevap da sesli gelir.</li>
+            <li data-i18n="s.l2">Ses bu sunucudan dışarı çıkmaz — yazıya çevirme yerelde yapılır.</li>
+            <li data-i18n="s.l3">Mikrofon yerine yazarak da gönderebilirsiniz.</li>
+            <li data-i18n="s.l4">Uzun çalışmalarda gözünüzü dinlendirir, oturumu kaçırmazsınız.</li>
+          </ul>
+          <div class="scope" id="wave-box">
+            <canvas id="wave" width="560" height="84" role="img" aria-label="Ses dalga formu" data-i18n-aria="s.wave"></canvas>
+            <div class="scope-row">
+              <button class="btn primary" id="play" type="button" aria-pressed="false" data-lock="PLAY"><span id="play-t" data-i18n="s.play">▶ Örnek konuşmayı dinle</span></button>
+              <span class="fine" id="wave-st" data-i18n="s.off">ses kapalı · düğmeye basınca çalar</span>
+            </div>
+          </div>
+          <p class="fine" data-i18n="s.early">Erken erişim: uygulamayı founder@ironvisiontools.com adresinden isteyebilirsiniz — kurulum desteği dahil.</p>
+          <div class="btns"><a class="btn" href="/#contact" data-demo data-lock="DEMO" data-i18n="cta.demo">Demo İste</a></div>
+        </div>
+      </article>
+
+      <!-- görev 03: MoyMote -->
+      <article class="card" id="moymote" data-lock="GÖREV 03 · MOYMOTE">
+        <figure class="fig phone"><img id="moy-img" src="img/b050-tr.webp" width="600" height="1298" loading="lazy" decoding="async" data-i18n-alt="m.alt" alt="Koyu görünümde MoyMote telefon paneli, parlaklık %50"><figcaption data-i18n="m.cap">MoyMote telefon paneli, parlaklık %50</figcaption></figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n3">GÖREV 03</span><span class="tag live" data-i18n="tag.store">Microsoft Store'da</span></p>
+          <h3 data-decode>MoyMote</h3>
+          <p data-i18n="m.p">Harici monitörünün parlaklığını, mavi ışığını ve HDR'ını telefonundan ya da Windows'tan değiştir; monitörün arkasındaki düğmelere uzanmadan. Telefona uygulama kurulmaz: bilgisayardaki kare kodu okutursun, panel tarayıcıda açılır.</p>
+          <ul class="list">
+            <li data-i18n="m.l1">Yerel ağında çalışır; hesap, telemetri ya da hata raporu gönderimi yok.</li>
+            <li data-i18n="m.l2">Windows 10 ve 11 için; 7 gün ücretsiz deneme.</li>
+          </ul>
+          <p class="strong" data-i18n="m.price">Abonelik yok. Al, senin olsun.</p>
+          <div class="btns">
+            <a class="btn primary" href="https://apps.microsoft.com/detail/9NPN2SHVSSX3" rel="noopener" data-lock="LINK" data-i18n="m.store">Microsoft Store'dan al</a>
+            <a class="btn" href="https://moymote.com/tr/" data-lock="LINK" data-i18n="m.site">moymote.com'da incele</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- görev 04: Sosyal medya otomasyonu (+ video kolu) -->
+      <article class="card" id="sosyal-medya" data-lock="GÖREV 04 · SOSYAL MEDYA">
+        <figure class="fig chain" aria-label="Akış: konu → senaryo → ses → video → yayın">
+          <ol class="chain-l">
+            <li data-i18n="v.f1">konu</li><li data-i18n="v.f2">senaryo</li><li data-i18n="v.f3">ses</li><li data-i18n="v.f4">video</li><li data-i18n="v.f5">yayın</li>
+          </ol>
+          <figcaption data-i18n="v.flow">Akış: konu → senaryo → ses → video → yayın</figcaption>
+        </figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n4">GÖREV 04</span><span class="tag order" data-i18n="tag.order">Sipariş üzerine kurulur</span></p>
+          <h3 data-decode data-i18n="t.social">Sosyal medya otomasyonu</h3>
+          <p data-i18n="o.p">İşletmenizin sosyal medya yönetimini sizin yerinize yürüten sistem: paylaşım metinlerini hazırlar, yayın takvimini kurar ve içeriği birden çok platforma yayına alır. Siz markanızın sesini ve konuları belirlersiniz; gerisi düzenli akar.</p>
+          <ul class="list">
+            <li data-i18n="o.l1">Paylaşım metinlerini markanızın diline uyarlayarak hazırlar.</li>
+            <li data-i18n="o.l2">Yayın takvimini kurar; paylaşımlar zamanında çıkar.</li>
+            <li data-i18n="o.l3">TikTok, Instagram veya YouTube gibi birden çok platforma yayına alır.</li>
+            <li data-i18n="o.l4">Markaya uyarlama, hesap bağlantıları ve ilk ısınma dönemini biz yönetiriz.</li>
+          </ul>
+          <div class="sub">
+            <p class="cid"><span class="cn" data-i18n="v.sub">Alt dal</span></p>
+            <h4 data-i18n="v.h">Video otomasyonu</h4>
+            <p data-i18n="v.p">Aynı akışın video kolu: sadece bir konu verirsiniz; araç o konudan senaryo yazar, seslendirme yapar, videoyu kurgular ve paylaşım metniyle birlikte yayına alır. Kısa dikey videolardan 40 dakikalık uzun içeriklere kadar üretim yapar.</p>
+          </div>
+          <div class="btns"><a class="btn primary" href="mailto:founder@ironvisiontools.com?subject=Sosyal%20medya%20otomasyonu" data-lock="DEMO" data-i18n="o.demo">Bu ürün için demo iste</a></div>
+        </div>
+      </article>
+
+      <!-- görev 05: Try-On -->
+      <article class="card" id="tryon" data-lock="GÖREV 05 · TRY-ON">
+        <figure class="fig concept"><img src="img/tryon-konsept.svg" width="400" height="500" loading="lazy" decoding="async" data-i18n-alt="y.alt" alt="Try-On konsept görseli — ürün ekranı değildir"><figcaption data-i18n="y.cap">Konsept görseli — ürün ekranı değildir</figcaption></figure>
+        <div class="body">
+          <p class="cid"><span class="cn" data-i18n="c.n5">GÖREV 05</span><span class="tag soon" data-i18n="tag.soon">Yakında · geliştirme aşamasında</span></p>
+          <h3 data-decode data-i18n="y.h">Try-On — kıyafeti almadan önce üzerinizde görün</h3>
+          <p data-i18n="y.p">Butik ve küçük e-ticaret siteleri için "üzerinde dene" düğmesi: müşteri ürünü satın almadan önce kendi fotoğrafı üzerinde görüyor. Amaç iade oranını düşürmek ve kararsız müşteriyi ikna etmek.</p>
+          <ul class="list">
+            <li data-i18n="y.l1">Teknolojinin çalıştığını kendi testlerimizde gösterdik.</li>
+            <li data-i18n="y.l2">Bir müşteri sitesinde canlı çalışan sürüm henüz yok.</li>
+            <li data-i18n="y.l3">İlk hedef: butik ve kadın giyim satan küçük mağazalar.</li>
+          </ul>
+          <div class="btns"><a class="btn" href="mailto:founder@ironvisiontools.com?subject=Try-On%20haberdar%20et" data-lock="LINK" data-i18n="y.notify">Hazır olunca haberim olsun</a></div>
+        </div>
+      </article>
+    </div>
+    <div class="strip-hud" aria-hidden="true">
+      <span class="sh-n" id="sh-n">01 / 06</span>
+      <div class="sh-bar"><i id="sh-fill"></i></div>
+      <span class="sh-t" data-i18n="p.hint">GÖZLEM ŞERİDİ</span>
+    </div>
+  </div>
+</section>
+
+<!-- 03 AKIŞ: sinyal hattı / osiloskop -->
+<section class="flow" id="akis" aria-labelledby="akis-h">
+  <div class="wrap">
+    <p class="label" data-i18n="f.label">SİNYAL HATTI</p>
+    <h2 id="akis-h" data-decode data-i18n="f.h">Bir işin baştan sona yolu</h2>
+    <p class="note" data-i18n="f.p">Tetikleyici → ajan → yapılan iş → sizin gördüğünüz yer. Dört kutunun tamamı bugün çalışıyor.</p>
+    <div class="scope big">
+      <canvas id="sig" width="1100" height="260" aria-hidden="true"></canvas>
+      <div class="sig-nodes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <ol class="stages" id="stages">
+      <li class="st" data-st="0">
+        <h3 data-i18n="f.s1">1 · TETİKLEYİCİ</h3>
+        <ul>
+          <li data-i18n="f.s1a"><b>Saat / cron</b> — her sabah 07:00</li>
+          <li data-i18n="f.s1b"><b>Telegram komutu</b> — "bugünün özetini çıkar"</li>
+          <li data-i18n="f.s1c"><b>Gelen e-posta</b> — kutu taranır</li>
+          <li data-i18n="f.s1d"><b>Bekçi uyarısı</b> — disk, hata, gecikme</li>
+        </ul>
+      </li>
+      <li class="st" data-st="1">
+        <h3 data-i18n="f.s2">2 · AJAN</h3>
+        <ul>
+          <li data-i18n="f.s2a"><b>Ajan çalışır</b> — kuralları okur, işi yapar, kaydeder</li>
+          <li data-i18n="f.s2b">gerekirse durur ve onay ister</li>
+        </ul>
+      </li>
+      <li class="st" data-st="2">
+        <h3 data-i18n="f.s3">3 · YAPILAN İŞ</h3>
+        <ul>
+          <li data-i18n="f.s3a"><b>Tarayıcı işi</b> — form doldurur, veri çeker</li>
+          <li data-i18n="f.s3b"><b>Rapor / özet</b> — günlük ve aylık</li>
+          <li data-i18n="f.s3c"><b>Yedek</b> — alınır ve doğrulanır</li>
+          <li data-i18n="f.s3d"><b>Maliyet takibi</b> — abonelik, kullanım</li>
+        </ul>
+      </li>
+      <li class="st" data-st="3">
+        <h3 data-i18n="f.s4">4 · SİZ</h3>
+        <ul><li data-i18n="f.s4a"><b>Panel · Telegram</b></li></ul>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- 04 ÖRNEK ÇALIŞMALAR -->
+<section class="works" id="isler" aria-labelledby="isler-h">
+  <div class="wrap">
+    <p class="label" data-i18n="w.label">YAPTIĞIMIZ İŞLER</p>
+    <h2 id="isler-h" data-decode data-i18n="w.h">Örnek çalışmalar</h2>
+    <p class="note" data-i18n="w.p">Kurgu markalar, gerçek üretim hattı.</p>
+    <div class="wgrid">
+      <article class="wcard" data-lock="ÖRNEK · KERVANKIRAN">
+        <img src="img/is-kervankiran-720.webp" width="720" height="450" loading="lazy" decoding="async" data-i18n-alt="w.alt1" alt="Kervankıran gece kampı sitesinin ana sayfası: yıldızlı gökyüzü fotoğrafı ve 'Burada gökyüzü hâlâ bir saat' başlığı">
+        <h3>Kervankıran</h3><p class="tag order" data-i18n="w.tag">Örnek çalışma · kurgu marka</p>
+        <a class="tl" href="https://ironvisiontools.github.io/astro-kamp/" target="_blank" rel="noopener" data-lock="LINK" data-i18n="w.open">Siteyi aç →</a>
+      </article>
+      <article class="wcard" data-lock="ÖRNEK · SAHAN">
+        <img src="img/is-sahan-720.webp" width="720" height="450" loading="lazy" decoding="async" data-i18n-alt="w.alt2" alt="Sahan tadım mutfağı sitesinin ana sayfası: masa üstü kadeh fotoğrafı ve 'Tava ciğeri, altı kursluk bir sofra oluyor' başlığı">
+        <h3>Sahan</h3><p class="tag order" data-i18n="w.tag">Örnek çalışma · kurgu marka</p>
+        <a class="tl" href="https://ironvisiontools.github.io/sahan-tadim/" target="_blank" rel="noopener" data-lock="LINK" data-i18n="w.open">Siteyi aç →</a>
+      </article>
+      <article class="wcard" data-lock="ÖRNEK · ATÖLYE BUTİK">
+        <img src="img/is-atolye-butik-2026-09-03-720.webp" width="720" height="450" loading="lazy" decoding="async" data-i18n-alt="w.alt3" alt="Atölye Butik sitesinin ana sayfası: askıda kıyafetler fotoğrafı ve 'Sakin kesimler, zamansız kumaşlar' başlığı">
+        <h3>Atölye Butik</h3><p class="tag order" data-i18n="w.tag">Örnek çalışma · kurgu marka</p>
+        <a class="tl" href="https://ironvisiontools.com/vitrin/vitrin-11-butik-kadin/" target="_blank" rel="noopener" data-lock="LINK" data-i18n="w.open">Siteyi aç →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 05 NASIL İLERLİYORUZ -->
+<section class="steps" id="surec" aria-labelledby="surec-h">
+  <div class="wrap">
+    <p class="label" data-i18n="h.label">NASIL İLERLİYORUZ</p>
+    <h2 id="surec-h" data-decode data-i18n="h.h">Üç adım, sürpriz yok</h2>
+    <p class="note" data-i18n="h.p">Sözleşme, kurulum ücreti ve uzun toplantılarla başlamıyoruz. Önce çalıştığını görüyorsunuz.</p>
+    <ol class="sgrid">
+      <li data-lock="ADIM 01"><span class="sn">01</span><h3 data-i18n="h.s1">Demo isteyin</h3><p data-i18n="h.s1p">Doğrudan e-posta atın. Bir iş günü içinde döneriz; ilk görüşme 20-30 dakika sürer ve ne yaptığınızı dinlemekle geçer.</p></li>
+      <li data-lock="ADIM 02"><span class="sn">02</span><h3 data-i18n="h.s2">Kendi işinizde deneyin</h3><p data-i18n="h.s2p">Kurulumu biz yaparız, sizden teknik bir iş istemeyiz. VyroN Agents OS'ta önce tek bir işi devralıp sonucu birlikte görürüz; MoyMote'ta 7 gün ücretsiz denersiniz.</p></li>
+      <li data-lock="ADIM 03"><span class="sn">03</span><h3 data-i18n="h.s3">Beğenirseniz konuşuruz</h3><p data-i18n="h.s3p">Beğenmezseniz yükümlülük yok, kapatırız. Veriniz sizde kalır; isterseniz sistemden tamamen sileriz. Fiyatı ancak işinizi gördükten sonra konuşuruz.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 06 HAKKINDA -->
+<section class="about" id="hakkinda" aria-labelledby="hakkinda-h">
+  <div class="wrap narrow">
+    <p class="label" data-i18n="b.label">HAKKINDA</p>
+    <h2 id="hakkinda-h" data-decode>IRON VISION</h2>
+    <p data-i18n="b.p1">IRON VISION, Türkiye merkezli bir yazılım girişimi. İşletmelerin tekrar eden yükünü üstlenen yapay zekâ araçları üretiyoruz: kurulumu biz yaparız, ürün sizde çalışır, veriniz sizde kalır. AWS başlangıç programının desteğiyle büyüyoruz.</p>
+    <p data-i18n="b.p2">Ürünlerimizi önce kendimiz kullanıyoruz. VyroN Agents OS'un içinde bugün 10'dan fazla mikro uygulama çalışıyor: bekçiler, yedek doğrulayıcı, ses köprüsü, e-posta ve randevu hatları, site üretim hattı, anlam arama motoru. Bizde çalışmayan bir aracı müşteriye önermiyoruz.</p>
+    <dl class="facts">
+      <div><dt data-i18n="b.f1">Merkez</dt><dd data-i18n="b.f1v">Türkiye</dd></div>
+      <div><dt data-i18n="b.f2">Çalışma şekli</dt><dd data-i18n="b.f2v">Kurulum bizde, veri sizde</dd></div>
+      <div><dt data-i18n="b.f3">İletişim</dt><dd><a href="mailto:founder@ironvisiontools.com" data-lock="LINK">founder@ironvisiontools.com</a></dd></div>
+    </dl>
+    <p><a class="btn" href="https://ironvisiontools.com/hakkinda.html" data-lock="LINK" data-i18n="b.more">Uzun hikâye ve mikro uygulama listesi</a></p>
+  </div>
+</section>
+
+<!-- 07 KARA DELİK: son -->
+<section class="finale" id="iletisim" aria-labelledby="son-h">
+  <div class="horizon" aria-hidden="true"><span data-i18n="z.hz">OLAY UFKU</span><i></i></div>
+  <div class="finale-in">
+    <p class="label" data-i18n="z.label">İLETİŞİM</p>
+    <h2 id="son-h" class="big" data-decode data-i18n="z.h">Demo İste</h2>
+    <p class="lead" data-i18n="z.p">Bir iş günü içinde döneriz; ilk görüşme 20-30 dakika sürer ve ne yaptığınızı dinlemekle geçer.</p>
+    <div class="btns center">
+      <a class="btn primary xl" href="/#contact" data-demo data-lock="DEMO" data-i18n="cta.demo">Demo İste</a>
+      <button class="btn" id="again" type="button" data-lock="↺" data-i18n="z.again">↑ Başa dön</button>
+    </div>
+    <p class="fine"><a href="mailto:founder@ironvisiontools.com" data-lock="LINK">founder@ironvisiontools.com</a></p>
+  </div>
+  <footer class="foot">
+    <span>© 2026 IRON VISION tools</span>
+    <nav aria-label="Alt bağlantılar">
+      <a href="https://ironvisiontools.com/hakkinda.html" data-i18n="nav.about">Hakkında</a>
+      <a href="https://ironvisiontools.com/iletisim.html" data-i18n="nav.contact">İletişim</a>
+      <a href="https://ironvisiontools.com/gizlilik.html" data-i18n="nav.privacy">Gizlilik</a>
+      <a href="https://ironvisiontools.com/sartlar.html" data-i18n="nav.terms">Şartlar</a>
+    </nav>
+  </footer>
+</section>
+</main>
+
+<script src="js/i18n.js"></script>
+<script src="js/gl.js"></script>
+<script src="js/ui.js"></script>
+<script src="/gorunum/secici.js" defer></script>
+</body>
+</html>

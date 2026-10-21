@@ -316,7 +316,7 @@ img.buyu:focus-visible{outline:2px solid var(--acc-yazi);outline-offset:3px}
 #urunler article.serit.gorsel-genis .gorsel-kutu{border-color:rgba(37,211,102,.35)}
 #urunler article.serit.gorsel-genis .panel-bas{color:#5be79c}
 
-/* ---------- 2) VYRON AgentOS — gercekci gece gokyuzu fotografi ----------
+/* ---------- 2) VyroN Agents OS — gercekci gece gokyuzu fotografi ----------
    PIL ile deterministik (seed sabit) uretildi: 1920x1080, dikey degrade zemin,
    ~900 yildiz (farkli boyut/parlaklik, birkaci mavi/sari tonlu), cok hafif
    samanyolu sisi. Eski CSS-only radial-gradient yildiz katmani KALDIRILDI —

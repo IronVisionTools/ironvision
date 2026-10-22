@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MindDX | Üretim şirketleri için ERP ve dijital dönüşüm — Demo B</title>
+<meta name="description" content="MindDX yeniden tasarım demosu (Demo B): yapay zekâ odaklı, MindDX Platformu vitrini. Statik ön yüz maketi; ekrandaki sayılar örnek veridir.">
+<meta name="theme-color" content="#08061a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08061a; --bg2:#0d0a28; --bg3:#130f36;
+  --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.11); --line2:rgba(255,255,255,.2);
+  --text:#f3f1fb; --muted:#aaa5cb; --dim:#7f7aa6;
+  --purple:#7c3aed; --purple2:#a78bfa; --lilac:#c4b0f2; --teal:#2dd4bf; --teal2:#14b8c4; --amber:#fbbf24;
+  --grad:linear-gradient(120deg,#a78bfa 0%,#7c3aed 45%,#2dd4bf 100%);
+  --r:18px; --maxw:1200px;
+  --head:'Montserrat',system-ui,sans-serif; --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- genel bileşenler ---------- */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:500 13px/1.45 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+h1,h2,h3{font-family:var(--head);letter-spacing:-.02em;line-height:1.08}
+h2{font-size:clamp(28px,3.6vw,46px);font-weight:800;margin:14px 0 16px}
+h3{font-size:19px;font-weight:700;line-height:1.25}
+.lead{color:var(--muted);font-size:clamp(16px,1.35vw,18.5px);max-width:640px}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+section{position:relative;padding:clamp(48px,6vw,84px) 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:14px;font:600 16px/1 var(--body);transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,#8b4dff,#6d28d9);color:#fff;box-shadow:0 10px 30px -8px rgba(124,58,237,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px -8px rgba(124,58,237,.85),inset 0 1px 0 rgba(255,255,255,.3)}
+.btn-ghost{border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--text)}
+.btn-ghost:hover{border-color:var(--teal);background:rgba(45,212,191,.07)}
+.btn svg{width:18px;height:18px;flex:none}
+.tag-sample{font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.08);padding:5px 8px;border-radius:999px;white-space:nowrap}
+.ph{border-bottom:1.5px dashed var(--amber);color:var(--amber);font-weight:600;white-space:nowrap}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}*{animation:none!important}}
+noscript .reveal{opacity:1;transform:none}
+
+/* ---------- üst çubuk ---------- */
+.hdr{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);background:rgba(8,6,26,.72);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:center;min-height:48px}
+.logo img{height:46px;width:auto}
+.nav{display:flex;align-items:center;gap:6px}
+.nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:10px;color:var(--muted);font-weight:500;font-size:15px;transition:color .2s,background .2s}
+.nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.hdr-r{display:flex;align-items:center;gap:12px}
+.lang{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;font:500 13px/1 var(--mono);color:var(--muted)}
+.hdr .btn{min-height:46px;padding:0 20px;font-size:15px}
+.burger{display:none;width:48px;height:48px;border:1px solid var(--line2);border-radius:12px;align-items:center;justify-content:center}
+.burger span,.burger span::before,.burger span::after{display:block;width:20px;height:2px;background:#fff;border-radius:2px;position:relative;transition:.25s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.burger[aria-expanded=true] span{background:transparent}
+.burger[aria-expanded=true] span::before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded=true] span::after{top:0;transform:rotate(-45deg)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(40px,5vw,72px) 0 clamp(56px,6vw,88px);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(900px 520px at 82% -8%,rgba(124,58,237,.38),transparent 62%),
+  radial-gradient(700px 480px at 8% 108%,rgba(20,184,196,.2),transparent 60%);animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(-2%,2%,0) scale(1.05)}}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 10%,transparent 72%);-webkit-mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 10%,transparent 72%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,4vw,64px);align-items:center}
+.hero h1{font-size:clamp(34px,4.5vw,58px);font-weight:800;margin:20px 0 20px}
+.hero .lead{margin-bottom:30px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.camp-pill{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:26px;padding:12px 16px;border:1px solid rgba(45,212,191,.35);background:rgba(45,212,191,.07);border-radius:14px;font-size:14.5px;color:var(--text)}
+.camp-pill b{font-family:var(--head);font-weight:700}
+.camp-pill s{color:var(--dim)}
+.camp-pill .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:6px;box-shadow:0 0 0 0 rgba(45,212,191,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(45,212,191,0)}100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}}
+.camp-pill .cd{font:500 13px/1 var(--mono);color:var(--teal)}
+
+/* ---------- gösterge paneli maketi ---------- */
+.dash-wrap{position:relative}
+.dash-wrap::before{content:"";position:absolute;inset:-2px;border-radius:24px;background:linear-gradient(140deg,rgba(167,139,250,.7),rgba(124,58,237,.1) 40%,rgba(45,212,191,.55));filter:blur(0);z-index:0}
+.dash{position:relative;z-index:1;border-radius:22px;background:linear-gradient(180deg,#12103a,#0b0924);box-shadow:0 40px 90px -30px rgba(124,58,237,.6),0 0 0 1px rgba(255,255,255,.05) inset;overflow:hidden}
+.dash-bar{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.dash-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
+.dash-bar i:nth-child(1){background:#ff6b8b}.dash-bar i:nth-child(2){background:#fbbf24}.dash-bar i:nth-child(3){background:#34d399}
+.dash-title{margin-left:10px;font:500 12.5px/1.2 var(--mono);color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dash-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;padding:14px 14px 40px}
+.dcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dcol .grow{flex:1;display:flex;flex-direction:column}
+.dcol .grow .flowsvg{margin:auto 0}
+.dcard{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:14px;padding:14px}
+.dlabel{font:500 11.5px/1.2 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;display:flex;justify-content:space-between;gap:8px}
+.score{display:flex;gap:12px;align-items:center}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .bg{stroke:rgba(255,255,255,.1)}
+.ring .fg{stroke:url(#rg);stroke-dasharray:289;stroke-dashoffset:289;transition:stroke-dashoffset 1.8s cubic-bezier(.2,.7,.2,1) .4s}
+.in .ring .fg,.ring.in .fg{stroke-dashoffset:104}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:800 22px/1 var(--head)}
+.ring b small{display:block;font:500 11px/1 var(--mono);color:var(--dim);margin-top:2px;text-align:center}
+.score-t strong{display:block;font:700 14.5px/1.25 var(--head);white-space:nowrap}
+.score-t span{font-size:13px;color:var(--teal)}
+.bars{margin-top:12px;display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:58px 1fr 28px;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.bar i{display:block;height:6px;border-radius:6px;background:rgba(255,255,255,.09);overflow:hidden}
+.bar i::after{content:"";display:block;height:100%;width:0;border-radius:6px;background:var(--grad);transition:width 1.4s cubic-bezier(.2,.7,.2,1) .6s}
+.in .bar i::after{width:var(--v)}
+.bar em{font:500 12px/1 var(--mono);font-style:normal;color:var(--text);text-align:right}
+.scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tile{padding:9px 8px 8px;border-radius:10px;border:1px solid var(--line);font:600 12.5px/1.2 var(--body);min-height:52px;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.tile small{font:500 11.5px/1 var(--body);opacity:.9}
+.t-ok{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.4);color:#baf5ec}
+.t-rev{background:rgba(124,58,237,.18);border-color:rgba(167,139,250,.55);color:#e1d6ff}
+.t-out{background:rgba(255,255,255,.03);border-style:dashed;color:var(--dim)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;background:var(--c);vertical-align:0}
+.flowsvg{width:100%;height:auto}
+.flowsvg text{font:600 12px var(--body);fill:#e9e6fa}
+.flowsvg{max-width:340px;margin-inline:auto}
+.flowsvg .sub{font:500 9.5px var(--mono);fill:#9893c2;letter-spacing:.04em}
+.flowsvg .flow{stroke-dasharray:5 7;animation:dash 1.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+.log-row{display:grid;gap:6px;padding:9px 0;border-top:1px solid var(--line)}
+.log-row:first-of-type{border-top:0;padding-top:0}
+.log-row b{font:600 13px/1.3 var(--body)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font:500 11.5px/1 var(--body);padding:5px 8px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.chip.ai{background:rgba(124,58,237,.22);border-color:rgba(167,139,250,.5);color:#e4dbff}
+.chip.hu{background:rgba(45,212,191,.12);border-color:rgba(45,212,191,.5);color:#b8f4ea}
+.chip.wait{border-color:rgba(251,191,36,.6);background:rgba(251,191,36,.1);color:#fde7a4;animation:glow 2.2s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 14px rgba(251,191,36,.35)}}
+.chip svg{width:12px;height:12px}
+.float-note{position:absolute;z-index:3;right:-14px;bottom:-22px;display:flex;gap:10px;align-items:center;padding:12px 16px;border-radius:14px;background:#161243;border:1px solid rgba(45,212,191,.55);box-shadow:0 20px 44px -12px rgba(0,0,0,.7);font-size:13.5px;font-weight:600;animation:bob 6s ease-in-out infinite}
+.float-note svg{width:30px;height:30px;flex:none}
+.float-note small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+@keyframes bob{50%{transform:translateY(-7px)}}
+
+/* ---------- referans şeridi ---------- */
+.refs{padding:0;border-block:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+.refs-in{padding:30px 0 22px}
+.refs-h{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap;margin-bottom:18px;font-size:14px;color:var(--muted)}
+.refs-h .ph-note{font:500 11.5px/1.3 var(--mono);color:var(--dim)}
+.marq{margin-bottom:18px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq-t{display:flex;gap:14px;width:max-content;animation:marq 70s linear infinite}
+.marq:hover .marq-t{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.wm{flex:none;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border:1px solid var(--line);border-radius:12px;background:var(--card);font:700 14px/1 var(--head);letter-spacing:.08em;color:#cfcae8;text-transform:uppercase}
+.wm::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--grad);opacity:.8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.stat{padding:22px 24px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{display:block;font:800 clamp(26px,3vw,36px)/1.1 var(--head);letter-spacing:-.02em}
+.stat span{font-size:14px;color:var(--muted)}
+
+/* ---------- platform ---------- */
+.plat-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center;margin-top:44px}
+.mods{display:grid;gap:12px}
+.mod{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);transition:border-color .25s,transform .25s,background .25s}
+.mod:hover{border-color:rgba(167,139,250,.6);transform:translateX(4px);background:var(--card2)}
+.ico{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(45,212,191,.2));border:1px solid rgba(167,139,250,.35)}
+.ico svg{width:24px;height:24px;stroke:#e6dcff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mod p{color:var(--muted);font-size:15px;margin:4px 0 8px}
+.mod .parts{display:flex;flex-wrap:wrap;gap:6px}
+.mod .parts span{font:500 12.5px/1 var(--body);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:#d8d3f2}
+.ladder{position:relative;padding:26px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(160deg,rgba(124,58,237,.14),rgba(45,212,191,.05) 70%)}
+.ladder h3{margin-bottom:4px}
+.ladder > p{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+.steps{display:flex;align-items:flex-end;gap:8px;height:230px}
+.stp{flex:1;border-radius:12px 12px 6px 6px;border:1px solid var(--line);background:rgba(255,255,255,.05);padding:10px 9px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;transition:transform .3s}
+.stp:hover{transform:translateY(-6px)}
+.stp b{font:800 22px/1 var(--head);color:#fff}
+.stp span{font-size:12px;line-height:1.25;color:var(--muted)}
+.stp:nth-child(1){height:34%}.stp:nth-child(2){height:48%}.stp:nth-child(3){height:64%;border-color:rgba(45,212,191,.6);background:linear-gradient(180deg,rgba(45,212,191,.2),rgba(45,212,191,.05))}
+.stp:nth-child(4){height:80%}.stp:nth-child(5){height:100%;border-color:rgba(167,139,250,.6);background:linear-gradient(180deg,rgba(124,58,237,.35),rgba(124,58,237,.08))}
+.ladder .note{margin-top:16px;font-size:13.5px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+
+/* ---------- ajan akışı ---------- */
+.agent{background:linear-gradient(180deg,transparent,rgba(124,58,237,.1) 40%,transparent)}
+.agent-head{max-width:920px}
+.pipe-wrap{margin-top:60px}
+.pipe{position:relative;display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr 1fr;gap:0;align-items:stretch}
+.node{position:relative;z-index:2;padding:20px 18px;border:1px solid var(--line);border-radius:var(--r);background:#0f0c2e;display:flex;flex-direction:column;gap:10px;min-height:208px}
+.node .ico{width:42px;height:42px;border-radius:12px}
+.node .ico svg{width:22px;height:22px}
+.node h3{font-size:16.5px}
+.node p{font-size:14.5px;color:var(--muted)}
+.node .who{font:500 11.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.node.ai{border-color:rgba(167,139,250,.6);background:linear-gradient(180deg,#1b1450,#0f0c2e);box-shadow:0 0 50px -14px rgba(124,58,237,.7)}
+.node.ai .who{color:var(--lilac)}
+.node.human{border-color:rgba(45,212,191,.75);background:linear-gradient(180deg,#0b2c3d,#0f0c2e 85%);box-shadow:0 0 60px -10px rgba(45,212,191,.45);transform:translateY(-14px);min-height:236px}
+.node.human .who{color:var(--teal)}
+.node.human .ico{background:linear-gradient(135deg,rgba(45,212,191,.4),rgba(124,58,237,.2));border-color:rgba(45,212,191,.6)}
+.node.human .ico svg{stroke:#c8fff6}
+.link{position:relative;align-self:center;height:2px;margin:0 -2px;z-index:1;background:repeating-linear-gradient(90deg,rgba(167,139,250,.9) 0 6px,transparent 6px 13px);background-size:26px 2px;animation:linkmove 1s linear infinite}
+.link.t{background-image:repeating-linear-gradient(90deg,rgba(45,212,191,.95) 0 6px,transparent 6px 13px)}
+@keyframes linkmove{to{background-position:26px 0}}
+.pipe-wrap{display:grid;grid-template-columns:1fr 34px 1fr 34px 1.25fr 34px 1fr 34px 1fr;align-items:stretch}
+.verdict{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vbox{padding:22px 24px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
+.vbox h3{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.vbox h3 i{width:10px;height:10px;border-radius:50%}
+.vbox ul{list-style:none;display:grid;gap:8px;color:var(--muted);font-size:15px}
+.vbox li{display:flex;gap:10px}
+.vbox li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;margin-top:9px;background:currentColor;opacity:.7}
+.vbox.a h3 i{background:var(--purple2)}.vbox.h h3 i{background:var(--teal)}
+.vbox.h{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.06)}
+.motto{margin-top:46px;text-align:center;font:800 clamp(24px,3.4vw,42px)/1.15 var(--head);letter-spacing:-.02em}
+.motto span{display:block}
+
+/* ---------- yolculuk + kampanya ---------- */
+.problem{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0 56px}
+.route{padding:24px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
+.route .eyebrow{color:var(--dim);margin-bottom:14px}
+.route.bad{border-color:rgba(251,113,133,.3)}
+.route.good{border-color:rgba(45,212,191,.5);background:rgba(45,212,191,.05)}
+.route.good .eyebrow{color:var(--teal)}
+.seq{display:flex;flex-wrap:wrap;gap:6px 6px;align-items:center;font-size:14px}
+.seq span{padding:7px 11px;border-radius:9px;background:rgba(255,255,255,.07);color:#ddd9f3}
+.seq em{font-style:normal;color:var(--dim)}
+.bad .seq span.x{background:rgba(251,113,133,.14);color:#ffc2cc}
+.good .seq span{background:rgba(45,212,191,.12);color:#c3f6ee}
+.route p{margin-top:14px;color:var(--muted);font-size:14.5px}
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative}
+.journey::before{content:"";position:absolute;left:8%;right:8%;top:34px;height:2px;background:linear-gradient(90deg,var(--teal),var(--purple2),var(--purple));opacity:.5}
+.jstep{position:relative;padding:20px 20px 22px;border:1px solid var(--line);border-radius:var(--r);background:#0d0a2a;display:flex;flex-direction:column;gap:8px}
+.jn{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--mono);background:var(--bg);border:1.5px solid var(--purple2);color:#fff;margin-bottom:6px;position:relative;z-index:2}
+.jstep.free .jn{border-color:var(--teal)}
+.jstep .k{font:500 12px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.jstep h3{font-size:20px}
+.jstep p{color:var(--muted);font-size:14.5px}
+.jstep a.price{display:flex;align-items:center;min-height:44px}
+.jstep .price{margin-top:auto;padding-top:10px;font:700 14px/1.3 var(--head);color:var(--lilac)}
+.jstep.hot{border-color:rgba(167,139,250,.8);background:linear-gradient(180deg,#1d1553,#0d0a2a);box-shadow:0 0 60px -18px rgba(124,58,237,.8)}
+.jstep.hot .jn{background:var(--purple);border-color:var(--purple2)}
+.badge{position:absolute;top:-12px;right:16px;font:700 12px/1 var(--body);padding:6px 10px;border-radius:999px;background:var(--teal);color:#04271f}
+.camp{margin-top:48px;position:relative;overflow:hidden;border-radius:28px;padding:clamp(28px,4vw,52px);border:1px solid rgba(167,139,250,.5);background:radial-gradient(700px 360px at 90% 0%,rgba(124,58,237,.5),transparent 65%),radial-gradient(500px 300px at 0% 100%,rgba(20,184,196,.22),transparent 65%),#0c0926;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center}
+.camp h3{font-size:clamp(24px,2.8vw,34px);font-weight:800;margin:12px 0}
+.camp p{color:var(--muted);max-width:520px}
+.price-line{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;margin:18px 0 22px}
+.price-line big{font:800 clamp(44px,5.5vw,68px)/1 var(--head);letter-spacing:-.03em}
+.price-line s{font:600 22px/1 var(--head);color:var(--dim)}
+.price-line span{color:var(--muted);font-size:15px}
+.cdbox{padding:22px;border-radius:20px;border:1px solid var(--line);background:rgba(8,6,26,.6)}
+.cdl{font:500 12.5px/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.cd4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cd4 div{padding:14px 4px 10px;text-align:center;border-radius:12px;background:var(--card2);border:1px solid var(--line)}
+.cd4 b{display:block;font:800 clamp(26px,3vw,34px)/1 var(--head);font-variant-numeric:tabular-nums}
+.cd4 span{font-size:12.5px;color:var(--muted)}
+.slots{margin-top:20px}
+.slots .row{display:flex;gap:7px;margin:10px 0 8px}
+.slots .row i{flex:1;height:10px;border-radius:5px;border:1.5px dashed rgba(251,191,36,.7);background:rgba(251,191,36,.08)}
+.slots p{font-size:14px;color:var(--text)}
+.fine{margin-top:12px;font-size:13px!important;color:var(--dim)!important}
+
+/* ---------- çözümler ---------- */
+.sol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.sol{padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);transition:border-color .25s,background .25s,transform .25s;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.sol:hover{border-color:rgba(45,212,191,.55);background:var(--card2);transform:translateY(-3px)}
+.sol .abbr{font:800 22px/1 var(--head);letter-spacing:-.01em}
+.sol .full{font-size:13.5px;color:var(--muted)}
+.sol .prod{margin-top:auto;padding-top:10px;font:500 13.5px/1.35 var(--body);color:var(--lilac)}
+.partners{margin-top:22px;padding:18px 22px;border-radius:var(--r);border:1px dashed var(--line2);display:flex;gap:14px 26px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:14.5px}
+.partners b{color:var(--text);font:700 15px/1 var(--head);letter-spacing:.02em}
+
+/* ---------- agentic AI ---------- */
+.soon{padding:clamp(40px,6vw,80px) 0}
+.soon-card{position:relative;overflow:hidden;border-radius:32px;border:1px solid rgba(167,139,250,.55);padding:clamp(32px,5vw,72px);background:radial-gradient(600px 400px at 85% 50%,rgba(124,58,237,.55),transparent 70%),radial-gradient(500px 300px at 0% 0%,rgba(45,212,191,.18),transparent 70%),#0a0722;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.soon-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(251,191,36,.6);color:#fde7a4;background:rgba(251,191,36,.1);font:600 13px/1 var(--body)}
+.soon-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber);animation:ping2 2s infinite}
+@keyframes ping2{70%{box-shadow:0 0 0 9px rgba(251,191,36,0)}100%{box-shadow:0 0 0 0 rgba(251,191,36,0)}}
+.soon h2{margin-top:18px}
+.orb{position:relative;aspect-ratio:1;max-width:340px;margin:0 auto;width:100%}
+.orb svg{width:100%;height:100%;overflow:visible}
+.orb .spin{transform-origin:150px 150px;animation:spin 28s linear infinite}
+.orb .spin2{transform-origin:150px 150px;animation:spin 40s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb text{font:600 11.5px var(--mono);fill:#e4dbff}
+
+/* ---------- yorumlar ---------- */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.q{padding:26px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);display:flex;flex-direction:column;gap:20px}
+.q blockquote{font-size:16.5px;line-height:1.55;color:#e8e5f8}
+.q blockquote::before{content:"“";display:block;font:800 54px/.7 var(--head);color:var(--purple2);margin-bottom:6px}
+.q figcaption{margin-top:auto;display:flex;gap:12px;align-items:center}
+.av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:none;font:800 15px/1 var(--head);background:var(--grad);color:#0a0722}
+.q figcaption b{display:block;font-size:15px}
+.q figcaption div span{font-size:13.5px;color:var(--muted);line-height:1.3;display:block}
+.q-note{margin-top:14px;font:500 12px/1.4 var(--mono);color:var(--dim)}
+
+/* ---------- SSS ---------- */
+.faq{max-width:860px;margin:36px auto 0;display:grid;gap:10px}
+details{border:1px solid var(--line);border-radius:14px;background:var(--card);transition:border-color .2s}
+details[open]{border-color:rgba(167,139,250,.55);background:var(--card2)}
+summary{list-style:none;cursor:pointer;min-height:60px;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;font:600 16.5px/1.35 var(--body)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font:500 20px/1 var(--body);color:var(--teal);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 22px 20px;color:var(--muted);font-size:15.5px}
+.center{text-align:center}.center .lead{margin-inline:auto}
+
+/* ---------- son çağrı + alt bilgi ---------- */
+.final{padding-bottom:clamp(56px,7vw,96px)}
+.final-card{text-align:center;padding:clamp(36px,6vw,80px) 24px;border-radius:32px;border:1px solid rgba(167,139,250,.5);background:radial-gradient(700px 320px at 50% 0%,rgba(124,58,237,.5),transparent 70%),radial-gradient(600px 300px at 50% 120%,rgba(20,184,196,.25),transparent 70%),#0b0825}
+.final-card h2{max-width:780px;margin-inline:auto}
+.final-card .cta-row{justify-content:center;margin-top:28px}
+.contact{margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;font-size:15px}
+.contact a{display:inline-flex;align-items:center;min-height:44px;color:var(--lilac);border-bottom:1px solid transparent}
+.contact a:hover{border-color:currentColor}
+footer{border-top:1px solid var(--line);padding:44px 0 36px;color:var(--muted);font-size:14.5px}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:32px}
+.foot img{height:40px;margin-bottom:14px}
+.foot h4{font:600 13px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.foot a{display:flex;align-items:center;min-height:44px}
+.foot a:hover{color:#fff}
+.demo-note{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--dim);font-size:13px}
+
+/* ---------- çerez şeridi + mobil CTA ---------- */
+.cookie{position:fixed;z-index:70;left:16px;bottom:16px;width:min(400px,calc(100vw - 32px));padding:14px 16px;border-radius:16px;background:rgba(18,15,52,.94);border:1px solid var(--line2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 18px 44px -12px rgba(0,0,0,.7);display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:13.5px;color:var(--muted)}
+.cookie p{flex:1 1 180px;line-height:1.45}
+.cookie a{color:var(--lilac);text-decoration:underline;display:inline-block;padding:14px 0 14px;margin:-14px 0}
+.cookie .cb{display:flex;gap:8px}
+.cookie button{min-height:44px;padding:0 16px;border-radius:10px;font:600 14px/1 var(--body);border:1px solid var(--line2)}
+.cookie .ok{background:var(--purple);border-color:var(--purple);color:#fff}
+.cookie.hide{display:none}
+.mbar{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .nav{display:none}.burger{display:inline-flex}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .dash-wrap{max-width:640px}
+  .plat-grid,.camp,.soon-card{grid-template-columns:minmax(0,1fr)}
+  .sol-grid{grid-template-columns:repeat(2,1fr)}
+  .quotes{grid-template-columns:minmax(0,1fr)}
+  .pipe-wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  .link{width:2px;height:34px;margin:0 auto;background:repeating-linear-gradient(180deg,rgba(167,139,250,.9) 0 6px,transparent 6px 13px);background-size:2px 26px;animation:linkmovev 1s linear infinite}
+  .link.t{background-image:repeating-linear-gradient(180deg,rgba(45,212,191,.95) 0 6px,transparent 6px 13px)}
+  @keyframes linkmovev{to{background-position:0 26px}}
+  .node,.node.human{min-height:0;transform:none}
+  .journey{grid-template-columns:repeat(2,1fr)}.journey::before{display:none}
+  .problem,.verdict{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0;padding-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .soon-card .orb{max-width:260px}
+}
+.mnav{display:none}
+@media (max-width:1100px){
+  .mnav{position:fixed;z-index:49;top:72px;left:0;right:0;padding:12px 20px 22px;background:rgba(8,6,26,.98);border-bottom:1px solid var(--line);display:none}
+  .mnav.open{display:block}
+  .mnav a{display:flex;align-items:center;min-height:52px;font-size:17px;border-bottom:1px solid var(--line)}
+}
+@media (max-width:640px){
+  body{font-size:16px;padding-bottom:84px}
+  .wrap{padding:0 18px}
+  .hdr .wrap{height:64px}.mnav{top:64px}
+  .logo img{height:38px}
+  .hdr .btn,.lang{display:none}
+  .hero{padding-top:30px}
+  .hero h1{font-size:33px;margin:16px 0 14px}
+  .hero .lead{font-size:16px;margin-bottom:22px}
+  .cta-row .btn{width:100%}
+  .camp-pill{margin-top:18px;font-size:14px}
+  .dash-body{grid-template-columns:minmax(0,1fr)}
+  .float-note{right:6px;bottom:-30px}
+  .dash-wrap{margin-bottom:30px}
+  .journey{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:1fr 1fr}
+  .bars,.legend{display:none}
+  .score{justify-content:flex-start}
+  .node .ico{display:none}.node{padding:16px 18px;gap:6px}.node p{font-size:15px}
+  .verdict{display:none}
+  .quotes .q:nth-child(3){display:none}
+  .sol-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .sol{min-height:0;padding:16px}.sol .full{display:none}.sol .abbr{font-size:19px}.sol .prod{padding-top:4px}
+  .camp .cta-row .btn-ghost{display:none}
+  .mod{grid-template-columns:40px minmax(0,1fr);gap:12px;padding:16px}.mod .ico{width:40px;height:40px}
+  .jstep{padding:16px 18px 18px}
+  .partners{padding:14px 16px}
+  .foot>div:nth-child(2){display:none}
+  .stat{padding:18px 14px}
+  .stat b{font-size:26px}
+  .steps{height:210px;gap:5px}
+  .stp{padding:8px 6px}.stp b{font-size:18px}.stp span{font-size:11.5px}
+  .foot{grid-template-columns:minmax(0,1fr)}
+  .btn{min-height:54px}
+  .cd4 b{font-size:26px}
+  .camp-pill .cd{font-size:13px}
+  .cookie{left:10px;right:10px;width:auto;bottom:78px;padding:8px 8px 8px 14px;border-radius:14px;flex-wrap:nowrap;gap:10px}
+  .cookie p{flex:1;font-size:12.5px;line-height:1.35}
+  .cookie button{min-height:44px;padding:0 12px;font-size:13.5px}
+  .cookie .cb{flex:none}
+  .mbar{display:flex;position:fixed;z-index:80;left:0;right:0;bottom:0;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(8,6,26,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line2)}
+  .mbar .btn{flex:1;min-height:56px;font-size:16px}
+  .mbar .call{flex:none;width:56px;padding:0;min-height:56px;border-radius:14px}
+  .mbar .btn small{font-weight:500;opacity:.85}
+}
+</style>
+</head>
+<body>
+<div class="oneri-serit" style="position:static;background:#130f36;color:#c4b0f2;border-bottom:1px solid #2a2563;font:500 13px/1.4 system-ui,-apple-system,'Segoe UI',sans-serif;text-align:center;padding:8px 14px;letter-spacing:0">Tasarım önerisi · MindDX için hazırlanmış demo — resmi site değildir. Düğmeler çalışmaz, yalnız görünüm.</div>
+<a class="sr" href="#icerik">İçeriğe geç</a>
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="MindDX ana sayfa"><img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMjYgMTAgMzExLjUgODEuNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzYzLjI3IDEwMS4yNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiAuc3Qwe2ZpbGw6IzI2M0Q0Rjt9IC5zdDF7ZmlsbDojRkZGRkZGO3N0cm9rZTojRUUyRTI4O3N0cm9rZS13aWR0aDowLjA3MTk7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fSAuc3Qye2ZpbGw6I0ZGRkZGRjt9IC5zdDN7c3Ryb2tlOiNFRTJFMjg7c3Ryb2tlLXdpZHRoOjAuMDcxOTtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9IC5zdDR7ZmlsbDpub25lO3N0cm9rZTojRUUyRTI4O3N0cm9rZS13aWR0aDowLjA3MTk7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fSAuc3Q1e2ZpbGw6dXJsKCNTVkdJRF8xXyk7fSAuc3Q2e2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDA3NjU4NTk5NzE1OTI2NDE2MTkzMDAwMDAxODA5OTgyOTM1NzM5MTg1NDAwMV8pO30gLnN0N3tmaWxsOnVybCgjU1ZHSURfMDAwMDAwNDYzMjE4MzYxNTQ2NDM5MjMwNjAwMDAwMDA0ODM1NzI5OTgxMzEzMzE5OTZfKTt9IC5zdDh7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDU4NTQ3MTc0OTY0MTIzMDI5NjYwMDAwMDE3ODg3OTYwMTkzMDU3MzkyNTc0Xyk7fSAuc3Q5e2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDA5NDYwMTk2NTM1NDA3Njg5MDI3MDAwMDAxNTEwNzc4NzgwMDgwMTU1MzAyOF8pO30gLnN0MTB7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDU4NTg3NzYyNTIyODA4MzA1OTcwMDAwMDAxNjEyMDI0NTcwNzg5NjYxMzUxXyk7fSAuc3QxMXtmaWxsOnVybCgjU1ZHSURfMDAwMDAxNjE2MjUxMjMzOTQyNzA1NTcyMjAwMDAwMDU2MzEzMzMxMzEyNTg3NDc4MDVfKTt9IC5zdDEye2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDEwMjUzNDgwOTQ4OTQxNDk1OTgwMDAwMDAxNzg5NzgxNjUxMjc3ODkzMjY1N18pO30gLnN0MTN7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDg1OTQzMDg0NTU0MzA5MDgwMzMwMDAwMDExMTYzMTA0MzU1NzY1MjU4MzgxXyk7fSAuc3QxNHtmaWxsOnVybCgjU1ZHSURfMDAwMDAxODEwNjA4Njc3MTEwMjYyNDAzNTAwMDAwMDU2MjcyMTM0OTI5NjExMDE5OThfKTt9IDwvc3R5bGU+IDxnPiA8bGluZSBjbGFzcz0ic3Q0IiB4MT0iNTEuOCIgeTE9Ijc0LjQzIiB4Mj0iNTEuOCIgeTI9Ijc0LjQzIi8+IDxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMV8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iNzU0Ni4xMTk2IiB5MT0iODguODYxOSIgeDI9Ijc1NDYuMTE5NiIgeTI9IjEyLjM5MDgiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgNzYxMS41ODg0IDApIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojQjgxRDhEIi8+IDxzdG9wIG9mZnNldD0iMC4wNDk3IiBzdHlsZT0ic3RvcC1jb2xvcjojQTk0Njk0Ii8+IDxzdG9wIG9mZnNldD0iMC4xMzY2IiBzdHlsZT0ic3RvcC1jb2xvcjojOTA2QkEwIi8+IDxzdG9wIG9mZnNldD0iMC4yMjQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojNzU4MEE4Ii8+IDxzdG9wIG9mZnNldD0iMC4zMTIxIiBzdHlsZT0ic3RvcC1jb2xvcjojNTY5MUFGIi8+IDxzdG9wIG9mZnNldD0iMC4zOTg4IiBzdHlsZT0ic3RvcC1jb2xvcjojMkI5Q0IzIi8+IDxzdG9wIG9mZnNldD0iMC40ODQ0IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBNEI2Ii8+IDxzdG9wIG9mZnNldD0iMC41Njg3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOEI3Ii8+IDxzdG9wIG9mZnNldD0iMC42NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTlCOCIvPiA8c3RvcCBvZmZzZXQ9IjAuNjg2NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUJCOSIvPiA8c3RvcCBvZmZzZXQ9IjAuNzM0NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQjBCRCIvPiA8c3RvcCBvZmZzZXQ9IjAuNzg5NiIgc3R5bGU9InN0b3AtY29sb3I6IzQ4QjhDNSIvPiA8c3RvcCBvZmZzZXQ9IjAuODQ5MyIgc3R5bGU9InN0b3AtY29sb3I6IzdBQzVEMCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTEyOSIgc3R5bGU9InN0b3AtY29sb3I6I0FERDhERiIvPiA8c3RvcCBvZmZzZXQ9IjAuOTc4OSIgc3R5bGU9InN0b3AtY29sb3I6I0U4RjNGNCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTk5NiIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPiA8L2xpbmVhckdyYWRpZW50PiA8cGF0aCBjbGFzcz0ic3Q1IiBkPSJNNTEuNTUsMzQuMjhjMCw0Ljg1LDIuMjYsOS4xOCw1Ljc4LDExLjk4YzAuMDEsMC4wMSwwLjAxLDAuMDEsMC4wMiwwLjAyYzAsMCwwLjAxLDAuMDEsMC4wMSwwLjAxIGMwLjA3LDAuMDUsMC4xNCwwLjExLDAuMjEsMC4xNmMwLDAsMCwwLDAsMGwwLDBjMC4yMywwLjE0LDAuNDksMC4yMywwLjc5LDAuMjNjMC44MSwwLDEuNDctMC42NiwxLjQ3LTEuNDcgYzAtMC40MS0wLjE3LTAuNzgtMC40NC0xLjA1YzAsMCwwLDAsMCwwYzAsMCwwLDAsMCwwYy0wLjA5LTAuMDYtMC4xNy0wLjEzLTAuMjYtMC4yYzAsMCwwLDAtMC4wMSwwIGMtMi44My0yLjI3LTQuNjQtNS43Ni00LjY0LTkuNjdjMC00LjI4LDIuMTctOC4wNSw1LjQ2LTEwLjI3bDAuNTEtMy42NEM1NS4xOSwyMi43OSw1MS41NSwyOC4xMSw1MS41NSwzNC4yOHogTTYwLjQ1LDIwLjM3IGwtMC41MSwzLjY0IE01MS4yMyw3Mi42YzAsMCwxLjQxLDkuNzEsMTQuOTMsOS43MXMxMS45MS04LjQzLDExLjkxLTguNDNzLTMuMzEsNS4yOS0xMS45MSw1LjI5QzU2LjM1LDc5LjE3LDUxLjIzLDcyLjYsNTEuMjMsNzIuNiB6IE01My4yLDcxLjU2YzAuNzgsMC43LDEuNjEsMS4zMywyLjQ4LDEuODhjMi43NywxLjc0LDUuOTksMi42Nyw5LjMyLDIuNjdjMC45NCwwLDcuMjMsMC4yNSwxMC42Mi0zLjE0YzEuOTktMS45OSwyLjgtNC45OCwyLjgxLTggYy0wLjAxLDAuMDMtMC4yMywwLjQ5LTAuMzQsMC43Yy0yLDMuOTMtNS42Miw2LjM0LTEwLjc1LDcuMTZjLTAuNzcsMC4xMi0xLjU2LDAuMTktMi4zNCwwLjE5Yy0zLjYxLDAtNy4wNi0xLjMzLTkuNzMtMy43NSBjLTEuMTItMS4wMS0yLjA0LTIuMTctMi43Ny0zLjQzYy0xLjMyLTIuMzEtMS45Ni00Ljk2LTEuNzktNy42N2wwLTAuMDdjMC4zMS0zLjk3LDIuNTYtNy41Miw2LjA4LTkuODJsLTIuNTktMS45NiBjLTMuOCwyLjgxLTYuMjEsNi45NS02LjU4LDExLjU0bC0wLjAxLDAuMTJDNDcuMzIsNjMuMTIsNDkuMzUsNjguMDcsNTMuMiw3MS41NnogTTY1LjQ2LDI0LjgzYy0wLjE1LTAuNTktMC4yMy0xLjItMC4yMy0xLjg0IGMwLTQuMTQsMy4zNi03LjQ5LDcuNDktNy40OWM0LjE0LDAsNy40OSwzLjM2LDcuNDksNy40OXY1NS4yNmMwLDEuMTgtMC4yNywyLjI5LTAuNzYsMy4yOWgwYy0xLjIyLDIuNDktMy43OCw0LjIxLTYuNzMsNC4yMSBjLTEuMTYsMC0yLjI2LTAuMjYtMy4yNC0wLjc0aDBjLTAuMDcsMC4wMS0wLjEzLDAuMDItMC4yLDAuMDNjLTEuNDEsMC4yMy0yLjg2LDAuMzQtNC4yOCwwLjM0aC0wLjEzIGMxLjk0LDIuMTMsNC43NCwzLjQ3LDcuODUsMy40N2M1LjY4LDAsMTAuMzEtNC40NiwxMC41OS0xMC4wN3YtMC4wMWMwLjAxLTAuMTgsMC4wMS0wLjM1LDAuMDEtMC41M1YyMi45OSBjMC01Ljg2LTQuNzUtMTAuNi0xMC42MS0xMC42Yy01Ljg2LDAtMTAuNiw0Ljc1LTEwLjYsMTAuNmMwLDAuODgsMC4xMSwxLjczLDAuMzEsMi41NEM2My40LDI1LjE3LDY0LjQyLDI0LjkzLDY1LjQ2LDI0LjgzeiBNNjcuMjIsMjIuOTljMCwwLjY0LDAuMTEsMS4yNSwwLjMxLDEuODFjMi45NSwwLjE1LDUuNjUsMS4yMSw3Ljc5LDMuMDVjMS43NC0wLjkzLDIuOTItMi43NiwyLjkyLTQuODcgYzAtMy4wNC0yLjQ3LTUuNTEtNS41MS01LjUxQzY5LjY5LDE3LjQ4LDY3LjIyLDE5Ljk1LDY3LjIyLDIyLjk5eiBNNzAuNTksMjIuOTljMC0xLjE4LDAuOTYtMi4xNCwyLjE0LTIuMTQgYzEuMTgsMCwyLjE0LDAuOTYsMi4xNCwyLjE0YzAsMS4xOC0wLjk2LDIuMTQtMi4xNCwyLjE0QzcxLjU1LDI1LjEzLDcwLjU5LDI0LjE4LDcwLjU5LDIyLjk5eiBNNTcuMjUsNjcuNTIgYzIuMjUsMi4wNCw1LjE0LDMuMTMsOC4xNCwzLjEzYzAuNjUsMCwxLjMxLTAuMDUsMS45Ny0wLjE2YzQuNDEtMC43LDcuMzYtMi42Myw5LjAyLTUuOWMwLjg1LTEuNjcsMS43Mi00LjE4LDEuNzItMTAuMDcgbDAuMTUtMTUuMjRjMC0zLjE4LTAuOTktNi4xMy0yLjgtOC4zMmMtMS45Mi0yLjMzLTQuNjktMy42OC03Ljc5LTMuOGMtMi45OC0wLjIxLTUuODQsMC45Ny03Ljg2LDMuMjQgYy0yLjAzLDIuMjktMi45MSw1LjQyLTIuMzMsOC4zOGwwLDAuMDJjMC43MiwzLjM2LDMuNTEsNiw3LjI5LDYuOWwwLjA5LDAuMDJjMi4zNiwwLjM3LDQuNjEtMC4yNCw2LjM0LTEuNzIgYzEuNzktMS41MywyLjc3LTMuNzcsMi43Ny02LjMxYy0wLjAzLTMuNDEtMi40My02LjE2LTUuODQtNi43Yy0yLjYzLTAuNDEtNS4xMSwwLjk3LTYuNDgsMy42MUw2MS42LDM0LjcgYy0wLjc4LDEuOTItMC4zNSw0LjE0LDEuMSw1LjY1YzEuMzMsMS4zOSwzLjIzLDEuODQsNS4wNywxLjE5bDAuMTEtMC4wNGMxLjE5LTAuNTUsMS45OC0xLjcyLDIuMDYtMy4wNyBjMC4wOC0xLjI3LTAuNDktMi40MS0xLjUzLTMuMDdjLTAuNTgtMC4zNy0xLjM2LTAuMTktMS43MywwLjM5Yy0wLjM3LDAuNTgtMC4xOSwxLjM2LDAuMzksMS43M2MwLjMzLDAuMjEsMC4zOCwwLjU0LDAuMzcsMC43OSBjLTAuMDMsMC40LTAuMjUsMC43Ni0wLjU3LDAuOTNjLTEuMiwwLjM5LTItMC4xOS0yLjM3LTAuNThjLTAuNzQtMC43Ny0wLjk4LTEuOTUtMC42MS0yLjkzYzEuMjUtMi4zNiwzLjEtMi4zNSwzLjgzLTIuMjMgYzIuMjEsMC4zNSwzLjcxLDIuMDUsMy43Myw0LjIzYzAsMS43OS0wLjY3LDMuMzUtMS44OSw0LjRjLTEuMTUsMC45OS0yLjY3LDEuNC00LjI3LDEuMTVjLTIuMi0wLjU0LTQuNzYtMi4xMi01LjM3LTQuOTYgYy0wLjQyLTIuMTksMC4yMy00LjUxLDEuNzUtNi4yMmMxLjUtMS42OSwzLjYyLTIuNTYsNS44Mi0yLjRsMC4wNSwwYzQuODMsMC4xOCw4LjIsNC4xMyw4LjIsOS42MUw3NS42LDU0LjUxIGMwLDMuMDItMC4xNyw2LjQ0LTEuNDUsOC45NWMtMS4yOSwyLjU0LTMuNTcsMy45OS03LjE4LDQuNTZjLTIuOTMsMC40Ny01Ljg2LTAuMzktOC4wMy0yLjM2Yy0yLjA1LTEuODYtMy4xMy00LjQ4LTIuOTgtNy4yIGMwLjItMi40MywxLjg2LTUuNTgsNS45Mi03LjE2YzItMC41OCw0LTAuMzIsNS42MywwLjc0YzEuNzIsMS4xMiwyLjg0LDIuOTgsMy4xNCw1LjI2YzAuMzQsMi43NS0xLjMzLDUuMjQtNC4wNSw2LjA1IGMtMS45NSwwLjU4LTMuOTUtMC4yNS01LjM1LTIuMjJjLTAuNjctMS4yNC0wLjU3LTIuODMsMC4yNy0zLjk5YzAuNDMtMC41OSwxLjQtMS41MiwzLjA5LTEuMTljMC41MiwwLjE4LDAuOTMsMC42NywxLjA0LDEuMjYgYzAuMDYsMC4zLDAuMDksMC44Ny0wLjQyLDEuMjljLTAuNTMsMC40NC0wLjYxLDEuMjMtMC4xNiwxLjc2YzAuNDQsMC41MywxLjIzLDAuNiwxLjc2LDAuMTZjMS4wOC0wLjksMS41Ni0yLjI4LDEuMjctMy43MSBjLTAuMy0xLjUyLTEuMzgtMi43NC0yLjgxLTMuMThsLTAuMTEtMC4wM2MtMi4yNC0wLjQ3LTQuMzYsMC4zNC01LjY5LDIuMTZjLTEuNDQsMS45OC0xLjYsNC42My0wLjQsNi43NWwwLjA2LDAuMSBjMi4wMiwyLjg5LDUuMTQsNC4xMyw4LjE1LDMuMjNjMy45My0xLjE3LDYuMzItNC43Nyw1LjgyLTguNzdjLTAuNC0zLjAyLTEuOTEtNS41Mi00LjI2LTcuMDRjLTIuMjctMS40Ny01LjAzLTEuODQtNy43NS0xLjAzIGwtMC4wOSwwLjAzYy00LjM1LDEuNjYtNy4yNSw1LjI0LTcuNTcsOS4zM2wwLDAuMDJDNTMuMjUsNjEuNzksNTQuNjMsNjUuMTUsNTcuMjUsNjcuNTJ6IE03OS40Nyw4MS41NEw3OS40Nyw4MS41NCIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMDAzMDY1MzI5NTA5MTM5NTEyNDIwMDAwMDA1MzI1Mzc3OTY5MDYyOTEzNjg2XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI3NTcxLjU3NjciIHkxPSI2Ny4zMzIxIiB4Mj0iNzU3MS41NzY3IiB5Mj0iMjUuNzQzNCIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtMSAwIDAgMSA3NjExLjU4ODQgMCkiPiA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiNCODFEOEQiLz4gPHN0b3Agb2Zmc2V0PSIwLjA0OTciIHN0eWxlPSJzdG9wLWNvbG9yOiNBOTQ2OTQiLz4gPHN0b3Agb2Zmc2V0PSIwLjEzNjYiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDZCQTAiLz4gPHN0b3Agb2Zmc2V0PSIwLjIyNDciIHN0eWxlPSJzdG9wLWNvbG9yOiM3NTgwQTgiLz4gPHN0b3Agb2Zmc2V0PSIwLjMxMjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM1NjkxQUYiLz4gPHN0b3Agb2Zmc2V0PSIwLjM5ODgiIHN0eWxlPSJzdG9wLWNvbG9yOiMyQjlDQjMiLz4gPHN0b3Agb2Zmc2V0PSIwLjQ4NDQiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE0QjYiLz4gPHN0b3Agb2Zmc2V0PSIwLjU2ODciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE4QjciLz4gPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOUI4Ii8+IDxzdG9wIG9mZnNldD0iMC42ODY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBQkI5Ii8+IDxzdG9wIG9mZnNldD0iMC43MzQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBCMEJEIi8+IDxzdG9wIG9mZnNldD0iMC43ODk2IiBzdHlsZT0ic3RvcC1jb2xvcjojNDhCOEM1Ii8+IDxzdG9wIG9mZnNldD0iMC44NDkzIiBzdHlsZT0ic3RvcC1jb2xvcjojN0FDNUQwIi8+IDxzdG9wIG9mZnNldD0iMC45MTI5IiBzdHlsZT0ic3RvcC1jb2xvcjojQUREOERGIi8+IDxzdG9wIG9mZnNldD0iMC45Nzg5IiBzdHlsZT0ic3RvcC1jb2xvcjojRThGM0Y0Ii8+IDxzdG9wIG9mZnNldD0iMC45OTk2IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+IDwvbGluZWFyR3JhZGllbnQ+IDxwYXRoIHN0eWxlPSJmaWxsOnVybCgjU1ZHSURfMDAwMDAwMDMwNjUzMjk1MDkxMzk1MTI0MjAwMDAwMDUzMjUzNzc5NjkwNjI5MTM2ODZfKTsiIGQ9Ik00NC45Niw2NC4yNGMwLjQ0LDAsMC43OSwwLjM1LDAuNzksMC43OSBjMCwwLjQ0LTAuMzUsMC43OS0wLjc5LDAuNzljLTAuNDQsMC0wLjc5LTAuMzUtMC43OS0wLjc5QzQ0LjE3LDY0LjU5LDQ0LjUzLDY0LjI0LDQ0Ljk2LDY0LjI0eiBNNDIuNjYsNjUuMDMgYzAsMS4yNywxLjAzLDIuMywyLjMsMi4zYzEuMjcsMCwyLjMtMS4wMywyLjMtMi4zcy0xLjAzLTIuMy0yLjMtMi4zQzQzLjY5LDYyLjczLDQyLjY2LDYzLjc2LDQyLjY2LDY1LjAzeiBNMzUuMzQsNjQuMjQgYzAuNDQsMCwwLjc5LDAuMzUsMC43OSwwLjc5YzAsMC40NC0wLjM1LDAuNzktMC43OSwwLjc5Yy0wLjQ0LDAtMC43OS0wLjM1LTAuNzktMC43OUMzNC41NSw2NC41OSwzNC45LDY0LjI0LDM1LjM0LDY0LjI0eiBNMzUuMzQsNjIuNzNjMC44NywwLDEuNjIsMC40OCwyLjAxLDEuMTljMC4wNi0wLjAxLDAuMTMtMC4wMiwwLjItMC4wMmgyLjM3YzAuMzEsMCwwLjYsMC4xMywwLjgsMC4zM2MwLjIsMC4yLDAuMzMsMC40OSwwLjMzLDAuOCBjMCwwLjYzLTAuNTEsMS4xMy0xLjEzLDEuMTNoLTIuMzdjLTAuMDcsMC0wLjEzLTAuMDEtMC4yLTAuMDJjLTAuMzksMC43MS0xLjE1LDEuMTktMi4wMSwxLjE5Yy0xLjI3LDAtMi4zLTEuMDMtMi4zLTIuMyBTMzQuMDcsNjIuNzMsMzUuMzQsNjIuNzN6IE0zNS4zNCw2NS44MmMwLjQ0LDAsMC43OS0wLjM1LDAuNzktMC43OWMwLTAuNDQtMC4zNS0wLjc5LTAuNzktMC43OWMtMC40NCwwLTAuNzksMC4zNS0wLjc5LDAuNzkgQzM0LjU1LDY1LjQ3LDM0LjksNjUuODIsMzUuMzQsNjUuODJ6IE0zNC41NSw2NS4wM2MwLDAuNDQsMC4zNSwwLjc5LDAuNzksMC43OWMwLjQ0LDAsMC43OS0wLjM1LDAuNzktMC43OSBjMC0wLjQ0LTAuMzUtMC43OS0wLjc5LTAuNzlDMzQuOSw2NC4yNCwzNC41NSw2NC41OSwzNC41NSw2NS4wM3ogTTM4LjYzLDQyLjI0YzAuNjYsMCwxLjE5LDAuNTMsMS4xOSwxLjE5IGMwLDAuNjYtMC41MywxLjE5LTEuMTksMS4xOWMtMC42NiwwLTEuMTktMC41My0xLjE5LTEuMTlDMzcuNDQsNDIuNzcsMzcuOTcsNDIuMjQsMzguNjMsNDIuMjR6IE0zNS45MSw0My40MyBjMCwxLjUsMS4yMiwyLjcyLDIuNzIsMi43MmMxLjUsMCwyLjcyLTEuMjIsMi43Mi0yLjcycy0xLjIyLTIuNzItMi43Mi0yLjcyQzM3LjEzLDQwLjcxLDM1LjkxLDQxLjkzLDM1LjkxLDQzLjQzeiBNMzMuOTYsMzUuNyBjMCwwLjY2LDAuNTMsMS4xOSwxLjE5LDEuMTlzMS4xOS0wLjUzLDEuMTktMS4xOWMwLTAuNjYtMC41My0xLjE5LTEuMTktMS4xOVMzMy45NiwzNS4wNCwzMy45NiwzNS43eiBNNDEuNTQsMzQuNTEgYzAuNjYsMCwxLjE5LDAuNTMsMS4xOSwxLjE5YzAsMC42Ni0wLjUzLDEuMTktMS4xOSwxLjE5Yy0wLjY2LDAtMS4xOS0wLjUzLTEuMTktMS4xOUM0MC4zNSwzNS4wNCw0MC44OCwzNC41MSw0MS41NCwzNC41MXogTTQxLjU0LDMyLjk4YzEuMTEsMCwyLjA2LDAuNjYsMi40OCwxLjYxYzAuMDktMC4wMiwwLjE5LTAuMDQsMC4yOC0wLjA0aDMuMzJjMC4zMSwwLDAuNiwwLjEzLDAuODEsMC4zMyBjMC4yMSwwLjIxLDAuMzMsMC40OSwwLjMzLDAuODFjMCwwLjYzLTAuNTEsMS4xNC0xLjE0LDEuMTRoLTMuMzJjLTAuMSwwLTAuMTktMC4wMS0wLjI4LTAuMDRjLTAuNDIsMC45NS0xLjM4LDEuNjEtMi40OCwxLjYxIGMtMS41LDAtMi43Mi0xLjIyLTIuNzItMi43MkMzOC44MiwzNC4yLDQwLjA0LDMyLjk4LDQxLjU0LDMyLjk4eiBNNDEuNTQsMzYuODljMC42NiwwLDEuMTktMC41MywxLjE5LTEuMTkgYzAtMC42Ni0wLjUzLTEuMTktMS4xOS0xLjE5Yy0wLjY2LDAtMS4xOSwwLjUzLTEuMTksMS4xOUM0MC4zNSwzNi4zNSw0MC44OCwzNi44OSw0MS41NCwzNi44OXogTTQwLjM1LDM1LjcgYzAsMC42NiwwLjUzLDEuMTksMS4xOSwxLjE5YzAuNjYsMCwxLjE5LTAuNTMsMS4xOS0xLjE5YzAtMC42Ni0wLjUzLTEuMTktMS4xOS0xLjE5QzQwLjg4LDM0LjUxLDQwLjM1LDM1LjA0LDQwLjM1LDM1Ljd6IE0zMi41OCwyOC40NmMwLDEuNSwxLjIyLDIuNzIsMi43MiwyLjcyYzEuMTQsMCwyLjEyLTAuNzEsMi41Mi0xLjcxaDIuOTNjMC41NiwwLDEuMDEtMC40NSwxLjAxLTEuMDFjMC0wLjI4LTAuMTEtMC41My0wLjMtMC43MSBzLTAuNDMtMC4yOS0wLjcxLTAuMjloLTIuOTNjLTAuNC0xLTEuMzgtMS43MS0yLjUyLTEuNzFDMzMuNzksMjUuNzQsMzIuNTgsMjYuOTYsMzIuNTgsMjguNDZ6IE0zNC4xMSwyOC40NiBjMC0wLjY2LDAuNTMtMS4xOSwxLjE5LTEuMTljMC42NiwwLDEuMTksMC41MywxLjE5LDEuMTljMCwwLjY2LTAuNTMsMS4xOS0xLjE5LDEuMTlDMzQuNjQsMjkuNjUsMzQuMTEsMjkuMTIsMzQuMTEsMjguNDZ6IE00My43NiwyOC40NmMwLDEuNSwxLjIyLDIuNzIsMi43MiwyLjcyYzEuNSwwLDIuNzItMS4yMiwyLjcyLTIuNzJjMC0xLjUtMS4yMi0yLjcyLTIuNzItMi43MiBDNDQuOTgsMjUuNzQsNDMuNzYsMjYuOTYsNDMuNzYsMjguNDZ6IE00NS4yOSwyOC40NmMwLTAuNjYsMC41My0xLjE5LDEuMTktMS4xOWMwLjY2LDAsMS4xOSwwLjUzLDEuMTksMS4xOSBjMCwwLjY2LTAuNTMsMS4xOS0xLjE5LDEuMTlDNDUuODIsMjkuNjUsNDUuMjksMjkuMTIsNDUuMjksMjguNDZ6IE00Ni42OCw1MC4yOUw0Ni42OCw1MC4yOWMwLTAuODItMC42Ny0xLjQ5LTEuNDktMS40OUgyOS41OSBjLTAuODIsMC0xLjQ5LDAuNjctMS40OSwxLjQ5djBjMCwwLjgyLDAuNjcsMS40OSwxLjQ5LDEuNDloMTUuNjFDNDYuMDIsNTEuNzgsNDYuNjgsNTEuMTEsNDYuNjgsNTAuMjl6IE00My40Myw0Mi4wMXYyLjExIGMwLDAuNDEsMC4zMywwLjc1LDAuNzUsMC43NWg3LjAxYzAuNCwwLDAuNzItMC4zMiwwLjc0LTAuNzFjLTAuNTEtMC45Mi0wLjkyLTEuODktMS4yMi0yLjg5aC02LjUzIEM0My43Nyw0MS4yNiw0My40Myw0MS41OSw0My40Myw0Mi4wMXogTTQwLjM1LDU1LjQ5TDQwLjM1LDU1LjQ5YzAtMC44Mi0wLjY3LTEuNDktMS40OS0xLjQ5SDMwLjVjLTAuODIsMC0xLjQ5LDAuNjctMS40OSwxLjQ5bDAsMCBjMCwwLjgyLDAuNjcsMS40OSwxLjQ5LDEuNDloOC4zNkMzOS42OCw1Ni45OCw0MC4zNSw1Ni4zMSw0MC4zNSw1NS40OXogTTQ1LjAxLDU5Ljg2TDQ1LjAxLDU5Ljg2YzAtMC44Mi0wLjY3LTEuNDktMS40OS0xLjQ5IGgtNC4zNGMtMC44MiwwLTEuNDksMC42Ny0xLjQ5LDEuNDl2MGMwLDAuODIsMC42NywxLjQ5LDEuNDksMS40OWg0LjM0QzQ0LjM0LDYxLjM1LDQ1LjAxLDYwLjY4LDQ1LjAxLDU5Ljg2eiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMDY3OTI3NzY2NjgwMjg2ODYwMTUwMDAwMDE3OTcxNzgzMTk1NDIwMzkwMDc2XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI3NTA2LjQxNiIgeTE9Ijg4LjM1OTYiIHgyPSI3NTA2LjQxNiIgeTI9IjEzLjMzOTQiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgNzYxMS41ODg0IDApIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojQjgxRDhEIi8+IDxzdG9wIG9mZnNldD0iMC4wNDk3IiBzdHlsZT0ic3RvcC1jb2xvcjojQTk0Njk0Ii8+IDxzdG9wIG9mZnNldD0iMC4xMzY2IiBzdHlsZT0ic3RvcC1jb2xvcjojOTA2QkEwIi8+IDxzdG9wIG9mZnNldD0iMC4yMjQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojNzU4MEE4Ii8+IDxzdG9wIG9mZnNldD0iMC4zMTIxIiBzdHlsZT0ic3RvcC1jb2xvcjojNTY5MUFGIi8+IDxzdG9wIG9mZnNldD0iMC4zOTg4IiBzdHlsZT0ic3RvcC1jb2xvcjojMkI5Q0IzIi8+IDxzdG9wIG9mZnNldD0iMC40ODQ0IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBNEI2Ii8+IDxzdG9wIG9mZnNldD0iMC41Njg3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOEI3Ii8+IDxzdG9wIG9mZnNldD0iMC42NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTlCOCIvPiA8c3RvcCBvZmZzZXQ9IjAuNjg2NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUJCOSIvPiA8c3RvcCBvZmZzZXQ9IjAuNzM0NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQjBCRCIvPiA8c3RvcCBvZmZzZXQ9IjAuNzg5NiIgc3R5bGU9InN0b3AtY29sb3I6IzQ4QjhDNSIvPiA8c3RvcCBvZmZzZXQ9IjAuODQ5MyIgc3R5bGU9InN0b3AtY29sb3I6IzdBQzVEMCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTEyOSIgc3R5bGU9InN0b3AtY29sb3I6I0FERDhERiIvPiA8c3RvcCBvZmZzZXQ9IjAuOTc4OSIgc3R5bGU9InN0b3AtY29sb3I6I0U4RjNGNCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTk5NiIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPiA8L2xpbmVhckdyYWRpZW50PiA8cGF0aCBzdHlsZT0iZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDY3OTI3NzY2NjgwMjg2ODYwMTUwMDAwMDE3OTcxNzgzMTk1NDIwMzkwMDc2Xyk7IiBkPSJNODkuNCwxMy43NEw4OS40LDEzLjc0bDAsMTguMjdoLTMuMTUgVjE2Ljg4Qzg2LjI1LDE1LjE1LDg3LjY2LDEzLjc0LDg5LjQsMTMuNzR6IE04Ni4yNSwzNS4zM0w4Ni4yNSwzNS4zM2MwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUyIHYwYzAtMC44NC0wLjY4LTEuNTItMS41Mi0xLjUyaC0wLjEyQzg2LjkzLDMzLjgxLDg2LjI1LDM0LjQ5LDg2LjI1LDM1LjMzeiBNODYuMjUsMzguNjV2My4wM2gxMy4wNnYtMy4wM0g4Ni4yNXogTTg2LjI1LDQzLjQ5IHYyNy4yM2gzLjE1VjQzLjQ5SDg2LjI1eiBNODkuNCw3Mi41M2gtMy4xNXYxMC4zNWMwLDEuODIsMS4zNCwzLjM3LDMuMTUsMy42M2wwLDBWNzIuNTN6IE05MS4yMSwyOC45N3Y3Ljg3aDMuMTV2LTcuODdIOTEuMjF6IE05MS4yMSw2OS4yMUw5MS4yMSw2OS4yMWMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUybDAsMGMwLTAuODQtMC42OC0xLjUyLTEuNTItMS41MmgtMC4xMiBDOTEuODgsNjcuNjksOTEuMjEsNjguMzcsOTEuMjEsNjkuMjF6IE05NC4zNSw3Mi41M2gtMy4xNXYxNC4yNGMwLDAuODgsMC43MSwxLjU5LDEuNTksMS41OWgxLjU2VjcyLjUzeiBNOTYuMTYsMTMuMzR2NC4xNGgzLjE1IHYtNC4xNEg5Ni4xNnogTTkxLjIxLDEzLjM0djguOThoOC4xMXYtMy4wM2gtNC45NnYtNS45NUg5MS4yMXogTTk5LjMxLDY3LjY5aC0zLjE1djEyLjcxaDMuMTVWNjcuNjl6IE05OS4zMSw4Mi4yMWgtMy4xNXY2LjE1IGgxLjcyYzAuNzksMCwxLjQzLTAuNjQsMS40My0xLjQzVjgyLjIxeiBNOTEuMjEsMjQuMTN2My4wM2gxMy4wNnYtOS44NmMwLTEuNzQtMS40MS0zLjE1LTMuMTUtMy4xNWgwdjkuOTdIOTEuMjF6IE0xMDEuMTIsMzMuODEgdjMuMDNoMTMuMDZWMjYuNDdjMC0xLjktMS4zLTMuNTYtMy4xNS00LjAyaDB2MTEuMzZIMTAxLjEyeiBNMTAxLjEyLDM4LjY1djMuMDNoOS45MVY1Ni4yaDMuMTVWMzguNjVIMTAxLjEyeiBNOTYuMTYsNDguMzN2MTIuNzEgaDMuMTV2LTkuNjhoNC45NnYtMy4wM0g5Ni4xNnogTTEwMS4xMiw1My4xN3YxMi43MWgzLjE1VjUzLjE3SDEwMS4xMnogTTEwMS4xMiw2OS4yMUwxMDEuMTIsNjkuMjFjMCwwLjg0LDAuNjgsMS41MiwxLjUyLDEuNTIgaDAuMTJjMC44NCwwLDEuNTItMC42OCwxLjUyLTEuNTJsMCwwYzAtMC44NC0wLjY4LTEuNTItMS41Mi0xLjUyaC0wLjEyQzEwMS44LDY3LjY5LDEwMS4xMiw2OC4zNywxMDEuMTIsNjkuMjF6IE0xMDEuMTIsNzIuNTMgdjMuMDNoMy4xNXYtMy4wM0gxMDEuMTJ6IE0xMDEuMTIsNzcuMzd2OS40MmgwLjM2YzEuNTQsMCwyLjc5LTEuMjUsMi43OS0yLjc5di02LjY0SDEwMS4xMnogTTk2LjE2LDI4Ljk3djcuODdoMy4xNVYzMmg5LjkxVjIxLjU0IGMwLTEuNzQtMS40MS0zLjE1LTMuMTUtMy4xNWgwdjEwLjU4SDk2LjE2eiBNOTEuMjEsNDMuNDl2MjIuMzloOC4xMXYtMy4wM2gtNC45NlY0Ni41MmgxMS43MnY5LjY4aDMuMTVWNDMuNDlIOTEuMjF6IE0xMDYuMDgsNTguMDF2My4wM2g4LjF2LTMuMDNIMTA2LjA4eiBNMTA2LjA4LDYyLjg1djcuODdoMy4xNXYtNy44N0gxMDYuMDh6IE0xMDYuMDgsNzQuMDVMMTA2LjA4LDc0LjA1IGMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUybDAsMGMwLTAuODQtMC42OC0xLjUyLTEuNTItMS41MmgtMC4xMiBDMTA2Ljc2LDcyLjUzLDEwNi4wOCw3My4yMSwxMDYuMDgsNzQuMDV6IE0xMDkuMjIsNzcuMzdoLTMuMTV2My45NGgzLjE1Vjc3LjM3eiBNMTExLjAzLDYyLjg1djcuODdoMy4xNXYtNy44N0gxMTEuMDN6IE0xMTQuMTgsNzIuNTNoLTMuMTV2Ny44N2gwLjI2YzEuNTksMCwyLjg5LTEuMjksMi44OS0yLjg5VjcyLjUzeiBNMTE1Ljk5LDI4LjA3djEzLjYybDAsMGMxLjc0LDAsMy4xNS0xLjQxLDMuMTUtMy4xNXYtNy4zMiBDMTE5LjE0LDI5LjQ4LDExNy43MywyOC4wNywxMTUuOTksMjguMDdMMTE1Ljk5LDI4LjA3eiBNMTE1Ljk5LDQzLjQ5djMuMDNoMy4xNXYtMC40OGMwLTEuNDEtMS4xNC0yLjU1LTIuNTUtMi41NUgxMTUuOTl6IE0xMTUuOTksNDguMzN2My4wM2g0Ljk2djE1LjQzbDAsMGMxLjc0LDAsMy4xNS0xLjQxLDMuMTUtMy4xNVY1MS42NmMwLTEuODQtMS40OS0zLjMyLTMuMzItMy4zMkgxMTUuOTl6IE0xMTUuOTksNTQuNjkgTDExNS45OSw1NC42OWMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUydjBjMC0wLjg0LTAuNjgtMS41Mi0xLjUyLTEuNTJoLTAuMTIgQzExNi42Nyw1My4xNywxMTUuOTksNTMuODUsMTE1Ljk5LDU0LjY5eiBNMTE1Ljk5LDU4LjAxdjMuMDNoMy4xNXYtMy4wM0gxMTUuOTl6IE0xMTkuMTQsNjIuODVoLTMuMTV2OC43OGgwLjQxIGMxLjUxLDAsMi43NC0xLjIzLDIuNzQtMi43NFY2Mi44NXoiLz4gPC9nPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTc5LjU4LDIyLjgxdjQ0LjJoLTEwLjF2LTI1LjdsLTExLjQzLDE4Ljc2aC0xLjE0bC0xMS40My0xOC43NnYyNS43aC0xMC4xdi00NC4yaDEwLjFsMTIsMTkuNjRsMTItMTkuNjQgSDE3OS41OHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE4My4xNCwyMi44MWgxMC4xdjQ0LjJoLTEwLjFWMjIuODF6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjEuNDIsMjIuODFoMTAuMXY0NC4yaC03LjU4bC0xNy4wNS0yNHYyNGgtMTAuMXYtNDQuMmg3LjU4bDE3LjA1LDI0VjIyLjgxeiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMTI0ODc1MDExNzc4NzA0NjEzMjUwMDAwMDE3OTAyNDE0ODI3NzUyMTYyNDgwXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIyNjIuMTM2MyIgeTE9IjcwLjcwMzQiIHgyPSIyNjIuMTM2MyIgeTI9IjE5LjEyMDgiPiA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiNCODFEOEQiLz4gPHN0b3Agb2Zmc2V0PSIwLjA0OTciIHN0eWxlPSJzdG9wLWNvbG9yOiNBOTQ2OTQiLz4gPHN0b3Agb2Zmc2V0PSIwLjEzNjYiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDZCQTAiLz4gPHN0b3Agb2Zmc2V0PSIwLjIyNDciIHN0eWxlPSJzdG9wLWNvbG9yOiM3NTgwQTgiLz4gPHN0b3Agb2Zmc2V0PSIwLjMxMjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM1NjkxQUYiLz4gPHN0b3Agb2Zmc2V0PSIwLjM5ODgiIHN0eWxlPSJzdG9wLWNvbG9yOiMyQjlDQjMiLz4gPHN0b3Agb2Zmc2V0PSIwLjQ4NDQiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE0QjYiLz4gPHN0b3Agb2Zmc2V0PSIwLjU2ODciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE4QjciLz4gPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOUI4Ii8+IDxzdG9wIG9mZnNldD0iMC42ODY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBQkI5Ii8+IDxzdG9wIG9mZnNldD0iMC43MzQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBCMEJEIi8+IDxzdG9wIG9mZnNldD0iMC43ODk2IiBzdHlsZT0ic3RvcC1jb2xvcjojNDhCOEM1Ii8+IDxzdG9wIG9mZnNldD0iMC44NDkzIiBzdHlsZT0ic3RvcC1jb2xvcjojN0FDNUQwIi8+IDxzdG9wIG9mZnNldD0iMC45MTI5IiBzdHlsZT0ic3RvcC1jb2xvcjojQUREOERGIi8+IDxzdG9wIG9mZnNldD0iMC45Nzg5IiBzdHlsZT0ic3RvcC1jb2xvcjojRThGM0Y0Ii8+IDxzdG9wIG9mZnNldD0iMC45OTk2IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+IDwvbGluZWFyR3JhZGllbnQ+IDxwYXRoIHN0eWxlPSJmaWxsOnVybCgjU1ZHSURfMDAwMDAxMjQ4NzUwMTE3Nzg3MDQ2MTMyNTAwMDAwMTc5MDI0MTQ4Mjc3NTIxNjI0ODBfKTsiIGQ9Ik0yODIuMDMsMjYuNTMgYy00Ljc5LTQuOTQtMTAuNzUtNy40MS0xNy44OC03LjQxaC0yOS4wOXYyLjA2aDE4LjQ5YzYuNTUsMCwxMi4wNCwyLjI4LDE2LjQ1LDYuODFjNC40LDQuNTUsNi42LDEwLjE5LDYuNiwxNi45MiBjMCw2Ljc1LTIuMTksMTIuMzgtNi42LDE2LjkyYy00LjQsNC41My05LjksNi44MS0xNi40NSw2LjgxaC0xOC40OXYyLjA2aDI5LjA5YzcuMTMsMCwxMy4wOS0yLjQ3LDE3Ljg4LTcuNDEgYzQuNzktNC45NCw3LjE3LTExLjA3LDcuMTctMTguMzlTMjg2LjgyLDMxLjQ2LDI4Mi4wMywyNi41M3oiLz4gPGc+IDxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMDAwMDAxMTExNjA4NzIwMzcxMzkzNDM4NzAwMDAwMDM3NTkxMzEzNjAzNDk2MjE2NTBfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjMwNy41Mzk0IiB5MT0iNzAuNzAxMyIgeDI9IjMwNy41Mzk0IiB5Mj0iMTkuMTI2OCIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAxIC01LjAwOTcxNGUtMDQgMi41NDE2OTRlLTAzKSI+IDxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0I4MUQ4RCIvPiA8c3RvcCBvZmZzZXQ9IjAuMDQ5NyIgc3R5bGU9InN0b3AtY29sb3I6I0E5NDY5NCIvPiA8c3RvcCBvZmZzZXQ9IjAuMTM2NiIgc3R5bGU9InN0b3AtY29sb3I6IzkwNkJBMCIvPiA8c3RvcCBvZmZzZXQ9IjAuMjI0NyIgc3R5bGU9InN0b3AtY29sb3I6Izc1ODBBOCIvPiA8c3RvcCBvZmZzZXQ9IjAuMzEyMSIgc3R5bGU9InN0b3AtY29sb3I6IzU2OTFBRiIvPiA8c3RvcCBvZmZzZXQ9IjAuMzk4OCIgc3R5bGU9InN0b3AtY29sb3I6IzJCOUNCMyIvPiA8c3RvcCBvZmZzZXQ9IjAuNDg0NCIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTRCNiIvPiA8c3RvcCBvZmZzZXQ9IjAuNTY4NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQThCNyIvPiA8c3RvcCBvZmZzZXQ9IjAuNjUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE5QjgiLz4gPHN0b3Agb2Zmc2V0PSIwLjY4NjUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEFCQjkiLz4gPHN0b3Agb2Zmc2V0PSIwLjczNDciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEIwQkQiLz4gPHN0b3Agb2Zmc2V0PSIwLjc4OTYiIHN0eWxlPSJzdG9wLWNvbG9yOiM0OEI4QzUiLz4gPHN0b3Agb2Zmc2V0PSIwLjg0OTMiIHN0eWxlPSJzdG9wLWNvbG9yOiM3QUM1RDAiLz4gPHN0b3Agb2Zmc2V0PSIwLjkxMjkiIHN0eWxlPSJzdG9wLWNvbG9yOiNBREQ4REYiLz4gPHN0b3Agb2Zmc2V0PSIwLjk3ODkiIHN0eWxlPSJzdG9wLWNvbG9yOiNFOEYzRjQiLz4gPHN0b3Agb2Zmc2V0PSIwLjk5OTYiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggc3R5bGU9ImZpbGw6dXJsKCNTVkdJRF8wMDAwMDExMTE2MDg3MjAzNzEzOTM0Mzg3MDAwMDAwMzc1OTEzMTM2MDM0OTYyMTY1MF8pOyIgZD0iTTMzNS4xOCw3MC43bC0xNi43NywwbC0xMC44Ny0xNC45MiBMMjk2LjY3LDcwLjdIMjc5LjlsMTkuMjUtMjYuNDJsLTE4LjMzLTI1LjE2bDE2Ljc3LDBsOS45NSwxMy42NWw5Ljk1LTEzLjY1bDE2Ljc3LDBsLTE4LjM0LDI1LjE2TDMzNS4xOCw3MC43eiIvPiA8L2c+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNjguMDcsMjkuMTZjLTQuMS00LjIzLTkuMjEtNi4zNS0xNS4zMS02LjM1aC0xNy42OHY0NC4yMWgxNy42OGM2LjEsMCwxMS4yMS0yLjExLDE1LjMxLTYuMzUgYzQuMS00LjIzLDYuMTYtOS40OCw2LjE2LTE1Ljc2QzI3NC4yMywzOC42NCwyNzIuMTgsMzMuMzksMjY4LjA3LDI5LjE2eiBNMjQ1LjE4LDU3LjI5VjMyLjU0aDcuNThjMy40OSwwLDYuMzIsMS4xMyw4LjQ5LDMuMzggYzIuMTcsMi4yNSwzLjI1LDUuMjUsMy4yNSw5YzAsMy43NS0xLjA4LDYuNzUtMy4yNSw5Yy0yLjE3LDIuMjUtNSwzLjM4LTguNDksMy4zOEgyNDUuMTh6Ii8+IDxnPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTc0LjE4LDc5LjQzdjYuODZoLTEuMzR2LTQuNDVsLTEuOTMsMy4xOGwtMC4xNiwwLjAxbC0xLjkzLTMuMTd2NC40M2gtMS4zNXYtNi44NmgxLjM5bDEuOTcsMy4yNGwxLjk2LTMuMjQgSDE3NC4xOHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE3NS40NSw3OS40M2gxLjM1djYuODZoLTEuMzVWNzkuNDN6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xODIuMDUsNzkuNDNoMS4zNXY2Ljg2aC0xLjAzbC0yLjk0LTQuMTl2NC4xOWgtMS4zNXYtNi44NmgxLjAzbDIuOTQsNC4xOFY3OS40M3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE4Ny40LDc5LjQzYzAuOTQsMCwxLjczLDAuMzMsMi4zNiwwLjk5czAuOTUsMS40NywwLjk1LDIuNDRzLTAuMzIsMS43OC0wLjk1LDIuNDQgYy0wLjYzLDAuNjYtMS40MiwwLjk5LTIuMzYsMC45OWgtMi43MnYtNi44NkgxODcuNHogTTE4Ny40LDg0Ljk5YzAuNTksMCwxLjA4LTAuMiwxLjQ1LTAuNTljMC4zNy0wLjQsMC41Ni0wLjkxLDAuNTYtMS41NCBzLTAuMTktMS4xNS0wLjU2LTEuNTRjLTAuMzctMC40LTAuODYtMC41OS0xLjQ1LTAuNTloLTEuMzd2NC4yN0gxODcuNHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE5OS44OCw4NS4zOWMtMC42OSwwLjY5LTEuNTQsMS4wMy0yLjUzLDEuMDNjLTAuOTksMC0xLjgzLTAuMzQtMi41Mi0xLjAzYy0wLjY5LTAuNjktMS4wMy0xLjUzLTEuMDMtMi41MyBjMC0xLDAuMzQtMS44NCwxLjAzLTIuNTNjMC42OS0wLjY5LDEuNTMtMS4wMywyLjUyLTEuMDNjMC45OSwwLDEuODQsMC4zNCwyLjUzLDEuMDNjMC42OSwwLjY5LDEuMDQsMS41MywxLjA0LDIuNTMgQzIwMC45Miw4My44NiwyMDAuNTcsODQuNywxOTkuODgsODUuMzl6IE0xOTUuNzcsODQuNDdjMC40MiwwLjQyLDAuOTUsMC42MywxLjU4LDAuNjNjMC42MywwLDEuMTUtMC4yMSwxLjU4LTAuNjMgYzAuNDItMC40MiwwLjY0LTAuOTYsMC42NC0xLjYxcy0wLjIxLTEuMTktMC42NC0xLjYyYy0wLjQyLTAuNDItMC45NS0wLjY0LTEuNTgtMC42NGMtMC42MywwLTEuMTUsMC4yMS0xLjU4LDAuNjQgYy0wLjQyLDAuNDItMC42NCwwLjk2LTAuNjQsMS42MlMxOTUuMzUsODQuMDUsMTk1Ljc3LDg0LjQ3eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjA1Ljk2LDgwLjcyaC0yLjc0djEuNjNoMi42N3YxLjI5aC0yLjY3djIuNjVoLTEuMzV2LTYuODZoNC4xVjgwLjcyeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjEyLjEzLDc5LjQzYzAuOTQsMCwxLjczLDAuMzMsMi4zNiwwLjk5czAuOTUsMS40NywwLjk1LDIuNDRzLTAuMzIsMS43OC0wLjk1LDIuNDQgYy0wLjYzLDAuNjYtMS40MiwwLjk5LTIuMzYsMC45OWgtMi43MnYtNi44NkgyMTIuMTN6IE0yMTIuMTMsODQuOTljMC41OSwwLDEuMDgtMC4yLDEuNDUtMC41OWMwLjM3LTAuNCwwLjU2LTAuOTEsMC41Ni0xLjU0IHMtMC4xOS0xLjE1LTAuNTYtMS41NGMtMC4zNy0wLjQtMC44Ni0wLjU5LTEuNDUtMC41OWgtMS4zN3Y0LjI3SDIxMi4xM3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTIxNi4zOSw3OS40M2gxLjM1djYuODZoLTEuMzVWNzkuNDN6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjUuNzUsODIuNnYwLjUzYzAsMC45OC0wLjMxLDEuNzctMC45NCwyLjM4Yy0wLjYzLDAuNjEtMS40NCwwLjkxLTIuNDMsMC45MWMtMS4wNiwwLTEuOTQtMC4zNC0yLjYzLTEuMDMgYy0wLjctMC42OS0xLjA0LTEuNTMtMS4wNC0yLjUyYzAtMSwwLjM0LTEuODQsMS4wMy0yLjU0YzAuNjktMC42OSwxLjU0LTEuMDQsMi41Ni0xLjA0YzAuNjQsMCwxLjIyLDAuMTUsMS43NSwwLjQ0IGMwLjUzLDAuMjksMC45NCwwLjY4LDEuMjMsMS4xNmwtMS4xNiwwLjY3Yy0wLjE2LTAuMjgtMC40MS0wLjUxLTAuNzQtMC42OWMtMC4zMy0wLjE4LTAuNy0wLjI2LTEuMS0wLjI2IGMtMC42NSwwLTEuMTksMC4yMS0xLjYxLDAuNjRzLTAuNjMsMC45Ny0wLjYzLDEuNjJjMCwwLjY1LDAuMjEsMS4xOCwwLjY0LDEuNmMwLjQzLDAuNDIsMC45OSwwLjYzLDEuNywwLjYzIGMwLjUyLDAsMC45Ni0wLjEyLDEuMy0wLjM1YzAuMzQtMC4yMywwLjU4LTAuNTUsMC43LTAuOTZoLTIuMDh2LTEuMkgyMjUuNzV6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjYuNzEsNzkuNDNoMS4zNXY2Ljg2aC0xLjM1Vjc5LjQzeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjMzLjg3LDc5LjQzdjEuMjloLTEuODV2NS41N2gtMS4zNXYtNS41N2gtMS44NHYtMS4yOUgyMzMuODd6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMzguNjMsODYuMjhsLTAuNDQtMS4yM2gtMi44MmwtMC40MSwxLjIzaC0xLjQ2bDIuNC02Ljg2aDEuNjhsMi40Miw2Ljg2SDIzOC42M3ogTTIzNS44Miw4My43OWgxLjkzIGwtMC45OS0yLjhMMjM1LjgyLDgzLjc5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjQyLjAyLDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjQ5LjIxLDg0Ljk5aDIuODl2MS4yOWgtNC4yNHYtNi44Nmg0LjE5djEuMjloLTIuODR2MS40NmgyLjZ2MS4yN2gtMi42Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjU4LjI3LDg2LjI4aC0xLjU0bC0xLjMzLTIuMjRsLTEuMzMsMi4yNGgtMS41M2wyLjEtMy41MmwtMS45OS0zLjM0aDEuNTNsMS4yMywyLjA1bDEuMjItMi4wNWgxLjUzIGwtMS45OSwzLjMzTDI1OC4yNyw4Ni4yOHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTI2MS45LDg2LjQyYy0xLjAzLDAtMS44OC0wLjM0LTIuNTYtMS4wM3MtMS4wMS0xLjUzLTEuMDEtMi41NGMwLTEuMDEsMC4zNC0xLjg2LDEuMDEtMi41NCBjMC42Ny0wLjY4LDEuNTMtMS4wMiwyLjU2LTEuMDJjMC42MiwwLDEuMTksMC4xNSwxLjcyLDAuNDRjMC41MywwLjI5LDAuOTQsMC42OCwxLjIzLDEuMThsLTEuMTcsMC42OCBjLTAuMTctMC4zMS0wLjQxLTAuNTUtMC43My0wLjcyYy0wLjMxLTAuMTctMC42Ny0wLjI2LTEuMDYtMC4yNmMtMC42NywwLTEuMiwwLjIxLTEuNjEsMC42M2MtMC40MSwwLjQyLTAuNjEsMC45Ni0wLjYxLDEuNjMgYzAsMC42NiwwLjIsMS4yLDAuNjEsMS42MmMwLjQxLDAuNDIsMC45NSwwLjYzLDEuNjEsMC42M2MwLjM5LDAsMC43NS0wLjA5LDEuMDYtMC4yNnMwLjU2LTAuNDEsMC43Mi0wLjcxbDEuMTcsMC42OCBjLTAuMjksMC41LTAuNywwLjg5LTEuMjIsMS4xOEMyNjMuMTEsODYuMjgsMjYyLjUzLDg2LjQyLDI2MS45LDg2LjQyeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjY3LjA0LDg0Ljk5aDIuODl2MS4yOWgtNC4yNHYtNi44Nmg0LjE5djEuMjloLTIuODR2MS40NmgyLjZ2MS4yN2gtMi42Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjcyLjIzLDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjc2Ljk2LDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjgxLjcsODQuOTloMi44OXYxLjI5aC00LjI0di02Ljg2aDQuMTl2MS4yOWgtMi44NHYxLjQ2aDIuNnYxLjI3aC0yLjZWODQuOTl6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yODkuNTEsNzkuNDNoMS4zNXY2Ljg2aC0xLjAzbC0yLjk0LTQuMTl2NC4xOWgtMS4zNXYtNi44NmgxLjAzbDIuOTQsNC4xOFY3OS40M3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTI5NS4zOSw4Ni40MmMtMS4wMywwLTEuODgtMC4zNC0yLjU2LTEuMDNzLTEuMDEtMS41My0xLjAxLTIuNTRjMC0xLjAxLDAuMzQtMS44NiwxLjAxLTIuNTQgYzAuNjctMC42OCwxLjUzLTEuMDIsMi41Ni0xLjAyYzAuNjIsMCwxLjE5LDAuMTUsMS43MiwwLjQ0YzAuNTMsMC4yOSwwLjk0LDAuNjgsMS4yMywxLjE4bC0xLjE3LDAuNjggYy0wLjE3LTAuMzEtMC40MS0wLjU1LTAuNzMtMC43MmMtMC4zMS0wLjE3LTAuNjctMC4yNi0xLjA2LTAuMjZjLTAuNjcsMC0xLjIsMC4yMS0xLjYxLDAuNjNjLTAuNDEsMC40Mi0wLjYxLDAuOTYtMC42MSwxLjYzIGMwLDAuNjYsMC4yLDEuMiwwLjYxLDEuNjJjMC40MSwwLjQyLDAuOTUsMC42MywxLjYxLDAuNjNjMC4zOSwwLDAuNzUtMC4wOSwxLjA2LTAuMjZzMC41Ni0wLjQxLDAuNzItMC43MWwxLjE3LDAuNjggYy0wLjI5LDAuNS0wLjcsMC44OS0xLjIyLDEuMThDMjk2LjU5LDg2LjI4LDI5Ni4wMSw4Ni40MiwyOTUuMzksODYuNDJ6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMDAuNTIsODQuOTloMi44OXYxLjI5aC00LjI0di02Ljg2aDQuMTl2MS4yOWgtMi44NHYxLjQ2aDIuNnYxLjI3aC0yLjZWODQuOTl6Ii8+IDwvZz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE2MS43OSw4NC44MmwtMjMuMDctMS4wNWMtMC4xOS0wLjAxLTAuMTktMC4yOSwwLTAuM2wyMy4wNy0xLjA1YzAuNjgtMC4wMywxLjI2LDAuNTIsMS4yNiwxLjJ2MCBDMTYzLjA0LDg0LjMxLDE2Mi40Nyw4NC44NiwxNjEuNzksODQuODJ6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMDguNzcsODIuNDNsMjMuMDcsMS4wNWMwLjE5LDAuMDEsMC4xOSwwLjI5LDAsMC4zbC0yMy4wNywxLjA1Yy0wLjY4LDAuMDMtMS4yNi0wLjUyLTEuMjYtMS4ydjAgQzMwNy41MSw4Mi45NCwzMDguMDgsODIuMzksMzA4Ljc3LDgyLjQzeiIvPiA8L3N2Zz4=" alt="MindDX — Mind of Digital Excellence" width="173" height="46"></a>
+    <nav class="nav" aria-label="Ana menü">
+      <a href="#platform">MindDX Platformu</a>
+      <a href="#ajan">Yapay zekâ ve insan</a>
+      <a href="#nasil">Nasıl çalışırız</a>
+      <a href="#cozumler">Çözümler</a>
+      <a href="#referans">Referanslar</a>
+    </nav>
+    <div class="hdr-r">
+      <span class="lang" aria-label="Dil: Türkçe">TR ▾</span>
+      <a class="btn btn-primary" href="#kampanya">Assess’i başlatın</a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Menüyü aç"><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="Mobil menü">
+  <a href="#platform">MindDX Platformu</a>
+  <a href="#ajan">Yapay zekâ ve insan</a>
+  <a href="#nasil">Nasıl çalışırız</a>
+  <a href="#cozumler">Çözümler</a>
+  <a href="#referans">Referanslar</a>
+  <a href="#sss">Sık sorulanlar</a>
+</nav>
+
+<main id="icerik">
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Üretim şirketleri için dijital dönüşüm ortağı</span>
+      <h1>ERP ve dijital dönüşümde <span class="grad">önce kanıt, sonra sabit fiyat.</span></h1>
+      <p class="lead">MindDX, ERP, CRM ve yapay zekâ yatırımınızın kapsamını önce kanıtla doğrular, sonra sabit fiyatla hayata geçirir. Yapay zekâ önerir; karar insanda kalır.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#kampanya">Assess’i başlatın
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="#nasil">Ücretsiz olgunluk taraması</a>
+      </div>
+      <div class="camp-pill"><span>Lansman: <b>€2.500 + KDV</b> <s>€5.000</s> · ilk 10 firma</span><span class="cd"><i class="dot"></i> <span id="cdPill">31 Ekim’e kadar</span></span></div>
+    </div>
+
+    <div class="dash-wrap reveal d2" id="dashWrap">
+      <div class="dash" aria-label="MindDX Platformu arayüz maketi (örnek veri)">
+        <div class="dash-bar"><i></i><i></i><i></i><span class="dash-title">MindDX Platformu · Assess çalışma alanı</span><span class="tag-sample">Örnek veri</span></div>
+        <div class="dash-body">
+          <div class="dcol">
+            <div class="dcard">
+              <div class="dlabel"><span>Süreç olgunluk skoru</span></div>
+              <div class="score">
+                <div class="ring"><svg viewBox="0 0 100 100"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs><circle class="bg" cx="50" cy="50" r="46" fill="none" stroke-width="7"/><circle class="fg" cx="50" cy="50" r="46" fill="none" stroke-width="7" stroke-linecap="round"/></svg><b><span>3,2<small>/ 5</small></span></b></div>
+                <div class="score-t"><strong>Düzey 3 · Entegre</strong><span>Sistemler birbiriyle konuşuyor</span></div>
+              </div>
+              <div class="bars">
+                <div class="bar"><span>Satış</span><i style="--v:76%"></i><em>3,8</em></div>
+                <div class="bar"><span>Üretim</span><i style="--v:58%"></i><em>2,9</em></div>
+                <div class="bar"><span>Depo</span><i style="--v:48%"></i><em>2,4</em></div>
+                <div class="bar"><span>Finans</span><i style="--v:72%"></i><em>3,6</em></div>
+              </div>
+            </div>
+            <div class="dcard grow">
+              <div class="dlabel"><span>Sistem bağlantı akışı</span></div>
+              <svg class="flowsvg" viewBox="0 0 280 160" role="img" aria-label="ERP, MindDX Platformu ve CRM arasında veri akışı şeması">
+                <defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
+                <path id="p1" class="flow" d="M78 50 H106" stroke="url(#fl)" stroke-width="2.2" fill="none"/>
+                <path id="p2" class="flow" d="M174 50 H202" stroke="url(#fl)" stroke-width="2.2" fill="none"/>
+                <path id="p3" class="flow" d="M140 84 V112" stroke="url(#fl)" stroke-width="2.2" fill="none"/>
+                <circle r="3.5" fill="#2dd4bf"><animateMotion dur="2.4s" repeatCount="indefinite" path="M78 50 H106"/></circle>
+                <circle r="3.5" fill="#a78bfa"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M202 50 H174"/></circle>
+                <circle r="3.5" fill="#2dd4bf"><animateMotion dur="2s" repeatCount="indefinite" path="M140 84 V112"/></circle>
+                <rect x="6" y="28" width="72" height="44" rx="11" fill="#1a1550" stroke="rgba(167,139,250,.65)"/>
+                <text x="42" y="55" text-anchor="middle" style="font-size:14px">ERP</text>
+                <rect x="106" y="16" width="68" height="68" rx="14" fill="#2a1a78" stroke="#a78bfa" stroke-width="1.5"/>
+                <text x="140" y="46" text-anchor="middle" style="font-size:13px">MindDX</text><text class="sub" x="140" y="62" text-anchor="middle" style="font-size:10px">PLATFORM</text>
+                <rect x="202" y="28" width="72" height="44" rx="11" fill="#0e3340" stroke="rgba(45,212,191,.75)"/>
+                <text x="238" y="55" text-anchor="middle" style="font-size:14px">CRM</text>
+                <rect x="88" y="112" width="104" height="38" rx="11" fill="#14123f" stroke="rgba(255,255,255,.3)" stroke-dasharray="3 3"/>
+                <text x="140" y="136" text-anchor="middle" style="font-size:13px">MES &amp; IIoT</text>
+              </svg>
+            </div>
+          </div>
+          <div class="dcol">
+            <div class="dcard">
+              <div class="dlabel"><span>Kapsam haritası</span></div>
+              <div class="scope-grid">
+                <div class="tile t-ok">ERP<small>doğrulandı</small></div>
+                <div class="tile t-ok">CRM<small>doğrulandı</small></div>
+                <div class="tile t-rev">MES<small>incelemede</small></div>
+                <div class="tile t-ok">APS<small>doğrulandı</small></div>
+                <div class="tile t-rev">CX<small>incelemede</small></div>
+                <div class="tile t-out">ESG<small>kapsam dışı</small></div>
+              </div>
+              <div class="legend"><span style="--c:var(--teal)">Doğrulandı</span><span style="--c:var(--purple2)">İncelemede</span><span style="--c:#555085">Kapsam dışı</span></div>
+            </div>
+            <div class="dcard">
+              <div class="dlabel"><span>Karar kaydı</span></div>
+              <div class="log-row"><b>Madde 07 · stok akışı</b><div class="chips"><span class="chip ai">Ajan önerdi</span><span class="chip hu"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6.5l2.5 2.5L10 3"/></svg>Danışman onayladı</span></div></div>
+              <div class="log-row"><b>Madde 08 · satış siparişi</b><div class="chips"><span class="chip ai">Ajan önerdi</span><span class="chip wait">Onay bekliyor</span></div></div>
+              <div class="log-row"><b>Madde 09 · e-Fatura</b><div class="chips"><span class="chip ai">Ajan önerdi</span><span class="chip">Uzman onayı gerekli</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="float-note" role="note">
+        <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="rgba(45,212,191,.15)" stroke="#2dd4bf"/><path d="M10 16.5l4 4 8-9" stroke="#2dd4bf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div>Karar insanda<small>Ajan önerir, danışman onaylar</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REFERANS ŞERİDİ ================= -->
+<section class="refs" id="referans-seridi" aria-label="Birlikte çalışılan firmalar">
+  <div class="wrap refs-in">
+    <div class="refs-h"><span>Birlikte çalıştığımız firmalardan bazıları</span><span class="ph-note">Yer tutucu: gerçek logolar eklenecek</span></div>
+  </div>
+  <div class="marq" aria-hidden="true"><div class="marq-t">
+    <span class="wm">Printpark</span><span class="wm">Kalde</span><span class="wm">Merkad Makina</span><span class="wm">Güney Çelik</span><span class="wm">Vastaş</span><span class="wm">Eco Etiket</span><span class="wm">Şoteks</span><span class="wm">Bralo Türkiye</span><span class="wm">Hezarfen Aerostructures</span><span class="wm">ITC</span><span class="wm">Uyarlar Demir Çelik</span><span class="wm">Ades Engineering</span><span class="wm">GUT Group</span><span class="wm">Petroyağ</span><span class="wm">Etapak</span><span class="wm">Livagaz</span><span class="wm">CTL Konik Kilit</span><span class="wm">Kaya Grubu</span><span class="wm">Noven Enerji</span><span class="wm">Folyoterm</span><span class="wm">Weicon Türkiye</span><span class="wm">CMS Jant</span><span class="wm">Magly</span>
+    <span class="wm">Printpark</span><span class="wm">Kalde</span><span class="wm">Merkad Makina</span><span class="wm">Güney Çelik</span><span class="wm">Vastaş</span><span class="wm">Eco Etiket</span><span class="wm">Şoteks</span><span class="wm">Bralo Türkiye</span><span class="wm">Hezarfen Aerostructures</span><span class="wm">ITC</span><span class="wm">Uyarlar Demir Çelik</span><span class="wm">Ades Engineering</span><span class="wm">GUT Group</span><span class="wm">Petroyağ</span><span class="wm">Etapak</span><span class="wm">Livagaz</span><span class="wm">CTL Konik Kilit</span><span class="wm">Kaya Grubu</span><span class="wm">Noven Enerji</span><span class="wm">Folyoterm</span><span class="wm">Weicon Türkiye</span><span class="wm">CMS Jant</span><span class="wm">Magly</span>
+  </div></div>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>Sabit fiyat</b><span>Adam-gün faturası yok</span></div>
+      <div class="stat"><b>5 düzey</b><span>Dijital olgunluk ölçeği</span></div>
+      <div class="stat"><b>9 alan</b><span>ERP’den ITSM’ye çözüm kategorisi</span></div>
+      <div class="stat"><b><span class="ph" style="font-size:inherit">[X] proje</span></b><span>Proje sayısı · yer tutucu</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLATFORM ================= -->
+<section id="platform">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px">
+      <span class="eyebrow">MindDX Platformu</span>
+      <h2>Kanıt, yapay zekâ ajanları ve insan kontrolü <span class="grad">tek platformda.</span></h2>
+      <p class="lead">MindDX Platformu, dönüşüm modelini daha kanıta dayalı, izlenebilir ve ölçeklenebilir kılan kendi ürünümüzdür. Yazılımdan bağımsızdır; ürün kararı Assess’te kanıtlanan sürecinize göre verilir.</p>
+    </div>
+    <div class="plat-grid">
+      <div class="mods">
+        <div class="mod reveal"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></div>
+          <div><h3>Ölç ve keşfet</h3><p>Olgunluğunuzu ölçer, mevcut durumu ve kapsamı kanıtla ortaya çıkarır.</p><div class="parts"><span>Checkup · Olgunluk ölçümü</span><span>Audit · Mevcut sistem denetimi</span><span>Discover · Keşif</span></div></div></div>
+        <div class="mod reveal d1"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 7l3 3"/></svg></div>
+          <div><h3>Tasarla ve eğit</h3><p>Doğrulanmış kapsamı tasarıma ve ekip hazırlığına taşır.</p><div class="parts"><span>Design · Tasarım</span><span>Train · Eğitim</span></div></div></div>
+        <div class="mod reveal d2"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg></div>
+          <div><h3>Doğrula ve destekle</h3><p>Canlıya geçişten sonra süreci ölçer, iyileştirir ve destekler.</p><div class="parts"><span>Process · Süreç ölçümü</span><span>Support · Canlı sonrası destek</span></div></div></div>
+      </div>
+      <div class="ladder reveal d2">
+        <span class="eyebrow">Ücretsiz olgunluk taraması</span>
+        <h3 style="margin-top:12px">Dijital olgunluğun beş düzeyi</h3>
+        <p>Ölçüm, önce neyin değişmesi gerektiğini gösterir; hangi yazılımın alınacağını değil.</p>
+        <div class="steps" role="img" aria-label="Beş düzeyli olgunluk merdiveni: Başlangıç, Gelişmekte, Entegre, Optimize, Dijital Lider">
+          <div class="stp"><b>1</b><span>Başlangıç</span></div>
+          <div class="stp"><b>2</b><span>Gelişmekte</span></div>
+          <div class="stp you"><b>3</b><span>Entegre</span></div>
+          <div class="stp"><b>4</b><span>Optimize</span></div>
+          <div class="stp"><b>5</b><span>Dijital Lider</span></div>
+        </div>
+        <div class="note"><span class="tag-sample" style="flex:none">Örnek</span><span>Merdiven örnek bir sonucu gösterir; gerçek düzey ölçümle belirlenir.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AJAN AKIŞI ================= -->
+<section class="agent" id="ajan">
+  <div class="wrap">
+    <div class="agent-head reveal">
+      <span class="eyebrow">Yapay zekâ ve insan kontrolü</span>
+      <h2>Yapay zekâ hazırlar. <span class="grad">Karar insanda.</span></h2>
+      <p class="lead">Ajanlar kanıtı toplayıp yapılandırır ve öneri sunar. Hiçbir öneri, bir danışmanın ya da uzmanın onayı olmadan kapsama girmez; her adım kayıt altındadır.</p>
+    </div>
+    <div class="pipe-wrap reveal d1" id="pipe">
+      <div class="node"><span class="who">1 · Girdi</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M14 4v5h5M8 13h8M8 17h6"/></svg></div><h3>Kanıt girdileri</h3><p>Görüşmeler, belgeler ve sistem verisi tek yerde toplanır.</p></div>
+      <div class="link"></div>
+      <div class="node ai"><span class="who">2 · Yapay zekâ ajanı</span><div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4M9.5 13h.01M14.5 13h.01M3 13h2M19 13h2"/></svg></div><h3>Hazırlar ve önerir</h3><p>Kanıtı yapılandırır, hazırlığı yapar, öneri üretir.</p></div>
+      <div class="link t"></div>
+      <div class="node human"><span class="who">3 · İnsan onayı</span><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg></div><h3>Danışman karar verir</h3><p>Kontrol eder, gerektiğinde uzman onayına götürür. Sorumluluk insanda kalır.</p></div>
+      <div class="link t"></div>
+      <div class="node"><span class="who">4 · Kayıt</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-3-6 3z"/><path d="M9 8h6M9 12h6"/></svg></div><h3>Kanıt kaydı</h3><p>Kim önerdi, kim onayladı, hangi kanıtla: izlenebilir.</p></div>
+      <div class="link"></div>
+      <div class="node"><span class="who">5 · Sonuç</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div><h3>Doğrulanmış kapsam</h3><p>Uygulama bu kapsama göre, sabit fiyatla ilerler.</p></div>
+    </div>
+    <div class="verdict reveal">
+      <div class="vbox a"><h3><i></i>Yapay zekâ ne üretir?</h3><ul><li>Kanıtı yapılandırır, özetler</li><li>Hazırlığı hızlandırır</li><li>İzlenebilir öneri sunar</li></ul></div>
+      <div class="vbox h"><h3><i></i>İnsan neyi kontrol eder?</h3><ul><li>Her öneriyi inceler ve onaylar ya da reddeder</li><li>Gerektiğinde uzman onayı alır</li><li>Kararın ve sorumluluğun sahibi olur</li></ul></div>
+    </div>
+    <p class="motto reveal"><span>Kararı yapay zekâ vermez.</span><span class="grad">Kanıtı ve hazırlığı hızlandırır.</span></p>
+  </div>
+</section>
+
+<!-- ================= NASIL ÇALIŞIRIZ + KAMPANYA ================= -->
+<section id="nasil">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px">
+      <span class="eyebrow">Nasıl çalışırız</span>
+      <h2>Tek bir model: <span class="grad">Assess, Implement, Transform.</span></h2>
+      <p class="lead">Önce kapsamı kanıtlarız, sonra sabit fiyatla uygularız. Böylece proje ortasında çıkan sürpriz karar ve bitmeyen adam-gün faturası kalmaz.</p>
+    </div>
+    <div class="problem reveal">
+      <div class="route bad"><span class="eyebrow">Yaygın sıra</span>
+        <div class="seq"><span>Yazılım</span><em>→</em><span>Workshop</span><em>→</em><span>Uygulama</span><em>→</em><span class="x">Eksik karar</span><em>→</em><span class="x">Yeniden çalışma</span><em>↺</em></div>
+        <p>Gerçek kapsam proje başladıktan sonra ortaya çıkar. Sonuç: bitmeyen adam-gün faturaları.</p></div>
+      <div class="route good"><span class="eyebrow">MindDX sırası</span>
+        <div class="seq"><span>Anla</span><em>→</em><span>Kanıtla</span><em>→</em><span>Kapsamı doğrula</span><em>→</em><span>Tasarla</span><em>→</em><span>Uygula</span><em>→</em><span>İyileştir</span></div>
+        <p>Karar vermek sorun değil; geç vermek sorun. Sonuç: doğrulanmış kapsama göre sabit fiyat.</p></div>
+    </div>
+    <div class="journey">
+      <div class="jstep free reveal"><div class="jn">0</div><span class="k">Ücretsiz</span><h3>Olgunluk taraması</h3><p>Çevrimiçi ve kısa. Dijital olgunluğunuzun ilk resmini çıkarır.</p><a class="price" href="#kampanya" style="color:var(--teal)">Taramayı başlatın →</a></div>
+      <div class="jstep hot reveal d1"><span class="badge">%50 lansman</span><div class="jn">1</div><span class="k">Assess · Doğrulama</span><h3>Doğrulanmış kapsam</h3><p>Danışman liderliğinde karar ürünü: bulgular, riskler, öncelikler ve Doğrulanmış Kapsam.</p><div class="price"><s style="color:var(--dim)">€5.000</s> €2.500 + KDV · sabit bedel</div></div>
+      <div class="jstep reveal d2"><div class="jn">2</div><span class="k">Implement · Uygulama</span><h3>Sabit fiyatlı uygulama</h3><p>Tasarımdan teste ve ekip hazırlığına. Kabul, insan onayıyla verilir.</p><div class="price">Doğrulanmış kapsama göre sabit fiyat</div></div>
+      <div class="jstep reveal d3"><div class="jn">3</div><span class="k">Transform · Dönüşüm</span><h3>Sürekli iyileştirme</h3><p>Yıllık çerçevede canlı sistemi ölçer, iyileştirir ve destekler.</p><div class="price">Yıllık abonelik</div></div>
+    </div>
+
+    <div class="camp reveal" id="kampanya">
+      <div>
+        <span class="eyebrow">Lansman kampanyası</span>
+        <h3>MindDX Assess’te ilk 10 firmaya %50 indirim.</h3>
+        <div class="price-line"><big>€2.500</big><span>+ KDV</span><s>€5.000</s></div>
+        <p>Implement’e devam ederseniz Assess için fiilen ödediğiniz net tutar Implement bedelinden mahsup edilir.</p>
+        <div class="cta-row" style="margin-top:24px"><a class="btn btn-primary" href="mailto:info@minddx.ai?subject=MindDX%20Assess%20ba%C5%9Flatmak%20istiyorum">Assess’i başlatın</a><a class="btn btn-ghost" href="#sss">Sık sorulanlar</a></div>
+        <p class="fine">Kampanya 31 Ekim 2026 (dâhil) tarihine kadar geçerlidir. Koşullar mevcut sitedeki gibi yayımlanır.</p>
+      </div>
+      <div class="cdbox">
+        <div class="cdl">Kampanyanın bitmesine</div>
+        <div class="cd4" id="cd4"><div><b data-u="d">--</b><span>gün</span></div><div><b data-u="h">--</b><span>saat</span></div><div><b data-u="m">--</b><span>dakika</span></div><div><b data-u="s">--</b><span>saniye</span></div></div>
+        <div class="slots"><div class="cdl" style="margin:0">Kalan yer</div>
+          <div class="row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p><span class="ph">[X] yer kaldı</span> / 10 firma <span class="tag-sample" style="margin-left:6px">Yer tutucu</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÇÖZÜMLER ================= -->
+<section id="cozumler" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px">
+      <span class="eyebrow">Çözümler</span>
+      <h2>Doğru çözüm, <span class="grad">doğrulanmış kapsamdan sonra</span> seçilir.</h2>
+      <p class="lead">Tek bir üreticiye bağlı değiliz. MindDX Platformu’nun yanında üçüncü taraf çözümleri uygun olduğu yerde değerlendirir, tasarlar, uygular ve destekleriz.</p>
+    </div>
+    <div class="sol-grid">
+      <div class="sol reveal"><span class="abbr">ERP</span><span class="full">Kurumsal Kaynak Planlama</span><span class="prod">abas ERP · Odoo</span></div>
+      <div class="sol reveal d1"><span class="abbr">CRM</span><span class="full">Müşteri İlişkileri Yönetimi</span><span class="prod">Zoho CRM · Pipedrive</span></div>
+      <div class="sol reveal d2"><span class="abbr">MES &amp; IIoT</span><span class="full">Üretim Yürütme ve Endüstriyel Nesnelerin İnterneti</span><span class="prod">Prodaso</span></div>
+      <div class="sol reveal d3"><span class="abbr">APS</span><span class="full">İleri Planlama ve Çizelgeleme</span><span class="prod">SkyPlanner APS</span></div>
+      <div class="sol reveal"><span class="abbr">Süreç zekâsı</span><span class="full">Süreçlerinizi veriyle görün</span><span class="prod">ProcessMind</span></div>
+      <div class="sol reveal d1"><span class="abbr">ESG</span><span class="full">Çevresel, Sosyal ve Yönetişim</span><span class="prod">Karbon ayak izi yönetimi</span></div>
+      <div class="sol reveal d2"><span class="abbr">CX</span><span class="full">Müşteri Deneyimi</span><span class="prod">Freshdesk</span></div>
+      <div class="sol reveal d3"><span class="abbr">ITSM</span><span class="full">BT Hizmet Yönetimi</span><span class="prod">Freshservice</span></div>
+    </div>
+    <div class="partners reveal"><b>İş ortakları</b><span>Zoho</span><span>Odoo</span><span>abas</span><span>Pipedrive</span><span>Freshworks</span><span>ProcessMind</span><span>Prodaso</span></div>
+  </div>
+</section>
+
+<!-- ================= AGENTIC AI ================= -->
+<section class="soon" id="agentic" style="padding-top:0">
+  <div class="wrap">
+    <div class="soon-card reveal">
+      <div>
+        <span class="soon-badge">Çok yakında</span>
+        <h2>Agentic AI: ajanlar iş hazırlar, <span class="grad">onay insanda kalır.</span></h2>
+        <p class="lead">MindDX’in yapay zekâ ajanı çözümü yolda. Duyuru yapıldığında ilk siz haberdar olun.</p>
+        <div class="cta-row" style="margin-top:26px"><a class="btn btn-primary" href="mailto:info@minddx.ai?subject=Agentic%20AI%20haberdar%20olmak%20istiyorum">Haberdar olun</a></div>
+      </div>
+      <div class="orb" aria-hidden="true">
+        <svg viewBox="0 0 300 300">
+          <defs><radialGradient id="core"><stop offset="0" stop-color="#c4b0f2"/><stop offset="1" stop-color="#6d28d9"/></radialGradient></defs>
+          <circle cx="150" cy="150" r="128" fill="none" stroke="rgba(167,139,250,.28)" stroke-dasharray="3 6"/>
+          <circle cx="150" cy="150" r="86" fill="none" stroke="rgba(45,212,191,.32)"/>
+          <g class="spin"><circle cx="150" cy="22" r="9" fill="#a78bfa"/><circle cx="261" cy="214" r="9" fill="#7c3aed"/><circle cx="39" cy="214" r="9" fill="#a78bfa"/></g>
+          <g class="spin2"><circle cx="150" cy="64" r="7" fill="#2dd4bf"/><circle cx="224" cy="192" r="7" fill="#2dd4bf"/><circle cx="76" cy="192" r="7" fill="#2dd4bf"/></g>
+          <circle cx="150" cy="150" r="40" fill="url(#core)"/>
+          <circle cx="150" cy="150" r="52" fill="none" stroke="rgba(196,176,242,.5)"/>
+          <text x="150" y="154" text-anchor="middle" style="fill:#fff;font-size:12px;font-weight:700">AGENTIC AI</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REFERANS YORUMLARI ================= -->
+<section id="referans" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal center"><span class="eyebrow">Referanslar</span>
+      <h2>MindDX’i seçenler <span class="grad">ne diyor?</span></h2></div>
+    <div class="quotes">
+      <figure class="q reveal"><blockquote>MindDX, dijital stratejimizi köklü biçimde değiştiren olağanüstü içgörüler sağladı.</blockquote><figcaption><span class="av" aria-hidden="true">FD</span><div><b>Ferit Dansık</b><span>Genel Müdür, Printpark</span></div></figcaption></figure>
+      <figure class="q reveal d1"><blockquote>MindDX sayesinde dijital operasyonlara sorunsuz bir geçiş yaptık.</blockquote><figcaption><span class="av" aria-hidden="true">OÇ</span><div><b>Ozan Çetiner</b><span>Fabrika Müdürü, Güney Çelik</span></div></figcaption></figure>
+      <figure class="q reveal d2"><blockquote>MindDX, gerçek zamanlı izleme ve sorunsuz entegrasyonla havacılık üretimimizi köklü biçimde değiştirdi.</blockquote><figcaption><span class="av" aria-hidden="true">CA</span><div><b>Cem Alkan</b><span>Program Yöneticisi, Hezarfen Aerostructures</span></div></figcaption></figure>
+    </div>
+    <p class="q-note">Alıntılar mevcut MindDX sitesinden alınmıştır. Yayında fotoğraf ve vaka çalışması bağlantıları eklenebilir.</p>
+  </div>
+</section>
+
+<!-- ================= SSS ================= -->
+<section id="sss" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal center"><span class="eyebrow">Sık sorulanlar</span><h2>Karar vermeden önce.</h2>
+      <p class="lead">Nereden başlayacağınızdan emin değilseniz bir danışmanla konuşun; satış masasıyla değil.</p></div>
+    <div class="faq reveal">
+      <details open><summary>Bir MindDX çalışması nereden başlar?</summary><p>Çoğu çalışma Assess ile başlar: yeni bir uygulama için Checkup (olgunluk ölçümü) ve Discover Scope (kapsam keşfi), canlı bir sistem için Checkup ve Audit (mevcut sistem denetimi). Checkup tek başına da alınabilir; yalnız dijital olgunluğunuzu ölçmek istiyorsanız oradan başlayabilirsiniz.</p></details>
+      <details><summary>Danışmanlık mı, yazılım mı sunuyorsunuz?</summary><p>İkisini de, bu sırayla. MindDX bir dijital dönüşüm şirketidir; MindDX Platformu kendi ürünümüzdür. Uygun olduğu yerde üçüncü taraf yazılım çözümlerini de tasarlar, seçer, uygular ve destekleriz.</p></details>
+      <details><summary>Hangi çözümün uygun olduğuna nasıl karar veriyorsunuz?</summary><p>Kanıtla. Assess’te mevcut durum ve ihtiyaç yapılandırılır, kapsam doğrulanır; ürün kararı bu kanıttan sonra gelir. Hangi ürünün uygun olduğu demoda değil, süreçlerinizde belirlenir.</p></details>
+      <details><summary>Canlıya geçişten (go-live) sonra ne olur?</summary><p>Canlıya geçiş bitiş değil, yeni bir ölçüm noktasıdır. Anlaşılan kapsamda Process (süreç ölçümü) süreçleri ölçer ve iyileştirir; Support (canlı sonrası destek) sözleşmeye bağlandığı yerde devreye girir.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SON ÇAĞRI ================= -->
+<section class="final" style="padding-top:0">
+  <div class="wrap">
+    <div class="final-card reveal">
+      <span class="eyebrow">Sonraki adım</span>
+      <h2>Önce ne yapılacağını <span class="grad">birlikte netleştirelim.</span></h2>
+      <p class="lead" style="margin-inline:auto">Assess kapsamı doğrular, riski erken gösterir ve kararı netleştirir.</p>
+      <div class="cta-row"><a class="btn btn-primary" href="mailto:info@minddx.ai?subject=MindDX%20Assess">Assess’i başlatın · €2.500 + KDV</a><a class="btn btn-ghost" href="mailto:info@minddx.ai?subject=Ücretsiz%20olgunluk%20taraması">Ücretsiz olgunluk taraması</a></div>
+      <div class="contact"><a href="mailto:info@minddx.ai">info@minddx.ai</a><a href="tel:+902128080079">+90 (212) 808 00 79</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMjYgMTAgMzExLjUgODEuNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzYzLjI3IDEwMS4yNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiAuc3Qwe2ZpbGw6IzI2M0Q0Rjt9IC5zdDF7ZmlsbDojRkZGRkZGO3N0cm9rZTojRUUyRTI4O3N0cm9rZS13aWR0aDowLjA3MTk7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fSAuc3Qye2ZpbGw6I0ZGRkZGRjt9IC5zdDN7c3Ryb2tlOiNFRTJFMjg7c3Ryb2tlLXdpZHRoOjAuMDcxOTtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9IC5zdDR7ZmlsbDpub25lO3N0cm9rZTojRUUyRTI4O3N0cm9rZS13aWR0aDowLjA3MTk7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fSAuc3Q1e2ZpbGw6dXJsKCNTVkdJRF8xXyk7fSAuc3Q2e2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDA3NjU4NTk5NzE1OTI2NDE2MTkzMDAwMDAxODA5OTgyOTM1NzM5MTg1NDAwMV8pO30gLnN0N3tmaWxsOnVybCgjU1ZHSURfMDAwMDAwNDYzMjE4MzYxNTQ2NDM5MjMwNjAwMDAwMDA0ODM1NzI5OTgxMzEzMzE5OTZfKTt9IC5zdDh7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDU4NTQ3MTc0OTY0MTIzMDI5NjYwMDAwMDE3ODg3OTYwMTkzMDU3MzkyNTc0Xyk7fSAuc3Q5e2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDA5NDYwMTk2NTM1NDA3Njg5MDI3MDAwMDAxNTEwNzc4NzgwMDgwMTU1MzAyOF8pO30gLnN0MTB7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDU4NTg3NzYyNTIyODA4MzA1OTcwMDAwMDAxNjEyMDI0NTcwNzg5NjYxMzUxXyk7fSAuc3QxMXtmaWxsOnVybCgjU1ZHSURfMDAwMDAxNjE2MjUxMjMzOTQyNzA1NTcyMjAwMDAwMDU2MzEzMzMxMzEyNTg3NDc4MDVfKTt9IC5zdDEye2ZpbGw6dXJsKCNTVkdJRF8wMDAwMDEwMjUzNDgwOTQ4OTQxNDk1OTgwMDAwMDAxNzg5NzgxNjUxMjc3ODkzMjY1N18pO30gLnN0MTN7ZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDg1OTQzMDg0NTU0MzA5MDgwMzMwMDAwMDExMTYzMTA0MzU1NzY1MjU4MzgxXyk7fSAuc3QxNHtmaWxsOnVybCgjU1ZHSURfMDAwMDAxODEwNjA4Njc3MTEwMjYyNDAzNTAwMDAwMDU2MjcyMTM0OTI5NjExMDE5OThfKTt9IDwvc3R5bGU+IDxnPiA8bGluZSBjbGFzcz0ic3Q0IiB4MT0iNTEuOCIgeTE9Ijc0LjQzIiB4Mj0iNTEuOCIgeTI9Ijc0LjQzIi8+IDxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMV8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iNzU0Ni4xMTk2IiB5MT0iODguODYxOSIgeDI9Ijc1NDYuMTE5NiIgeTI9IjEyLjM5MDgiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgNzYxMS41ODg0IDApIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojQjgxRDhEIi8+IDxzdG9wIG9mZnNldD0iMC4wNDk3IiBzdHlsZT0ic3RvcC1jb2xvcjojQTk0Njk0Ii8+IDxzdG9wIG9mZnNldD0iMC4xMzY2IiBzdHlsZT0ic3RvcC1jb2xvcjojOTA2QkEwIi8+IDxzdG9wIG9mZnNldD0iMC4yMjQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojNzU4MEE4Ii8+IDxzdG9wIG9mZnNldD0iMC4zMTIxIiBzdHlsZT0ic3RvcC1jb2xvcjojNTY5MUFGIi8+IDxzdG9wIG9mZnNldD0iMC4zOTg4IiBzdHlsZT0ic3RvcC1jb2xvcjojMkI5Q0IzIi8+IDxzdG9wIG9mZnNldD0iMC40ODQ0IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBNEI2Ii8+IDxzdG9wIG9mZnNldD0iMC41Njg3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOEI3Ii8+IDxzdG9wIG9mZnNldD0iMC42NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTlCOCIvPiA8c3RvcCBvZmZzZXQ9IjAuNjg2NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUJCOSIvPiA8c3RvcCBvZmZzZXQ9IjAuNzM0NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQjBCRCIvPiA8c3RvcCBvZmZzZXQ9IjAuNzg5NiIgc3R5bGU9InN0b3AtY29sb3I6IzQ4QjhDNSIvPiA8c3RvcCBvZmZzZXQ9IjAuODQ5MyIgc3R5bGU9InN0b3AtY29sb3I6IzdBQzVEMCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTEyOSIgc3R5bGU9InN0b3AtY29sb3I6I0FERDhERiIvPiA8c3RvcCBvZmZzZXQ9IjAuOTc4OSIgc3R5bGU9InN0b3AtY29sb3I6I0U4RjNGNCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTk5NiIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPiA8L2xpbmVhckdyYWRpZW50PiA8cGF0aCBjbGFzcz0ic3Q1IiBkPSJNNTEuNTUsMzQuMjhjMCw0Ljg1LDIuMjYsOS4xOCw1Ljc4LDExLjk4YzAuMDEsMC4wMSwwLjAxLDAuMDEsMC4wMiwwLjAyYzAsMCwwLjAxLDAuMDEsMC4wMSwwLjAxIGMwLjA3LDAuMDUsMC4xNCwwLjExLDAuMjEsMC4xNmMwLDAsMCwwLDAsMGwwLDBjMC4yMywwLjE0LDAuNDksMC4yMywwLjc5LDAuMjNjMC44MSwwLDEuNDctMC42NiwxLjQ3LTEuNDcgYzAtMC40MS0wLjE3LTAuNzgtMC40NC0xLjA1YzAsMCwwLDAsMCwwYzAsMCwwLDAsMCwwYy0wLjA5LTAuMDYtMC4xNy0wLjEzLTAuMjYtMC4yYzAsMCwwLDAtMC4wMSwwIGMtMi44My0yLjI3LTQuNjQtNS43Ni00LjY0LTkuNjdjMC00LjI4LDIuMTctOC4wNSw1LjQ2LTEwLjI3bDAuNTEtMy42NEM1NS4xOSwyMi43OSw1MS41NSwyOC4xMSw1MS41NSwzNC4yOHogTTYwLjQ1LDIwLjM3IGwtMC41MSwzLjY0IE01MS4yMyw3Mi42YzAsMCwxLjQxLDkuNzEsMTQuOTMsOS43MXMxMS45MS04LjQzLDExLjkxLTguNDNzLTMuMzEsNS4yOS0xMS45MSw1LjI5QzU2LjM1LDc5LjE3LDUxLjIzLDcyLjYsNTEuMjMsNzIuNiB6IE01My4yLDcxLjU2YzAuNzgsMC43LDEuNjEsMS4zMywyLjQ4LDEuODhjMi43NywxLjc0LDUuOTksMi42Nyw5LjMyLDIuNjdjMC45NCwwLDcuMjMsMC4yNSwxMC42Mi0zLjE0YzEuOTktMS45OSwyLjgtNC45OCwyLjgxLTggYy0wLjAxLDAuMDMtMC4yMywwLjQ5LTAuMzQsMC43Yy0yLDMuOTMtNS42Miw2LjM0LTEwLjc1LDcuMTZjLTAuNzcsMC4xMi0xLjU2LDAuMTktMi4zNCwwLjE5Yy0zLjYxLDAtNy4wNi0xLjMzLTkuNzMtMy43NSBjLTEuMTItMS4wMS0yLjA0LTIuMTctMi43Ny0zLjQzYy0xLjMyLTIuMzEtMS45Ni00Ljk2LTEuNzktNy42N2wwLTAuMDdjMC4zMS0zLjk3LDIuNTYtNy41Miw2LjA4LTkuODJsLTIuNTktMS45NiBjLTMuOCwyLjgxLTYuMjEsNi45NS02LjU4LDExLjU0bC0wLjAxLDAuMTJDNDcuMzIsNjMuMTIsNDkuMzUsNjguMDcsNTMuMiw3MS41NnogTTY1LjQ2LDI0LjgzYy0wLjE1LTAuNTktMC4yMy0xLjItMC4yMy0xLjg0IGMwLTQuMTQsMy4zNi03LjQ5LDcuNDktNy40OWM0LjE0LDAsNy40OSwzLjM2LDcuNDksNy40OXY1NS4yNmMwLDEuMTgtMC4yNywyLjI5LTAuNzYsMy4yOWgwYy0xLjIyLDIuNDktMy43OCw0LjIxLTYuNzMsNC4yMSBjLTEuMTYsMC0yLjI2LTAuMjYtMy4yNC0wLjc0aDBjLTAuMDcsMC4wMS0wLjEzLDAuMDItMC4yLDAuMDNjLTEuNDEsMC4yMy0yLjg2LDAuMzQtNC4yOCwwLjM0aC0wLjEzIGMxLjk0LDIuMTMsNC43NCwzLjQ3LDcuODUsMy40N2M1LjY4LDAsMTAuMzEtNC40NiwxMC41OS0xMC4wN3YtMC4wMWMwLjAxLTAuMTgsMC4wMS0wLjM1LDAuMDEtMC41M1YyMi45OSBjMC01Ljg2LTQuNzUtMTAuNi0xMC42MS0xMC42Yy01Ljg2LDAtMTAuNiw0Ljc1LTEwLjYsMTAuNmMwLDAuODgsMC4xMSwxLjczLDAuMzEsMi41NEM2My40LDI1LjE3LDY0LjQyLDI0LjkzLDY1LjQ2LDI0LjgzeiBNNjcuMjIsMjIuOTljMCwwLjY0LDAuMTEsMS4yNSwwLjMxLDEuODFjMi45NSwwLjE1LDUuNjUsMS4yMSw3Ljc5LDMuMDVjMS43NC0wLjkzLDIuOTItMi43NiwyLjkyLTQuODcgYzAtMy4wNC0yLjQ3LTUuNTEtNS41MS01LjUxQzY5LjY5LDE3LjQ4LDY3LjIyLDE5Ljk1LDY3LjIyLDIyLjk5eiBNNzAuNTksMjIuOTljMC0xLjE4LDAuOTYtMi4xNCwyLjE0LTIuMTQgYzEuMTgsMCwyLjE0LDAuOTYsMi4xNCwyLjE0YzAsMS4xOC0wLjk2LDIuMTQtMi4xNCwyLjE0QzcxLjU1LDI1LjEzLDcwLjU5LDI0LjE4LDcwLjU5LDIyLjk5eiBNNTcuMjUsNjcuNTIgYzIuMjUsMi4wNCw1LjE0LDMuMTMsOC4xNCwzLjEzYzAuNjUsMCwxLjMxLTAuMDUsMS45Ny0wLjE2YzQuNDEtMC43LDcuMzYtMi42Myw5LjAyLTUuOWMwLjg1LTEuNjcsMS43Mi00LjE4LDEuNzItMTAuMDcgbDAuMTUtMTUuMjRjMC0zLjE4LTAuOTktNi4xMy0yLjgtOC4zMmMtMS45Mi0yLjMzLTQuNjktMy42OC03Ljc5LTMuOGMtMi45OC0wLjIxLTUuODQsMC45Ny03Ljg2LDMuMjQgYy0yLjAzLDIuMjktMi45MSw1LjQyLTIuMzMsOC4zOGwwLDAuMDJjMC43MiwzLjM2LDMuNTEsNiw3LjI5LDYuOWwwLjA5LDAuMDJjMi4zNiwwLjM3LDQuNjEtMC4yNCw2LjM0LTEuNzIgYzEuNzktMS41MywyLjc3LTMuNzcsMi43Ny02LjMxYy0wLjAzLTMuNDEtMi40My02LjE2LTUuODQtNi43Yy0yLjYzLTAuNDEtNS4xMSwwLjk3LTYuNDgsMy42MUw2MS42LDM0LjcgYy0wLjc4LDEuOTItMC4zNSw0LjE0LDEuMSw1LjY1YzEuMzMsMS4zOSwzLjIzLDEuODQsNS4wNywxLjE5bDAuMTEtMC4wNGMxLjE5LTAuNTUsMS45OC0xLjcyLDIuMDYtMy4wNyBjMC4wOC0xLjI3LTAuNDktMi40MS0xLjUzLTMuMDdjLTAuNTgtMC4zNy0xLjM2LTAuMTktMS43MywwLjM5Yy0wLjM3LDAuNTgtMC4xOSwxLjM2LDAuMzksMS43M2MwLjMzLDAuMjEsMC4zOCwwLjU0LDAuMzcsMC43OSBjLTAuMDMsMC40LTAuMjUsMC43Ni0wLjU3LDAuOTNjLTEuMiwwLjM5LTItMC4xOS0yLjM3LTAuNThjLTAuNzQtMC43Ny0wLjk4LTEuOTUtMC42MS0yLjkzYzEuMjUtMi4zNiwzLjEtMi4zNSwzLjgzLTIuMjMgYzIuMjEsMC4zNSwzLjcxLDIuMDUsMy43Myw0LjIzYzAsMS43OS0wLjY3LDMuMzUtMS44OSw0LjRjLTEuMTUsMC45OS0yLjY3LDEuNC00LjI3LDEuMTVjLTIuMi0wLjU0LTQuNzYtMi4xMi01LjM3LTQuOTYgYy0wLjQyLTIuMTksMC4yMy00LjUxLDEuNzUtNi4yMmMxLjUtMS42OSwzLjYyLTIuNTYsNS44Mi0yLjRsMC4wNSwwYzQuODMsMC4xOCw4LjIsNC4xMyw4LjIsOS42MUw3NS42LDU0LjUxIGMwLDMuMDItMC4xNyw2LjQ0LTEuNDUsOC45NWMtMS4yOSwyLjU0LTMuNTcsMy45OS03LjE4LDQuNTZjLTIuOTMsMC40Ny01Ljg2LTAuMzktOC4wMy0yLjM2Yy0yLjA1LTEuODYtMy4xMy00LjQ4LTIuOTgtNy4yIGMwLjItMi40MywxLjg2LTUuNTgsNS45Mi03LjE2YzItMC41OCw0LTAuMzIsNS42MywwLjc0YzEuNzIsMS4xMiwyLjg0LDIuOTgsMy4xNCw1LjI2YzAuMzQsMi43NS0xLjMzLDUuMjQtNC4wNSw2LjA1IGMtMS45NSwwLjU4LTMuOTUtMC4yNS01LjM1LTIuMjJjLTAuNjctMS4yNC0wLjU3LTIuODMsMC4yNy0zLjk5YzAuNDMtMC41OSwxLjQtMS41MiwzLjA5LTEuMTljMC41MiwwLjE4LDAuOTMsMC42NywxLjA0LDEuMjYgYzAuMDYsMC4zLDAuMDksMC44Ny0wLjQyLDEuMjljLTAuNTMsMC40NC0wLjYxLDEuMjMtMC4xNiwxLjc2YzAuNDQsMC41MywxLjIzLDAuNiwxLjc2LDAuMTZjMS4wOC0wLjksMS41Ni0yLjI4LDEuMjctMy43MSBjLTAuMy0xLjUyLTEuMzgtMi43NC0yLjgxLTMuMThsLTAuMTEtMC4wM2MtMi4yNC0wLjQ3LTQuMzYsMC4zNC01LjY5LDIuMTZjLTEuNDQsMS45OC0xLjYsNC42My0wLjQsNi43NWwwLjA2LDAuMSBjMi4wMiwyLjg5LDUuMTQsNC4xMyw4LjE1LDMuMjNjMy45My0xLjE3LDYuMzItNC43Nyw1LjgyLTguNzdjLTAuNC0zLjAyLTEuOTEtNS41Mi00LjI2LTcuMDRjLTIuMjctMS40Ny01LjAzLTEuODQtNy43NS0xLjAzIGwtMC4wOSwwLjAzYy00LjM1LDEuNjYtNy4yNSw1LjI0LTcuNTcsOS4zM2wwLDAuMDJDNTMuMjUsNjEuNzksNTQuNjMsNjUuMTUsNTcuMjUsNjcuNTJ6IE03OS40Nyw4MS41NEw3OS40Nyw4MS41NCIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMDAzMDY1MzI5NTA5MTM5NTEyNDIwMDAwMDA1MzI1Mzc3OTY5MDYyOTEzNjg2XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI3NTcxLjU3NjciIHkxPSI2Ny4zMzIxIiB4Mj0iNzU3MS41NzY3IiB5Mj0iMjUuNzQzNCIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtMSAwIDAgMSA3NjExLjU4ODQgMCkiPiA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiNCODFEOEQiLz4gPHN0b3Agb2Zmc2V0PSIwLjA0OTciIHN0eWxlPSJzdG9wLWNvbG9yOiNBOTQ2OTQiLz4gPHN0b3Agb2Zmc2V0PSIwLjEzNjYiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDZCQTAiLz4gPHN0b3Agb2Zmc2V0PSIwLjIyNDciIHN0eWxlPSJzdG9wLWNvbG9yOiM3NTgwQTgiLz4gPHN0b3Agb2Zmc2V0PSIwLjMxMjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM1NjkxQUYiLz4gPHN0b3Agb2Zmc2V0PSIwLjM5ODgiIHN0eWxlPSJzdG9wLWNvbG9yOiMyQjlDQjMiLz4gPHN0b3Agb2Zmc2V0PSIwLjQ4NDQiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE0QjYiLz4gPHN0b3Agb2Zmc2V0PSIwLjU2ODciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE4QjciLz4gPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOUI4Ii8+IDxzdG9wIG9mZnNldD0iMC42ODY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBQkI5Ii8+IDxzdG9wIG9mZnNldD0iMC43MzQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBCMEJEIi8+IDxzdG9wIG9mZnNldD0iMC43ODk2IiBzdHlsZT0ic3RvcC1jb2xvcjojNDhCOEM1Ii8+IDxzdG9wIG9mZnNldD0iMC44NDkzIiBzdHlsZT0ic3RvcC1jb2xvcjojN0FDNUQwIi8+IDxzdG9wIG9mZnNldD0iMC45MTI5IiBzdHlsZT0ic3RvcC1jb2xvcjojQUREOERGIi8+IDxzdG9wIG9mZnNldD0iMC45Nzg5IiBzdHlsZT0ic3RvcC1jb2xvcjojRThGM0Y0Ii8+IDxzdG9wIG9mZnNldD0iMC45OTk2IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+IDwvbGluZWFyR3JhZGllbnQ+IDxwYXRoIHN0eWxlPSJmaWxsOnVybCgjU1ZHSURfMDAwMDAwMDMwNjUzMjk1MDkxMzk1MTI0MjAwMDAwMDUzMjUzNzc5NjkwNjI5MTM2ODZfKTsiIGQ9Ik00NC45Niw2NC4yNGMwLjQ0LDAsMC43OSwwLjM1LDAuNzksMC43OSBjMCwwLjQ0LTAuMzUsMC43OS0wLjc5LDAuNzljLTAuNDQsMC0wLjc5LTAuMzUtMC43OS0wLjc5QzQ0LjE3LDY0LjU5LDQ0LjUzLDY0LjI0LDQ0Ljk2LDY0LjI0eiBNNDIuNjYsNjUuMDMgYzAsMS4yNywxLjAzLDIuMywyLjMsMi4zYzEuMjcsMCwyLjMtMS4wMywyLjMtMi4zcy0xLjAzLTIuMy0yLjMtMi4zQzQzLjY5LDYyLjczLDQyLjY2LDYzLjc2LDQyLjY2LDY1LjAzeiBNMzUuMzQsNjQuMjQgYzAuNDQsMCwwLjc5LDAuMzUsMC43OSwwLjc5YzAsMC40NC0wLjM1LDAuNzktMC43OSwwLjc5Yy0wLjQ0LDAtMC43OS0wLjM1LTAuNzktMC43OUMzNC41NSw2NC41OSwzNC45LDY0LjI0LDM1LjM0LDY0LjI0eiBNMzUuMzQsNjIuNzNjMC44NywwLDEuNjIsMC40OCwyLjAxLDEuMTljMC4wNi0wLjAxLDAuMTMtMC4wMiwwLjItMC4wMmgyLjM3YzAuMzEsMCwwLjYsMC4xMywwLjgsMC4zM2MwLjIsMC4yLDAuMzMsMC40OSwwLjMzLDAuOCBjMCwwLjYzLTAuNTEsMS4xMy0xLjEzLDEuMTNoLTIuMzdjLTAuMDcsMC0wLjEzLTAuMDEtMC4yLTAuMDJjLTAuMzksMC43MS0xLjE1LDEuMTktMi4wMSwxLjE5Yy0xLjI3LDAtMi4zLTEuMDMtMi4zLTIuMyBTMzQuMDcsNjIuNzMsMzUuMzQsNjIuNzN6IE0zNS4zNCw2NS44MmMwLjQ0LDAsMC43OS0wLjM1LDAuNzktMC43OWMwLTAuNDQtMC4zNS0wLjc5LTAuNzktMC43OWMtMC40NCwwLTAuNzksMC4zNS0wLjc5LDAuNzkgQzM0LjU1LDY1LjQ3LDM0LjksNjUuODIsMzUuMzQsNjUuODJ6IE0zNC41NSw2NS4wM2MwLDAuNDQsMC4zNSwwLjc5LDAuNzksMC43OWMwLjQ0LDAsMC43OS0wLjM1LDAuNzktMC43OSBjMC0wLjQ0LTAuMzUtMC43OS0wLjc5LTAuNzlDMzQuOSw2NC4yNCwzNC41NSw2NC41OSwzNC41NSw2NS4wM3ogTTM4LjYzLDQyLjI0YzAuNjYsMCwxLjE5LDAuNTMsMS4xOSwxLjE5IGMwLDAuNjYtMC41MywxLjE5LTEuMTksMS4xOWMtMC42NiwwLTEuMTktMC41My0xLjE5LTEuMTlDMzcuNDQsNDIuNzcsMzcuOTcsNDIuMjQsMzguNjMsNDIuMjR6IE0zNS45MSw0My40MyBjMCwxLjUsMS4yMiwyLjcyLDIuNzIsMi43MmMxLjUsMCwyLjcyLTEuMjIsMi43Mi0yLjcycy0xLjIyLTIuNzItMi43Mi0yLjcyQzM3LjEzLDQwLjcxLDM1LjkxLDQxLjkzLDM1LjkxLDQzLjQzeiBNMzMuOTYsMzUuNyBjMCwwLjY2LDAuNTMsMS4xOSwxLjE5LDEuMTlzMS4xOS0wLjUzLDEuMTktMS4xOWMwLTAuNjYtMC41My0xLjE5LTEuMTktMS4xOVMzMy45NiwzNS4wNCwzMy45NiwzNS43eiBNNDEuNTQsMzQuNTEgYzAuNjYsMCwxLjE5LDAuNTMsMS4xOSwxLjE5YzAsMC42Ni0wLjUzLDEuMTktMS4xOSwxLjE5Yy0wLjY2LDAtMS4xOS0wLjUzLTEuMTktMS4xOUM0MC4zNSwzNS4wNCw0MC44OCwzNC41MSw0MS41NCwzNC41MXogTTQxLjU0LDMyLjk4YzEuMTEsMCwyLjA2LDAuNjYsMi40OCwxLjYxYzAuMDktMC4wMiwwLjE5LTAuMDQsMC4yOC0wLjA0aDMuMzJjMC4zMSwwLDAuNiwwLjEzLDAuODEsMC4zMyBjMC4yMSwwLjIxLDAuMzMsMC40OSwwLjMzLDAuODFjMCwwLjYzLTAuNTEsMS4xNC0xLjE0LDEuMTRoLTMuMzJjLTAuMSwwLTAuMTktMC4wMS0wLjI4LTAuMDRjLTAuNDIsMC45NS0xLjM4LDEuNjEtMi40OCwxLjYxIGMtMS41LDAtMi43Mi0xLjIyLTIuNzItMi43MkMzOC44MiwzNC4yLDQwLjA0LDMyLjk4LDQxLjU0LDMyLjk4eiBNNDEuNTQsMzYuODljMC42NiwwLDEuMTktMC41MywxLjE5LTEuMTkgYzAtMC42Ni0wLjUzLTEuMTktMS4xOS0xLjE5Yy0wLjY2LDAtMS4xOSwwLjUzLTEuMTksMS4xOUM0MC4zNSwzNi4zNSw0MC44OCwzNi44OSw0MS41NCwzNi44OXogTTQwLjM1LDM1LjcgYzAsMC42NiwwLjUzLDEuMTksMS4xOSwxLjE5YzAuNjYsMCwxLjE5LTAuNTMsMS4xOS0xLjE5YzAtMC42Ni0wLjUzLTEuMTktMS4xOS0xLjE5QzQwLjg4LDM0LjUxLDQwLjM1LDM1LjA0LDQwLjM1LDM1Ljd6IE0zMi41OCwyOC40NmMwLDEuNSwxLjIyLDIuNzIsMi43MiwyLjcyYzEuMTQsMCwyLjEyLTAuNzEsMi41Mi0xLjcxaDIuOTNjMC41NiwwLDEuMDEtMC40NSwxLjAxLTEuMDFjMC0wLjI4LTAuMTEtMC41My0wLjMtMC43MSBzLTAuNDMtMC4yOS0wLjcxLTAuMjloLTIuOTNjLTAuNC0xLTEuMzgtMS43MS0yLjUyLTEuNzFDMzMuNzksMjUuNzQsMzIuNTgsMjYuOTYsMzIuNTgsMjguNDZ6IE0zNC4xMSwyOC40NiBjMC0wLjY2LDAuNTMtMS4xOSwxLjE5LTEuMTljMC42NiwwLDEuMTksMC41MywxLjE5LDEuMTljMCwwLjY2LTAuNTMsMS4xOS0xLjE5LDEuMTlDMzQuNjQsMjkuNjUsMzQuMTEsMjkuMTIsMzQuMTEsMjguNDZ6IE00My43NiwyOC40NmMwLDEuNSwxLjIyLDIuNzIsMi43MiwyLjcyYzEuNSwwLDIuNzItMS4yMiwyLjcyLTIuNzJjMC0xLjUtMS4yMi0yLjcyLTIuNzItMi43MiBDNDQuOTgsMjUuNzQsNDMuNzYsMjYuOTYsNDMuNzYsMjguNDZ6IE00NS4yOSwyOC40NmMwLTAuNjYsMC41My0xLjE5LDEuMTktMS4xOWMwLjY2LDAsMS4xOSwwLjUzLDEuMTksMS4xOSBjMCwwLjY2LTAuNTMsMS4xOS0xLjE5LDEuMTlDNDUuODIsMjkuNjUsNDUuMjksMjkuMTIsNDUuMjksMjguNDZ6IE00Ni42OCw1MC4yOUw0Ni42OCw1MC4yOWMwLTAuODItMC42Ny0xLjQ5LTEuNDktMS40OUgyOS41OSBjLTAuODIsMC0xLjQ5LDAuNjctMS40OSwxLjQ5djBjMCwwLjgyLDAuNjcsMS40OSwxLjQ5LDEuNDloMTUuNjFDNDYuMDIsNTEuNzgsNDYuNjgsNTEuMTEsNDYuNjgsNTAuMjl6IE00My40Myw0Mi4wMXYyLjExIGMwLDAuNDEsMC4zMywwLjc1LDAuNzUsMC43NWg3LjAxYzAuNCwwLDAuNzItMC4zMiwwLjc0LTAuNzFjLTAuNTEtMC45Mi0wLjkyLTEuODktMS4yMi0yLjg5aC02LjUzIEM0My43Nyw0MS4yNiw0My40Myw0MS41OSw0My40Myw0Mi4wMXogTTQwLjM1LDU1LjQ5TDQwLjM1LDU1LjQ5YzAtMC44Mi0wLjY3LTEuNDktMS40OS0xLjQ5SDMwLjVjLTAuODIsMC0xLjQ5LDAuNjctMS40OSwxLjQ5bDAsMCBjMCwwLjgyLDAuNjcsMS40OSwxLjQ5LDEuNDloOC4zNkMzOS42OCw1Ni45OCw0MC4zNSw1Ni4zMSw0MC4zNSw1NS40OXogTTQ1LjAxLDU5Ljg2TDQ1LjAxLDU5Ljg2YzAtMC44Mi0wLjY3LTEuNDktMS40OS0xLjQ5IGgtNC4zNGMtMC44MiwwLTEuNDksMC42Ny0xLjQ5LDEuNDl2MGMwLDAuODIsMC42NywxLjQ5LDEuNDksMS40OWg0LjM0QzQ0LjM0LDYxLjM1LDQ1LjAxLDYwLjY4LDQ1LjAxLDU5Ljg2eiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMDY3OTI3NzY2NjgwMjg2ODYwMTUwMDAwMDE3OTcxNzgzMTk1NDIwMzkwMDc2XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI3NTA2LjQxNiIgeTE9Ijg4LjM1OTYiIHgyPSI3NTA2LjQxNiIgeTI9IjEzLjMzOTQiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgNzYxMS41ODg0IDApIj4gPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojQjgxRDhEIi8+IDxzdG9wIG9mZnNldD0iMC4wNDk3IiBzdHlsZT0ic3RvcC1jb2xvcjojQTk0Njk0Ii8+IDxzdG9wIG9mZnNldD0iMC4xMzY2IiBzdHlsZT0ic3RvcC1jb2xvcjojOTA2QkEwIi8+IDxzdG9wIG9mZnNldD0iMC4yMjQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojNzU4MEE4Ii8+IDxzdG9wIG9mZnNldD0iMC4zMTIxIiBzdHlsZT0ic3RvcC1jb2xvcjojNTY5MUFGIi8+IDxzdG9wIG9mZnNldD0iMC4zOTg4IiBzdHlsZT0ic3RvcC1jb2xvcjojMkI5Q0IzIi8+IDxzdG9wIG9mZnNldD0iMC40ODQ0IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBNEI2Ii8+IDxzdG9wIG9mZnNldD0iMC41Njg3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOEI3Ii8+IDxzdG9wIG9mZnNldD0iMC42NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTlCOCIvPiA8c3RvcCBvZmZzZXQ9IjAuNjg2NSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQUJCOSIvPiA8c3RvcCBvZmZzZXQ9IjAuNzM0NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQjBCRCIvPiA8c3RvcCBvZmZzZXQ9IjAuNzg5NiIgc3R5bGU9InN0b3AtY29sb3I6IzQ4QjhDNSIvPiA8c3RvcCBvZmZzZXQ9IjAuODQ5MyIgc3R5bGU9InN0b3AtY29sb3I6IzdBQzVEMCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTEyOSIgc3R5bGU9InN0b3AtY29sb3I6I0FERDhERiIvPiA8c3RvcCBvZmZzZXQ9IjAuOTc4OSIgc3R5bGU9InN0b3AtY29sb3I6I0U4RjNGNCIvPiA8c3RvcCBvZmZzZXQ9IjAuOTk5NiIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPiA8L2xpbmVhckdyYWRpZW50PiA8cGF0aCBzdHlsZT0iZmlsbDp1cmwoI1NWR0lEXzAwMDAwMDY3OTI3NzY2NjgwMjg2ODYwMTUwMDAwMDE3OTcxNzgzMTk1NDIwMzkwMDc2Xyk7IiBkPSJNODkuNCwxMy43NEw4OS40LDEzLjc0bDAsMTguMjdoLTMuMTUgVjE2Ljg4Qzg2LjI1LDE1LjE1LDg3LjY2LDEzLjc0LDg5LjQsMTMuNzR6IE04Ni4yNSwzNS4zM0w4Ni4yNSwzNS4zM2MwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUyIHYwYzAtMC44NC0wLjY4LTEuNTItMS41Mi0xLjUyaC0wLjEyQzg2LjkzLDMzLjgxLDg2LjI1LDM0LjQ5LDg2LjI1LDM1LjMzeiBNODYuMjUsMzguNjV2My4wM2gxMy4wNnYtMy4wM0g4Ni4yNXogTTg2LjI1LDQzLjQ5IHYyNy4yM2gzLjE1VjQzLjQ5SDg2LjI1eiBNODkuNCw3Mi41M2gtMy4xNXYxMC4zNWMwLDEuODIsMS4zNCwzLjM3LDMuMTUsMy42M2wwLDBWNzIuNTN6IE05MS4yMSwyOC45N3Y3Ljg3aDMuMTV2LTcuODdIOTEuMjF6IE05MS4yMSw2OS4yMUw5MS4yMSw2OS4yMWMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUybDAsMGMwLTAuODQtMC42OC0xLjUyLTEuNTItMS41MmgtMC4xMiBDOTEuODgsNjcuNjksOTEuMjEsNjguMzcsOTEuMjEsNjkuMjF6IE05NC4zNSw3Mi41M2gtMy4xNXYxNC4yNGMwLDAuODgsMC43MSwxLjU5LDEuNTksMS41OWgxLjU2VjcyLjUzeiBNOTYuMTYsMTMuMzR2NC4xNGgzLjE1IHYtNC4xNEg5Ni4xNnogTTkxLjIxLDEzLjM0djguOThoOC4xMXYtMy4wM2gtNC45NnYtNS45NUg5MS4yMXogTTk5LjMxLDY3LjY5aC0zLjE1djEyLjcxaDMuMTVWNjcuNjl6IE05OS4zMSw4Mi4yMWgtMy4xNXY2LjE1IGgxLjcyYzAuNzksMCwxLjQzLTAuNjQsMS40My0xLjQzVjgyLjIxeiBNOTEuMjEsMjQuMTN2My4wM2gxMy4wNnYtOS44NmMwLTEuNzQtMS40MS0zLjE1LTMuMTUtMy4xNWgwdjkuOTdIOTEuMjF6IE0xMDEuMTIsMzMuODEgdjMuMDNoMTMuMDZWMjYuNDdjMC0xLjktMS4zLTMuNTYtMy4xNS00LjAyaDB2MTEuMzZIMTAxLjEyeiBNMTAxLjEyLDM4LjY1djMuMDNoOS45MVY1Ni4yaDMuMTVWMzguNjVIMTAxLjEyeiBNOTYuMTYsNDguMzN2MTIuNzEgaDMuMTV2LTkuNjhoNC45NnYtMy4wM0g5Ni4xNnogTTEwMS4xMiw1My4xN3YxMi43MWgzLjE1VjUzLjE3SDEwMS4xMnogTTEwMS4xMiw2OS4yMUwxMDEuMTIsNjkuMjFjMCwwLjg0LDAuNjgsMS41MiwxLjUyLDEuNTIgaDAuMTJjMC44NCwwLDEuNTItMC42OCwxLjUyLTEuNTJsMCwwYzAtMC44NC0wLjY4LTEuNTItMS41Mi0xLjUyaC0wLjEyQzEwMS44LDY3LjY5LDEwMS4xMiw2OC4zNywxMDEuMTIsNjkuMjF6IE0xMDEuMTIsNzIuNTMgdjMuMDNoMy4xNXYtMy4wM0gxMDEuMTJ6IE0xMDEuMTIsNzcuMzd2OS40MmgwLjM2YzEuNTQsMCwyLjc5LTEuMjUsMi43OS0yLjc5di02LjY0SDEwMS4xMnogTTk2LjE2LDI4Ljk3djcuODdoMy4xNVYzMmg5LjkxVjIxLjU0IGMwLTEuNzQtMS40MS0zLjE1LTMuMTUtMy4xNWgwdjEwLjU4SDk2LjE2eiBNOTEuMjEsNDMuNDl2MjIuMzloOC4xMXYtMy4wM2gtNC45NlY0Ni41MmgxMS43MnY5LjY4aDMuMTVWNDMuNDlIOTEuMjF6IE0xMDYuMDgsNTguMDF2My4wM2g4LjF2LTMuMDNIMTA2LjA4eiBNMTA2LjA4LDYyLjg1djcuODdoMy4xNXYtNy44N0gxMDYuMDh6IE0xMDYuMDgsNzQuMDVMMTA2LjA4LDc0LjA1IGMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUybDAsMGMwLTAuODQtMC42OC0xLjUyLTEuNTItMS41MmgtMC4xMiBDMTA2Ljc2LDcyLjUzLDEwNi4wOCw3My4yMSwxMDYuMDgsNzQuMDV6IE0xMDkuMjIsNzcuMzdoLTMuMTV2My45NGgzLjE1Vjc3LjM3eiBNMTExLjAzLDYyLjg1djcuODdoMy4xNXYtNy44N0gxMTEuMDN6IE0xMTQuMTgsNzIuNTNoLTMuMTV2Ny44N2gwLjI2YzEuNTksMCwyLjg5LTEuMjksMi44OS0yLjg5VjcyLjUzeiBNMTE1Ljk5LDI4LjA3djEzLjYybDAsMGMxLjc0LDAsMy4xNS0xLjQxLDMuMTUtMy4xNXYtNy4zMiBDMTE5LjE0LDI5LjQ4LDExNy43MywyOC4wNywxMTUuOTksMjguMDdMMTE1Ljk5LDI4LjA3eiBNMTE1Ljk5LDQzLjQ5djMuMDNoMy4xNXYtMC40OGMwLTEuNDEtMS4xNC0yLjU1LTIuNTUtMi41NUgxMTUuOTl6IE0xMTUuOTksNDguMzN2My4wM2g0Ljk2djE1LjQzbDAsMGMxLjc0LDAsMy4xNS0xLjQxLDMuMTUtMy4xNVY1MS42NmMwLTEuODQtMS40OS0zLjMyLTMuMzItMy4zMkgxMTUuOTl6IE0xMTUuOTksNTQuNjkgTDExNS45OSw1NC42OWMwLDAuODQsMC42OCwxLjUyLDEuNTIsMS41MmgwLjEyYzAuODQsMCwxLjUyLTAuNjgsMS41Mi0xLjUydjBjMC0wLjg0LTAuNjgtMS41Mi0xLjUyLTEuNTJoLTAuMTIgQzExNi42Nyw1My4xNywxMTUuOTksNTMuODUsMTE1Ljk5LDU0LjY5eiBNMTE1Ljk5LDU4LjAxdjMuMDNoMy4xNXYtMy4wM0gxMTUuOTl6IE0xMTkuMTQsNjIuODVoLTMuMTV2OC43OGgwLjQxIGMxLjUxLDAsMi43NC0xLjIzLDIuNzQtMi43NFY2Mi44NXoiLz4gPC9nPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTc5LjU4LDIyLjgxdjQ0LjJoLTEwLjF2LTI1LjdsLTExLjQzLDE4Ljc2aC0xLjE0bC0xMS40My0xOC43NnYyNS43aC0xMC4xdi00NC4yaDEwLjFsMTIsMTkuNjRsMTItMTkuNjQgSDE3OS41OHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE4My4xNCwyMi44MWgxMC4xdjQ0LjJoLTEwLjFWMjIuODF6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjEuNDIsMjIuODFoMTAuMXY0NC4yaC03LjU4bC0xNy4wNS0yNHYyNGgtMTAuMXYtNDQuMmg3LjU4bDE3LjA1LDI0VjIyLjgxeiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzAwMDAwMTI0ODc1MDExNzc4NzA0NjEzMjUwMDAwMDE3OTAyNDE0ODI3NzUyMTYyNDgwXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIyNjIuMTM2MyIgeTE9IjcwLjcwMzQiIHgyPSIyNjIuMTM2MyIgeTI9IjE5LjEyMDgiPiA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiNCODFEOEQiLz4gPHN0b3Agb2Zmc2V0PSIwLjA0OTciIHN0eWxlPSJzdG9wLWNvbG9yOiNBOTQ2OTQiLz4gPHN0b3Agb2Zmc2V0PSIwLjEzNjYiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDZCQTAiLz4gPHN0b3Agb2Zmc2V0PSIwLjIyNDciIHN0eWxlPSJzdG9wLWNvbG9yOiM3NTgwQTgiLz4gPHN0b3Agb2Zmc2V0PSIwLjMxMjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM1NjkxQUYiLz4gPHN0b3Agb2Zmc2V0PSIwLjM5ODgiIHN0eWxlPSJzdG9wLWNvbG9yOiMyQjlDQjMiLz4gPHN0b3Agb2Zmc2V0PSIwLjQ4NDQiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE0QjYiLz4gPHN0b3Agb2Zmc2V0PSIwLjU2ODciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE4QjciLz4gPHN0b3Agb2Zmc2V0PSIwLjY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBOUI4Ii8+IDxzdG9wIG9mZnNldD0iMC42ODY1IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBQkI5Ii8+IDxzdG9wIG9mZnNldD0iMC43MzQ3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBCMEJEIi8+IDxzdG9wIG9mZnNldD0iMC43ODk2IiBzdHlsZT0ic3RvcC1jb2xvcjojNDhCOEM1Ii8+IDxzdG9wIG9mZnNldD0iMC44NDkzIiBzdHlsZT0ic3RvcC1jb2xvcjojN0FDNUQwIi8+IDxzdG9wIG9mZnNldD0iMC45MTI5IiBzdHlsZT0ic3RvcC1jb2xvcjojQUREOERGIi8+IDxzdG9wIG9mZnNldD0iMC45Nzg5IiBzdHlsZT0ic3RvcC1jb2xvcjojRThGM0Y0Ii8+IDxzdG9wIG9mZnNldD0iMC45OTk2IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+IDwvbGluZWFyR3JhZGllbnQ+IDxwYXRoIHN0eWxlPSJmaWxsOnVybCgjU1ZHSURfMDAwMDAxMjQ4NzUwMTE3Nzg3MDQ2MTMyNTAwMDAwMTc5MDI0MTQ4Mjc3NTIxNjI0ODBfKTsiIGQ9Ik0yODIuMDMsMjYuNTMgYy00Ljc5LTQuOTQtMTAuNzUtNy40MS0xNy44OC03LjQxaC0yOS4wOXYyLjA2aDE4LjQ5YzYuNTUsMCwxMi4wNCwyLjI4LDE2LjQ1LDYuODFjNC40LDQuNTUsNi42LDEwLjE5LDYuNiwxNi45MiBjMCw2Ljc1LTIuMTksMTIuMzgtNi42LDE2LjkyYy00LjQsNC41My05LjksNi44MS0xNi40NSw2LjgxaC0xOC40OXYyLjA2aDI5LjA5YzcuMTMsMCwxMy4wOS0yLjQ3LDE3Ljg4LTcuNDEgYzQuNzktNC45NCw3LjE3LTExLjA3LDcuMTctMTguMzlTMjg2LjgyLDMxLjQ2LDI4Mi4wMywyNi41M3oiLz4gPGc+IDxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMDAwMDAxMTExNjA4NzIwMzcxMzkzNDM4NzAwMDAwMDM3NTkxMzEzNjAzNDk2MjE2NTBfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjMwNy41Mzk0IiB5MT0iNzAuNzAxMyIgeDI9IjMwNy41Mzk0IiB5Mj0iMTkuMTI2OCIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAxIC01LjAwOTcxNGUtMDQgMi41NDE2OTRlLTAzKSI+IDxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0I4MUQ4RCIvPiA8c3RvcCBvZmZzZXQ9IjAuMDQ5NyIgc3R5bGU9InN0b3AtY29sb3I6I0E5NDY5NCIvPiA8c3RvcCBvZmZzZXQ9IjAuMTM2NiIgc3R5bGU9InN0b3AtY29sb3I6IzkwNkJBMCIvPiA8c3RvcCBvZmZzZXQ9IjAuMjI0NyIgc3R5bGU9InN0b3AtY29sb3I6Izc1ODBBOCIvPiA8c3RvcCBvZmZzZXQ9IjAuMzEyMSIgc3R5bGU9InN0b3AtY29sb3I6IzU2OTFBRiIvPiA8c3RvcCBvZmZzZXQ9IjAuMzk4OCIgc3R5bGU9InN0b3AtY29sb3I6IzJCOUNCMyIvPiA8c3RvcCBvZmZzZXQ9IjAuNDg0NCIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTRCNiIvPiA8c3RvcCBvZmZzZXQ9IjAuNTY4NyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQThCNyIvPiA8c3RvcCBvZmZzZXQ9IjAuNjUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEE5QjgiLz4gPHN0b3Agb2Zmc2V0PSIwLjY4NjUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEFCQjkiLz4gPHN0b3Agb2Zmc2V0PSIwLjczNDciIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEIwQkQiLz4gPHN0b3Agb2Zmc2V0PSIwLjc4OTYiIHN0eWxlPSJzdG9wLWNvbG9yOiM0OEI4QzUiLz4gPHN0b3Agb2Zmc2V0PSIwLjg0OTMiIHN0eWxlPSJzdG9wLWNvbG9yOiM3QUM1RDAiLz4gPHN0b3Agb2Zmc2V0PSIwLjkxMjkiIHN0eWxlPSJzdG9wLWNvbG9yOiNBREQ4REYiLz4gPHN0b3Agb2Zmc2V0PSIwLjk3ODkiIHN0eWxlPSJzdG9wLWNvbG9yOiNFOEYzRjQiLz4gPHN0b3Agb2Zmc2V0PSIwLjk5OTYiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggc3R5bGU9ImZpbGw6dXJsKCNTVkdJRF8wMDAwMDExMTE2MDg3MjAzNzEzOTM0Mzg3MDAwMDAwMzc1OTEzMTM2MDM0OTYyMTY1MF8pOyIgZD0iTTMzNS4xOCw3MC43bC0xNi43NywwbC0xMC44Ny0xNC45MiBMMjk2LjY3LDcwLjdIMjc5LjlsMTkuMjUtMjYuNDJsLTE4LjMzLTI1LjE2bDE2Ljc3LDBsOS45NSwxMy42NWw5Ljk1LTEzLjY1bDE2Ljc3LDBsLTE4LjM0LDI1LjE2TDMzNS4xOCw3MC43eiIvPiA8L2c+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNjguMDcsMjkuMTZjLTQuMS00LjIzLTkuMjEtNi4zNS0xNS4zMS02LjM1aC0xNy42OHY0NC4yMWgxNy42OGM2LjEsMCwxMS4yMS0yLjExLDE1LjMxLTYuMzUgYzQuMS00LjIzLDYuMTYtOS40OCw2LjE2LTE1Ljc2QzI3NC4yMywzOC42NCwyNzIuMTgsMzMuMzksMjY4LjA3LDI5LjE2eiBNMjQ1LjE4LDU3LjI5VjMyLjU0aDcuNThjMy40OSwwLDYuMzIsMS4xMyw4LjQ5LDMuMzggYzIuMTcsMi4yNSwzLjI1LDUuMjUsMy4yNSw5YzAsMy43NS0xLjA4LDYuNzUtMy4yNSw5Yy0yLjE3LDIuMjUtNSwzLjM4LTguNDksMy4zOEgyNDUuMTh6Ii8+IDxnPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTc0LjE4LDc5LjQzdjYuODZoLTEuMzR2LTQuNDVsLTEuOTMsMy4xOGwtMC4xNiwwLjAxbC0xLjkzLTMuMTd2NC40M2gtMS4zNXYtNi44NmgxLjM5bDEuOTcsMy4yNGwxLjk2LTMuMjQgSDE3NC4xOHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE3NS40NSw3OS40M2gxLjM1djYuODZoLTEuMzVWNzkuNDN6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xODIuMDUsNzkuNDNoMS4zNXY2Ljg2aC0xLjAzbC0yLjk0LTQuMTl2NC4xOWgtMS4zNXYtNi44NmgxLjAzbDIuOTQsNC4xOFY3OS40M3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE4Ny40LDc5LjQzYzAuOTQsMCwxLjczLDAuMzMsMi4zNiwwLjk5czAuOTUsMS40NywwLjk1LDIuNDRzLTAuMzIsMS43OC0wLjk1LDIuNDQgYy0wLjYzLDAuNjYtMS40MiwwLjk5LTIuMzYsMC45OWgtMi43MnYtNi44NkgxODcuNHogTTE4Ny40LDg0Ljk5YzAuNTksMCwxLjA4LTAuMiwxLjQ1LTAuNTljMC4zNy0wLjQsMC41Ni0wLjkxLDAuNTYtMS41NCBzLTAuMTktMS4xNS0wLjU2LTEuNTRjLTAuMzctMC40LTAuODYtMC41OS0xLjQ1LTAuNTloLTEuMzd2NC4yN0gxODcuNHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE5OS44OCw4NS4zOWMtMC42OSwwLjY5LTEuNTQsMS4wMy0yLjUzLDEuMDNjLTAuOTksMC0xLjgzLTAuMzQtMi41Mi0xLjAzYy0wLjY5LTAuNjktMS4wMy0xLjUzLTEuMDMtMi41MyBjMC0xLDAuMzQtMS44NCwxLjAzLTIuNTNjMC42OS0wLjY5LDEuNTMtMS4wMywyLjUyLTEuMDNjMC45OSwwLDEuODQsMC4zNCwyLjUzLDEuMDNjMC42OSwwLjY5LDEuMDQsMS41MywxLjA0LDIuNTMgQzIwMC45Miw4My44NiwyMDAuNTcsODQuNywxOTkuODgsODUuMzl6IE0xOTUuNzcsODQuNDdjMC40MiwwLjQyLDAuOTUsMC42MywxLjU4LDAuNjNjMC42MywwLDEuMTUtMC4yMSwxLjU4LTAuNjMgYzAuNDItMC40MiwwLjY0LTAuOTYsMC42NC0xLjYxcy0wLjIxLTEuMTktMC42NC0xLjYyYy0wLjQyLTAuNDItMC45NS0wLjY0LTEuNTgtMC42NGMtMC42MywwLTEuMTUsMC4yMS0xLjU4LDAuNjQgYy0wLjQyLDAuNDItMC42NCwwLjk2LTAuNjQsMS42MlMxOTUuMzUsODQuMDUsMTk1Ljc3LDg0LjQ3eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjA1Ljk2LDgwLjcyaC0yLjc0djEuNjNoMi42N3YxLjI5aC0yLjY3djIuNjVoLTEuMzV2LTYuODZoNC4xVjgwLjcyeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjEyLjEzLDc5LjQzYzAuOTQsMCwxLjczLDAuMzMsMi4zNiwwLjk5czAuOTUsMS40NywwLjk1LDIuNDRzLTAuMzIsMS43OC0wLjk1LDIuNDQgYy0wLjYzLDAuNjYtMS40MiwwLjk5LTIuMzYsMC45OWgtMi43MnYtNi44NkgyMTIuMTN6IE0yMTIuMTMsODQuOTljMC41OSwwLDEuMDgtMC4yLDEuNDUtMC41OWMwLjM3LTAuNCwwLjU2LTAuOTEsMC41Ni0xLjU0IHMtMC4xOS0xLjE1LTAuNTYtMS41NGMtMC4zNy0wLjQtMC44Ni0wLjU5LTEuNDUtMC41OWgtMS4zN3Y0LjI3SDIxMi4xM3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTIxNi4zOSw3OS40M2gxLjM1djYuODZoLTEuMzVWNzkuNDN6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjUuNzUsODIuNnYwLjUzYzAsMC45OC0wLjMxLDEuNzctMC45NCwyLjM4Yy0wLjYzLDAuNjEtMS40NCwwLjkxLTIuNDMsMC45MWMtMS4wNiwwLTEuOTQtMC4zNC0yLjYzLTEuMDMgYy0wLjctMC42OS0xLjA0LTEuNTMtMS4wNC0yLjUyYzAtMSwwLjM0LTEuODQsMS4wMy0yLjU0YzAuNjktMC42OSwxLjU0LTEuMDQsMi41Ni0xLjA0YzAuNjQsMCwxLjIyLDAuMTUsMS43NSwwLjQ0IGMwLjUzLDAuMjksMC45NCwwLjY4LDEuMjMsMS4xNmwtMS4xNiwwLjY3Yy0wLjE2LTAuMjgtMC40MS0wLjUxLTAuNzQtMC42OWMtMC4zMy0wLjE4LTAuNy0wLjI2LTEuMS0wLjI2IGMtMC42NSwwLTEuMTksMC4yMS0xLjYxLDAuNjRzLTAuNjMsMC45Ny0wLjYzLDEuNjJjMCwwLjY1LDAuMjEsMS4xOCwwLjY0LDEuNmMwLjQzLDAuNDIsMC45OSwwLjYzLDEuNywwLjYzIGMwLjUyLDAsMC45Ni0wLjEyLDEuMy0wLjM1YzAuMzQtMC4yMywwLjU4LTAuNTUsMC43LTAuOTZoLTIuMDh2LTEuMkgyMjUuNzV6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMjYuNzEsNzkuNDNoMS4zNXY2Ljg2aC0xLjM1Vjc5LjQzeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjMzLjg3LDc5LjQzdjEuMjloLTEuODV2NS41N2gtMS4zNXYtNS41N2gtMS44NHYtMS4yOUgyMzMuODd6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMzguNjMsODYuMjhsLTAuNDQtMS4yM2gtMi44MmwtMC40MSwxLjIzaC0xLjQ2bDIuNC02Ljg2aDEuNjhsMi40Miw2Ljg2SDIzOC42M3ogTTIzNS44Miw4My43OWgxLjkzIGwtMC45OS0yLjhMMjM1LjgyLDgzLjc5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjQyLjAyLDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjQ5LjIxLDg0Ljk5aDIuODl2MS4yOWgtNC4yNHYtNi44Nmg0LjE5djEuMjloLTIuODR2MS40NmgyLjZ2MS4yN2gtMi42Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjU4LjI3LDg2LjI4aC0xLjU0bC0xLjMzLTIuMjRsLTEuMzMsMi4yNGgtMS41M2wyLjEtMy41MmwtMS45OS0zLjM0aDEuNTNsMS4yMywyLjA1bDEuMjItMi4wNWgxLjUzIGwtMS45OSwzLjMzTDI1OC4yNyw4Ni4yOHoiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTI2MS45LDg2LjQyYy0xLjAzLDAtMS44OC0wLjM0LTIuNTYtMS4wM3MtMS4wMS0xLjUzLTEuMDEtMi41NGMwLTEuMDEsMC4zNC0xLjg2LDEuMDEtMi41NCBjMC42Ny0wLjY4LDEuNTMtMS4wMiwyLjU2LTEuMDJjMC42MiwwLDEuMTksMC4xNSwxLjcyLDAuNDRjMC41MywwLjI5LDAuOTQsMC42OCwxLjIzLDEuMThsLTEuMTcsMC42OCBjLTAuMTctMC4zMS0wLjQxLTAuNTUtMC43My0wLjcyYy0wLjMxLTAuMTctMC42Ny0wLjI2LTEuMDYtMC4yNmMtMC42NywwLTEuMiwwLjIxLTEuNjEsMC42M2MtMC40MSwwLjQyLTAuNjEsMC45Ni0wLjYxLDEuNjMgYzAsMC42NiwwLjIsMS4yLDAuNjEsMS42MmMwLjQxLDAuNDIsMC45NSwwLjYzLDEuNjEsMC42M2MwLjM5LDAsMC43NS0wLjA5LDEuMDYtMC4yNnMwLjU2LTAuNDEsMC43Mi0wLjcxbDEuMTcsMC42OCBjLTAuMjksMC41LTAuNywwLjg5LTEuMjIsMS4xOEMyNjMuMTEsODYuMjgsMjYyLjUzLDg2LjQyLDI2MS45LDg2LjQyeiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjY3LjA0LDg0Ljk5aDIuODl2MS4yOWgtNC4yNHYtNi44Nmg0LjE5djEuMjloLTIuODR2MS40NmgyLjZ2MS4yN2gtMi42Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjcyLjIzLDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjc2Ljk2LDg0Ljk5aDIuNjJ2MS4yOWgtMy45N3YtNi44NmgxLjM1Vjg0Ljk5eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjgxLjcsODQuOTloMi44OXYxLjI5aC00LjI0di02Ljg2aDQuMTl2MS4yOWgtMi44NHYxLjQ2aDIuNnYxLjI3aC0yLjZWODQuOTl6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yODkuNTEsNzkuNDNoMS4zNXY2Ljg2aC0xLjAzbC0yLjk0LTQuMTl2NC4xOWgtMS4zNXYtNi44NmgxLjAzbDIuOTQsNC4xOFY3OS40M3oiLz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTI5NS4zOSw4Ni40MmMtMS4wMywwLTEuODgtMC4zNC0yLjU2LTEuMDNzLTEuMDEtMS41My0xLjAxLTIuNTRjMC0xLjAxLDAuMzQtMS44NiwxLjAxLTIuNTQgYzAuNjctMC42OCwxLjUzLTEuMDIsMi41Ni0xLjAyYzAuNjIsMCwxLjE5LDAuMTUsMS43MiwwLjQ0YzAuNTMsMC4yOSwwLjk0LDAuNjgsMS4yMywxLjE4bC0xLjE3LDAuNjggYy0wLjE3LTAuMzEtMC40MS0wLjU1LTAuNzMtMC43MmMtMC4zMS0wLjE3LTAuNjctMC4yNi0xLjA2LTAuMjZjLTAuNjcsMC0xLjIsMC4yMS0xLjYxLDAuNjNjLTAuNDEsMC40Mi0wLjYxLDAuOTYtMC42MSwxLjYzIGMwLDAuNjYsMC4yLDEuMiwwLjYxLDEuNjJjMC40MSwwLjQyLDAuOTUsMC42MywxLjYxLDAuNjNjMC4zOSwwLDAuNzUtMC4wOSwxLjA2LTAuMjZzMC41Ni0wLjQxLDAuNzItMC43MWwxLjE3LDAuNjggYy0wLjI5LDAuNS0wLjcsMC44OS0xLjIyLDEuMThDMjk2LjU5LDg2LjI4LDI5Ni4wMSw4Ni40MiwyOTUuMzksODYuNDJ6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMDAuNTIsODQuOTloMi44OXYxLjI5aC00LjI0di02Ljg2aDQuMTl2MS4yOWgtMi44NHYxLjQ2aDIuNnYxLjI3aC0yLjZWODQuOTl6Ii8+IDwvZz4gPHBhdGggY2xhc3M9InN0MiIgZD0iTTE2MS43OSw4NC44MmwtMjMuMDctMS4wNWMtMC4xOS0wLjAxLTAuMTktMC4yOSwwLTAuM2wyMy4wNy0xLjA1YzAuNjgtMC4wMywxLjI2LDAuNTIsMS4yNiwxLjJ2MCBDMTYzLjA0LDg0LjMxLDE2Mi40Nyw4NC44NiwxNjEuNzksODQuODJ6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMDguNzcsODIuNDNsMjMuMDcsMS4wNWMwLjE5LDAuMDEsMC4xOSwwLjI5LDAsMC4zbC0yMy4wNywxLjA1Yy0wLjY4LDAuMDMtMS4yNi0wLjUyLTEuMjYtMS4ydjAgQzMwNy41MSw4Mi45NCwzMDguMDgsODIuMzksMzA4Ljc3LDgyLjQzeiIvPiA8L3N2Zz4=" alt="MindDX" width="150" height="40"><p>MindDX Dijital Dönüşüm Teknolojileri San. ve Tic. A.Ş. · İstanbul<br>Dijital dönüşüm merkezli, MindDX Platformu ile güçlendirilmiş, yazılımdan bağımsız.</p></div>
+      <div><h4>Sayfalar</h4><a href="#platform">MindDX Platformu</a><a href="#nasil">Nasıl çalışırız</a><a href="#cozumler">Çözümler</a><a href="#sss">Sık sorulanlar</a></div>
+      <div><h4>İletişim</h4><a href="mailto:info@minddx.ai">info@minddx.ai</a><a href="tel:+902128080079">+90 (212) 808 00 79</a><p style="margin-top:6px">Ataköy 7-8-9-10. Kısım Mah., Selenyum Ataköy, Bakırköy / İstanbul</p></div>
+    </div>
+    <div class="demo-note"><span>© 2026 MindDX Dijital Dönüşüm Teknolojileri San. ve Tic. A.Ş.</span><span>Yeniden tasarım demosu (B) · Sayılar ve skorlar örnek veridir · Yayında değildir</span></div>
+  </div>
+</footer>
+
+<div class="cookie" id="cookie" role="dialog" aria-label="Çerez tercihi">
+  <p>Analiz ve reklam çerezlerini yalnızca izninizle kullanırız. <a href="#">Ayrıntılar</a></p>
+  <div class="cb"><button type="button" data-c="no">Reddet</button><button type="button" class="ok" data-c="ok">Kabul</button></div>
+</div>
+
+<div class="mbar">
+  <a class="btn btn-primary" href="#kampanya">Assess’i başlatın · €2.500</a>
+  <a class="btn btn-ghost call" href="tel:+902128080079" aria-label="MindDX’i arayın"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></a>
+</div>
+
+<script>
+(function(){
+  var d=document;
+  // beliren bölümler
+  var els=[].slice.call(d.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  } else els.forEach(function(e){e.classList.add('in')});
+  // mobil menü
+  var b=d.getElementById('burger'),m=d.getElementById('mnav');
+  b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menüyü kapat':'Menüyü aç')});
+  m.addEventListener('click',function(e){if(e.target.tagName==='A'){m.classList.remove('open');b.setAttribute('aria-expanded','false')}});
+  // çerez şeridi
+  d.getElementById('cookie').addEventListener('click',function(e){if(e.target.closest('button'))this.classList.add('hide')});
+  // geri sayım: 31 Ekim 2026 23:59:59 (İstanbul)
+  var T=new Date('2026-10-31T23:59:59+03:00').getTime();
+  var pill=d.getElementById('cdPill'),cd=d.getElementById('cd4');
+  function p2(n){return n<10?'0'+n:''+n}
+  function tick(){
+    var s=Math.max(0,Math.floor((T-Date.now())/1000));
+    var D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+    if(s===0){pill.textContent='Kampanya sona erdi'}else{pill.textContent=D+' gün '+H+' sa kaldı'}
+    var v={d:D,h:p2(H),m:p2(M),s:p2(S)};
+    [].forEach.call(cd.querySelectorAll('b'),function(e){e.textContent=v[e.dataset.u]});
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>

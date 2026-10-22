@@ -70,10 +70,6 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero-media" aria-hidden="true">
-        <!-- HIGGSFIELD VIDEO SLOT — swap this canvas+poster for:
-             <video class="hero-poster" poster="assets/hero-poster.svg" autoplay muted loop playsinline preload="none">
-               <source src="assets/hero.mp4" type="video/mp4"></video>
-             Poster + prompt spec live in rapor.md → "Higgsfield istek listesi". -->
         <img class="hero-poster" src="assets/hero-poster.svg" alt="" width="1600" height="900">
         <canvas class="hero-canvas" id="heroCanvas"></canvas>
         <div class="hero-scrim"></div>
@@ -118,7 +114,7 @@
       <div class="wrap stage-intro">
         <p class="eyebrow" data-reveal>Selected work <span class="dot">—</span> 2026</p>
         <h2 id="work-h" class="section-h" data-reveal>A deck of pieces we shaped from a single video</h2>
-        <p class="section-lede" data-reveal>Scroll and the top plate tips away to reveal the next. Every card below is a fictional showcase brand — the real gallery arrives once your project ships. Click any card to jump to the brief form.</p>
+        <p class="section-lede" data-reveal>Scroll and the top plate tips away to reveal the next. Every card below is a real, live showcase site for a fictional brand. Click a card to open it — or the last one to start your own brief.</p>
       </div>
 
       <!-- pinned 3D deck built by JS from the source cards below -->
@@ -133,41 +129,85 @@
       <div class="wrap">
         <ol class="stage-fallback" id="deckSource">
           <li class="card card-1" data-tint="1">
-            <div class="card-top"><span class="card-idx">01 / 04</span><span class="card-tag">Boutique hotel</span></div>
+            <img class="card-img" src="assets/fleet/vitrin-12-karakor-ocakbasi.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">01 / 08</span><span class="card-tag">Restaurant</span></div>
             <div class="card-body">
-              <span class="card-kind">Dark editorial · cinematic hero</span>
-              <h3 class="card-title">Maison&nbsp;Solène</h3>
-              <p class="card-desc">A cliff-side stay whose booking flow feels like turning the pages of a private journal.</p>
-              <div class="card-foot"><span>Video → site</span><span>7 languages</span><span>Lighthouse 98</span></div>
+              <span class="card-kind">Dark editorial · charcoal grill</span>
+              <h3 class="card-title">Karakor&nbsp;Ocakbaşı</h3>
+              <p class="card-desc">A charcoal-grill house whose menu page smells of smoke: skewers, ribs and hot flatbread, booking in one form.</p>
+              <div class="card-foot"><span>Reservations</span><span>Menu-led</span><span>Fictional brand</span></div>
             </div>
-          <a class="card-cover" href="#contact" data-piece="Maison&nbsp;Solène"><span class="visually-hidden">Start a project like Maison&nbsp;Solène</span></a></li>
+          <a class="card-cover" href="/vitrin/vitrin-12-karakor-ocakbasi/"><span class="visually-hidden">Open the Karakor Ocakbaşı site</span></a></li>
           <li class="card card-2" data-tint="2">
-            <div class="card-top"><span class="card-idx">02 / 04</span><span class="card-tag">Adventure</span></div>
+            <img class="card-img" src="assets/fleet/vitrin-13-ayna-sac-studyosu.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">02 / 08</span><span class="card-tag">Hair studio</span></div>
             <div class="card-body">
-              <span class="card-kind">Maximalist · kinetic type</span>
-              <h3 class="card-title">Debi&nbsp;Outdoor</h3>
-              <p class="card-desc">Scroll speed becomes the river's discharge — the page rises when the water does.</p>
-              <div class="card-foot"><span>Signature meter</span><span>WCAG AA</span><span>JS 41&nbsp;KB</span></div>
+              <span class="card-kind">Clean booking · appointment flow</span>
+              <h3 class="card-title">Ayna&nbsp;Saç Stüdyosu</h3>
+              <p class="card-desc">Pick the service, pick the day, send the request — a salon site built around one calm booking path.</p>
+              <div class="card-foot"><span>Booking form</span><span>Service picker</span><span>Fictional brand</span></div>
             </div>
-          <a class="card-cover" href="#contact" data-piece="Debi&nbsp;Outdoor"><span class="visually-hidden">Start a project like Debi&nbsp;Outdoor</span></a></li>
+          <a class="card-cover" href="/vitrin/vitrin-13-ayna-sac-studyosu/"><span class="visually-hidden">Open the Ayna Saç Stüdyosu site</span></a></li>
           <li class="card card-3" data-tint="3">
-            <div class="card-top"><span class="card-idx">03 / 04</span><span class="card-tag">Wine estate</span></div>
+            <img class="card-img" src="assets/fleet/vitrin-14-dutluk-pansiyon.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">03 / 08</span><span class="card-tag">Guesthouse</span></div>
             <div class="card-body">
-              <span class="card-kind">Retro-analog · paper grain</span>
-              <h3 class="card-title">Bağ&nbsp;Şato</h3>
-              <p class="card-desc">A vineyard archive where the vintage year drives the palette and the grain.</p>
-              <div class="card-foot"><span>Orbit gallery</span><span>Schema.org</span><span>≤ 5&nbsp;MB</span></div>
+              <span class="card-kind">Warm stone · family-run</span>
+              <h3 class="card-title">Dutluk&nbsp;Pansiyon</h3>
+              <p class="card-desc">Three room types, a garden breakfast and free parking, told like a stay at a friend's stone house.</p>
+              <div class="card-foot"><span>Three rooms</span><span>Availability form</span><span>Fictional brand</span></div>
             </div>
-          <a class="card-cover" href="#contact" data-piece="Bağ&nbsp;Şato"><span class="visually-hidden">Start a project like Bağ&nbsp;Şato</span></a></li>
+          <a class="card-cover" href="/vitrin/vitrin-14-dutluk-pansiyon/"><span class="visually-hidden">Open the Dutluk Pansiyon site</span></a></li>
           <li class="card card-4" data-tint="4">
-            <div class="card-top"><span class="card-idx">04 / 04</span><span class="card-tag">Your brand</span></div>
+            <img class="card-img" src="assets/fleet/vitrin-15-little-wren.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">04 / 08</span><span class="card-tag">Guesthouse</span></div>
+            <div class="card-body">
+              <span class="card-kind">Quiet editorial · English</span>
+              <h3 class="card-title">Little&nbsp;Wren Guesthouse</h3>
+              <p class="card-desc">Three light rooms, a long breakfast table and a host who answers her own emails.</p>
+              <div class="card-foot"><span>Three rooms</span><span>Plain language</span><span>Fictional brand</span></div>
+            </div>
+          <a class="card-cover" href="/vitrin/vitrin-15-little-wren/"><span class="visually-hidden">Open the Little Wren Guesthouse site</span></a></li>
+          <li class="card card-1" data-tint="1">
+            <img class="card-img" src="assets/fleet/vitrin-17-sahan-tadim.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">05 / 08</span><span class="card-tag">Tasting kitchen</span></div>
+            <div class="card-body">
+              <span class="card-kind">Street-fire discipline · 6 courses</span>
+              <h3 class="card-title">SAHAN</h3>
+              <p class="card-desc">A six-course tasting menu cooked with the discipline of a street grill, in Karaköy.</p>
+              <div class="card-foot"><span>Tasting menu</span><span>Turkish</span><span>Fictional brand</span></div>
+            </div>
+          <a class="card-cover" href="/vitrin/vitrin-17-sahan-tadim/"><span class="visually-hidden">Open the SAHAN site</span></a></li>
+          <li class="card card-2" data-tint="2">
+            <img class="card-img" src="assets/fleet/vitrin-18-kervankiran.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">06 / 08</span><span class="card-tag">Night camp</span></div>
+            <div class="card-body">
+              <span class="card-kind">Dark sky · Bortle 2</span>
+              <h3 class="card-title">KERVANKIRAN</h3>
+              <p class="card-desc">Six bungalows, one telescope and a chart that computes how many hours of real darkness you get.</p>
+              <div class="card-foot"><span>Dark-sky chart</span><span>Karapınar</span><span>Fictional brand</span></div>
+            </div>
+          <a class="card-cover" href="/vitrin/vitrin-18-kervankiran/"><span class="visually-hidden">Open the KERVANKIRAN site</span></a></li>
+          <li class="card card-3" data-tint="3">
+            <img class="card-img" src="assets/fleet/vitrin-16-kapadokya.jpeg" alt="" width="640" height="854" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">07 / 08</span><span class="card-tag">Balloon flights</span></div>
+            <div class="card-body">
+              <span class="card-kind">Cinematic · 11 languages</span>
+              <h3 class="card-title">AURELIA Cappadocia</h3>
+              <p class="card-desc">Private sunrise balloon journeys above the fairy chimneys of Göreme.</p>
+              <div class="card-foot"><span>11 languages</span><span>Video hero</span><span>Fictional brand</span></div>
+            </div>
+          <a class="card-cover" href="/vitrin/vitrin-16-kapadokya/"><span class="visually-hidden">Open the AURELIA Cappadocia site</span></a></li>
+          <li class="card card-1" data-tint="1">
+            <img class="card-img" src="assets/hero-poster.svg" alt="" width="1600" height="900" loading="eager" decoding="async">
+            <div class="card-top"><span class="card-idx">08 / 08</span><span class="card-tag">Your brand</span></div>
             <div class="card-body">
               <span class="card-kind">Yet to be filmed</span>
               <h3 class="card-title">This&nbsp;could be&nbsp;yours</h3>
               <p class="card-desc">Send one clip. A demo like these is waiting, jury-passed and ready to revise.</p>
               <div class="card-foot"><span>Demo first</span><span>3 revisions</span><span>Jury sign-off</span></div>
             </div>
-          <a class="card-cover" href="#contact" data-piece="This&nbsp;could be&nbsp;yours"><span class="visually-hidden">Start a project like This&nbsp;could be&nbsp;yours</span></a></li>
+          <a class="card-cover" href="#contact" data-piece="This&nbsp;could be&nbsp;yours"><span class="visually-hidden">Start a project like these</span></a></li>
         </ol>
       </div>
     </section>
@@ -175,7 +215,7 @@
     <!-- ============ FLEET RING (signature #2 — halka geçidi) ============ -->
     <section class="fleet" id="fleet" aria-labelledby="fleet-h">
       <div class="fleet-intro">
-        <p class="eyebrow" data-reveal>The fleet <span class="dot">—</span> 12 live builds</p>
+        <p class="eyebrow" data-reveal>The fleet <span class="dot">—</span> 19 live builds</p>
         <h2 id="fleet-h" class="section-h" data-reveal>Step through the ring into any site we run</h2>
         <p class="section-lede" data-reveal>Every card is a real, living site from our showcase fleet. Hover to flip one open; click and the ring carries you straight into it.</p>
       </div>
@@ -217,7 +257,7 @@
         </div>
         <aside class="stat-stack" aria-label="Delivery figures">
           <div class="stat" data-reveal><span class="big">≥90</span><span class="lbl">Lighthouse floor</span></div>
-          <div class="stat" data-reveal><span class="big">10</span><span class="lbl">sites live in the fleet</span></div>
+          <div class="stat" data-reveal><span class="big">19</span><span class="lbl">sites live in the fleet</span></div>
           <div class="stat" data-reveal><span class="big">4+1</span><span class="lbl">jurors per site</span></div>
         </aside>
       </div>

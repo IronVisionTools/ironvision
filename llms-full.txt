@@ -29,5 +29,5 @@ A "try it on" button for boutiques and small e-commerce sites: the customer sees
 - About: https://ironvisiontools.com/en/hakkinda.html
 - Contact / demo request: https://ironvisiontools.com/en/contact/
 - Blog (articles in Turkish): https://ironvisiontools.com/en/blog/
-- Showcase of demo business sites: https://ironvisiontools.com/vitrin/vitrin-hub/
+- ATÖLYE VYRON showcase of demo business sites: https://ironvisiontools.com/vitrin/odul-01-vyron-atolye/
 - Privacy: https://ironvisiontools.com/en/privacy/ ; Terms: https://ironvisiontools.com/en/terms/

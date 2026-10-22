@@ -5,9 +5,15 @@
   "use strict";
   if (!window.gsap) return;
 
-  var BASE = "../";
+  var BASE = "/vitrin/";
   var FLEET = [
-    { dir: "vitrin-hub", title: "Vitrin Hub" },
+    { dir: "vitrin-12-karakor-ocakbasi", title: "Karakor Ocakbaşı" },
+    { dir: "vitrin-13-ayna-sac-studyosu", title: "Ayna Saç Stüdyosu" },
+    { dir: "vitrin-14-dutluk-pansiyon", title: "Dutluk Pansiyon" },
+    { dir: "vitrin-15-little-wren", title: "Little Wren Guesthouse" },
+    { dir: "vitrin-17-sahan-tadim", title: "SAHAN Tadım Mutfağı" },
+    { dir: "vitrin-18-kervankiran", title: "KERVANKIRAN Gece Kampı" },
+    { dir: "vitrin-16-kapadokya", title: "AURELIA Cappadocia" },
     { dir: "odul-02-meridyen-orbit", title: "Meridyen Orbit" },
     { dir: "vitrin-01-alp-kayak", title: "IGLU Alpine Lodge" },
     { dir: "vitrin-02-col-glamping", title: "HALLEY Desert Camp" },
@@ -19,6 +25,7 @@
     { dir: "vitrin-08-hamam", title: "TAS Hammam" },
     { dir: "vitrin-09-fotografci", title: "MERCEK Studio" },
     { dir: "vitrin-10-zeytinyagi", title: "SAFİ Olive Oil" },
+    { dir: "vitrin-11-butik-kadin", title: "Atölye Butik" },
   ];
 
   var section = document.getElementById("fleet");
@@ -229,7 +236,9 @@
 
     var vw = window.innerWidth, vh = window.innerHeight;
     var isM = config.isMobile;
-    var gap = isM ? 44 : 74;
+    var nC = cards.length;
+    var gap = isM ? Math.max(18, Math.min(44, Math.floor(((vw - 40) / 0.55 - 58) / (nC - 1))))
+                  : Math.max(30, Math.min(74, Math.floor((vw - 80 - 72) / (nC - 1))));
     var lineY = isM ? 130 : 200;
     var startX = -((cards.length - 1) * gap) / 2;
 

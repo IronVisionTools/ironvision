@@ -12,7 +12,7 @@ actually operate.
 | Path | What it is |
 | --- | --- |
 | `index.html` | Landing page: products, how we work, demo request |
-| `vitrin/` | 11 live demo business sites + the [showcase hub](https://ironvisiontools.com/vitrin/vitrin-hub/) |
+| `vitrin/` | 18 live demo business sites + the [Atölye showcase](https://ironvisiontools.com/vitrin/odul-01-vyron-atolye/) |
 | `iletisim.html` | Contact |
 | `gizlilik.html`, `gizlilik-politikasi-lav.html`, `hesap-silme-lav.html` | Privacy policies and account-deletion page required by the app stores / Meta |
 | `assets/`, `js/` | Images, fonts, and the small amount of JavaScript the site uses |

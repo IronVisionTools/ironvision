@@ -116,6 +116,29 @@
     footer a{color:var(--muted);display:inline-flex;align-items:center;min-height:40px;padding:0 2px}
     footer a:hover{color:var(--ink)}
 
+
+    /* ---- en yeni örnekler (öne çıkan bölüm) ---- */
+    .feat{padding:6px 0 clamp(24px,4vw,44px)}
+    .sec-label{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 6px}
+    .sec-label h2{margin:0;font-size:clamp(22px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
+    .sec-label p{margin:0;color:var(--muted);font-size:14px}
+    .feat-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-top:16px}
+    .feat-grid .card{min-height:0}
+    .feat-grid .card.big{grid-column:1/-1;flex-direction:row;align-items:stretch}
+    .feat-grid .card.big .shot{flex:0 0 46%;aspect-ratio:auto;min-height:260px;border-bottom:0;border-right:1px solid var(--line)}
+    .feat-grid .card.big .brand{font-size:30px}
+    .shot{display:block;width:100%;aspect-ratio:16/10;background:#0d0f13;border-bottom:1px solid var(--line);overflow:hidden}
+    .shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s ease}
+    .card:hover .shot img{transform:scale(1.04)}
+    .feat-grid .imza{flex:0 0 auto;margin-bottom:4px}
+    .old-label{padding-top:clamp(8px,2vw,20px)}
+    @media (max-width:700px){
+      .feat-grid{grid-template-columns:1fr}
+      .feat-grid .card.big{flex-direction:column}
+      .feat-grid .card.big .shot{flex:none;aspect-ratio:16/10;min-height:0;border-right:0;border-bottom:1px solid var(--line)}
+    }
+    @media (prefers-reduced-motion:reduce){.card:hover .shot img{transform:none}}
+
     @media (max-width:520px){
       .arch{display:none}
       .grid{grid-template-columns:1fr}
@@ -154,6 +177,80 @@
       </div>
     </div>
   </header>
+
+  <section class="wrap feat" aria-labelledby="feat-h">
+    <div class="sec-label"><h2 id="feat-h">En yeni örnekler</h2><p>Atölye tanıtımı, dört yeni işletme sitesi ve Kapadokya demosu. Hepsi örnek; işletmeler kurgusal.</p></div>
+    <div class="feat-grid">
+        <a class="card big" href="../odul-01-vyron-atolye/" aria-label="ATÖLYE VYRON — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../odul-01-vyron-atolye/assets/og-cover.svg" width="1200" height="630" loading="eager" decoding="async" alt="ATÖLYE VYRON tanıtım sayfası kapağı"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">ATÖLYE</span><span class="arch mono">Site fabrikası tanıtımı</span></span>
+            <span class="brand">ATÖLYE VYRON</span>
+            <span class="concept">Videonuzdan özgün, elle denetlenmiş site: analiz, tasarım, jüri, teslim</span>
+            <span class="imza">Siteleri nasıl ürettiğimizi anlatan tanıtım sayfası: kaydırdıkça üstteki kart eğilip kalkar, altındaki çalışma görünür.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Tanıtım sayfası</span></span>
+          </span>
+        </a>
+        <a class="card" href="../vitrin-12-karakor-ocakbasi/" aria-label="Karakor Ocakbaşı — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../vitrin-12-karakor-ocakbasi/img/hero-ocak.webp" width="1800" height="1062" loading="lazy" decoding="async" alt="Kömür ateşinde dizili kuzu şişler"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">VİT_12</span><span class="arch mono">Esnaf lokantası</span></span>
+            <span class="brand">Karakor Ocakbaşı</span>
+            <span class="concept">Mahalle ocakbaşı: rezervasyon ve paket sipariş formu</span>
+            <span class="imza">Kor ateşte kuzu şiş, kaburga ve sıcak lavaş; mobilde sabit rezervasyon çubuğu.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Örnek site · işletme kurgusal</span></span>
+          </span>
+        </a>
+        <a class="card" href="../vitrin-13-ayna-sac-studyosu/" aria-label="Ayna Saç Stüdyosu — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../vitrin-13-ayna-sac-studyosu/img/hero.webp" width="820" height="1044" loading="lazy" decoding="async" alt="Işıklı aynalı aydınlık kuaför salonu"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">VİT_13</span><span class="arch mono">Kuaför / randevu</span></span>
+            <span class="brand">Ayna Saç Stüdyosu</span>
+            <span class="concept">Dört adımlı randevu talebi, hizmet seçimi, sık sorulanlar</span>
+            <span class="imza">Hizmeti seçip uygun günü bildirirsiniz; salon dönüp saati kesinleştirir.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Örnek site · işletme kurgusal</span></span>
+          </span>
+        </a>
+        <a class="card" href="../vitrin-14-dutluk-pansiyon/" aria-label="Dutluk Pansiyon — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../vitrin-14-dutluk-pansiyon/img/hero.webp" width="1800" height="1200" loading="lazy" decoding="async" alt="Mavi panjurlu bahçeli taş ev"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">VİT_14</span><span class="arch mono">Aile pansiyonu</span></span>
+            <span class="brand">Dutluk Pansiyon</span>
+            <span class="concept">Üç oda, bahçede kahvaltı, müsaitlik sorma formu</span>
+            <span class="imza">Taş evin bahçesinde kahvaltı, oda kartları ve büyütülebilir galeri.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Örnek site · işletme kurgusal</span></span>
+          </span>
+        </a>
+        <a class="card" href="../vitrin-15-little-wren/" aria-label="Little Wren Guesthouse — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../vitrin-15-little-wren/assets/img/hero.webp" width="1800" height="1188" loading="lazy" decoding="async" alt="Sheer perdeli güneşli yatak odası"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">VİT_15</span><span class="arch mono">Guesthouse · English</span></span>
+            <span class="brand">Little Wren Guesthouse</span>
+            <span class="concept">Üç odalı küçük konukevi, İngilizce, availability formu</span>
+            <span class="imza">Üç sakin oda ve uzun bir kahvaltı masası; ev sahibi kişisel yanıt verir.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Örnek site · işletme kurgusal</span></span>
+          </span>
+        </a>
+        <a class="card" href="../vitrin-16-kapadokya/" aria-label="AURELIA Kapadokya — vitrini aç">
+          <span class="go" aria-hidden="true">↗</span>
+          <span class="shot"><img src="../vitrin-16-kapadokya/assets/video/hero-poster.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="Kapadokya üzerinde gün doğumu balonları"></span>
+          <span class="cbody">
+            <span class="crow"><span class="cno mono">VİT_16</span><span class="arch mono">Balon turu · 11 dil</span></span>
+            <span class="brand">AURELIA Kapadokya</span>
+            <span class="concept">Balon yolculuğu sitesi: video arka plan, 11 dil, rezervasyon formu</span>
+            <span class="imza">Kaydırmayla açılan sinematik tek sayfa; dil seçici ve paket kartları.</span>
+            <span class="meta"><span class="badge ok"><span class="d"></span>Örnek site · işletme kurgusal</span></span>
+          </span>
+        </a>
+    </div>
+  </section>
+
+  <div class="wrap old-label"><div class="sec-label"><h2>Vitrin filosu</h2><p>Önceki seri: 10 iklim, 10 stüdyo.</p></div></div>
 
   <main class="wrap">
     <div class="grid" id="grid"><!-- kartlar JS ile basılır --></div>

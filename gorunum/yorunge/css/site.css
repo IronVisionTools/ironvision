@@ -223,3 +223,5 @@ html:not(.dyn) .top{opacity:1}
 /* açılışta arayüz sonradan gelir */
 html.dyn .stages,html.dyn .hud,html.dyn .rail,html.dyn .scrollhint{transition:opacity .8s}
 html.dyn:not(.introdone) .stages,html.dyn:not(.introdone) .hud,html.dyn:not(.introdone) .rail,html.dyn:not(.introdone) .scrollhint{opacity:0!important}
+html[data-lang=tr] .work.wen,html[data-lang=en] .work.wtr{display:none}
+.wall{margin:20px 0 0}.wall a{font-weight:600;text-decoration:none}

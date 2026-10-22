@@ -260,3 +260,5 @@ h3{font-size:clamp(20px,2vw,28px)}
 .rm .reticle,.rm .lock,.rm .gauge{display:none}
 
 @media (min-width:760px){.strip.native .card{grid-template-columns:minmax(200px,36%) 1fr;width:min(920px,88vw)}.strip.native .fig img{max-height:360px}.strip.native .fig.phone img{max-height:420px}}
+html[lang=tr] .wcard.wen,html[lang=en] .wcard.wtr{display:none}
+.wall{margin-top:22px}

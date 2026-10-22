@@ -229,7 +229,7 @@ section { position: relative; }
   overflow: hidden;
 }
 .card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; z-index: -2; }
-.card:has(.card-img)::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11,12,16,0.80) 0%, rgba(11,12,16,0.72) 40%, rgba(11,12,16,0.93) 100%); }
+.card:has(.card-img)::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11,12,16,0.90) 0%, rgba(11,12,16,0.86) 40%, rgba(11,12,16,0.96) 100%); }
 .card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(130% 120% at 85% 0%, rgba(255,255,255,0.14), transparent 45%); pointer-events: none; }
 .card-1 { background: var(--card-1); } .card-2 { background: var(--card-2); }
 .card-3 { background: var(--card-3); } .card-4 { background: var(--card-4); }

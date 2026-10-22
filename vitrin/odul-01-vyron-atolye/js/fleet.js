@@ -57,11 +57,21 @@
   var navTimer = null;
   var currentTitle = null;
 
+  /* Halka, "The fleet" tanıtım yazısının ALTINA sığacak ölçekte ve konumda durur
+     (1280'de üst kartlar açıklama satırına biniyordu). */
   function ringScale(vw) {
     vw = vw || window.innerWidth;
-    if (vw < 768) return 0.55;
-    if (vw < 1200) return 0.8;
-    return 1;
+    var ws = vw < 768 ? 0.55 : (vw < 1200 ? 0.8 : 1);
+    if (!intro) return ws;
+    var H = section.clientHeight || window.innerHeight;
+    var top = intro.offsetTop + intro.offsetHeight + 14;
+    var cardH = vw < 768 ? 78 : 96;
+    var span = 2 * config.radius + cardH + 24;
+    var hs = (H - top - 10) / span;
+    var sc = Math.max(0.3, Math.min(ws, hs));
+    var centerY = top + (span * sc) / 2;
+    ring.style.marginTop = (2 * (centerY - H / 2)) + "px";
+    return sc;
   }
 
   for (var i = 0; i < config.count; i++) {
